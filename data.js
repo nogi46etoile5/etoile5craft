@@ -1,339 +1,264 @@
-const CRAFT_DATA = [
-    // --- 【北海道】(2) ---
-    { "id": "CR-001", "region": "北日本", "pref": "北海道", "certified": "国", "name": "二風谷アットゥㇱ", "type": "織物", "history": "オヒョウ等の樹皮から作る織物。水に強く驚くほど丈夫。", "tags": ["unique", "tough","daily","aging","gift",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-002", "region": "北日本", "pref": "北海道", "certified": "国", "name": "二風谷イタ", "type": "木工品", "history": "アイヌに伝わる木製盆。渦巻きなどのアイヌ文様が力強く彫られる。", "tags": ["unique","tough","aging","no-machine","gift","daily"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
+const shopDetails = [
+    // H系列 (H)
+    { 
+        name_jp: "一(はじめ)", name_en: "Bar Hajime", series: "H系列", seriesMark: "H", type: "MIX", area: "東京", xId: "@barhajime", snsUrl: "https://x.com/barhajime", time: "19:00～26:00,20:00〜4:00", holiday: "日曜,火曜", address_jp: "東京都新宿区新宿2丁目-12-14-1A", address_en: "1A, 2-12-14 Shinjuku, Shinjuku-ku, Tokyo", tags: ["カラオケ", "喫煙可", "初心者向け", "年齢層高め", "変わったリキュール有", "穏やか", "ボトルキープ有", "持ち込み食べ物可"], icon: "https://unavatar.io/twitter/barhajime", note: "https://note.com/412357siki/n/n214e5c8e1d02", medium: "#",
+        description_jp: "半地下のように見えてこれが一階！迷ったらギロンセンを目指せ、ほぼレズビアンがいるMIXバー。年齢層幅広く会える所です。",
+        description_en: "It looks like a semi-basement but it's actually the 1st floor! If you get lost, look for the 'Giron-sen' sign. A MIX bar where most customers are lesbians, attracting a wide range of age groups."
+    },
+    { 
+        name_jp: "八(はち)", name_en: "Bar Hachi", series: "H系列", seriesMark: "H", type: "ビアン", area: "東京", xId: "@hachi_omusubi_8", snsUrl: "https://x.com/hachi_omusubi_8", time: "20:00〜25:00", holiday: "日曜,月曜", address_jp: "東京都新宿区新宿2丁目-15-13第二中江ビルB1", address_en: "B1, Dai-ni Nakae Bldg, 2-15-13 Shinjuku, Tokyo", tags: ["喫煙可", "初心者向け", "初心者多め", "変わったリキュール有", "穏やか", "イベント多い", "フード有", "盛り上がる"], icon: "https://unavatar.io/twitter/hachi_omusubi_8", note: "#", medium: "#",
+        description_jp: "地下一階にあるおむすびがコンセプトのレズビアンバー。オーナーの知り合いならたまに男性がいることも。珍しいリキュールや炭酸サーバーがあるお店です。",
+        description_en: "A lesbian bar on B1F with an 'Onigiri' (rice ball) concept. You might occasionally see male acquaintances of the owner. They feature rare liqueurs and a soda carbonator."
+    },
+    { 
+        name_jp: "はっちゃけ", name_en: "Hacchake", series: "H系列", seriesMark: "H", type: "MIX", area: "東京", xId: "@hacchake_nicho", snsUrl: "https://x.com/hacchake_nicho", time: "18:00〜24:00", holiday: "日曜,月曜,火曜", address_jp: "東京都新宿区新宿2丁目-14-11フタミビル101-A", address_en: "101-A, Futami Bldg, 2-14-11 Shinjuku, Tokyo", tags: ["初心者向け", "穏やか", "お通し有", "フード有"], icon: "https://unavatar.io/twitter/hacchake_nicho", note: "#", medium: "#",
+        description_jp: "H系列でご飯メインのお店。二丁目横丁の一番奥にあり、おつまみからしっかりした食事まで充実。一軒目にピッタリです！",
+        description_en: "An H-series spot focused on food, located at the very back of Nichome Yokocho. From snacks to full meals, it's the perfect first stop for the night!"
+    },
+    { 
+        name_jp: "PUZZLE", name_en: "Bar PUZZLE", series: "H系列", seriesMark: "H", type: "ビアン", area: "東京", xId: "@BarPUZZLE1", snsUrl: "https://x.com/BarPUZZLE1", time: "20:00〜26:00", holiday: "不定休", address_jp: "東京都新宿区新宿2丁目-13-14jビルディング1F", address_en: "1F, J-Building, 2-13-14 Shinjuku, Tokyo", tags: ["カラオケ", "喫煙可", "初心者向け", "初心者多め", "穏やか", "変わったリキュール有", "持ち込み食べ物可", "イベント多い"], icon: "https://unavatar.io/twitter/BarPUZZLE1", note: "#", medium: "#",
+        description_jp: "曜日ごとにスタッフが決まっている珍しいシステムのレズビアンバー。変わったリキュールやイベントも多い。居酒屋『よしだ海岸』の先にあります。",
+        description_en: "A lesbian bar with a unique system where the staff is fixed by the day of the week. Lots of rare liqueurs and events. Located just past the Izakaya 'Yoshida Kaigan'."
+    },
+    { 
+        name_jp: "パズルアソビ", name_en: "PUZZLE ASOBI", series: "H系列", seriesMark: "H", type: "ビアン", area: "東京", xId: "@puzzleasobi2", snsUrl: "https://x.com/puzzleasobi2", time: "21:00〜9:00", holiday: "不定休", address_jp: "東京都新宿区新宿1丁目36-3新宿御苑136ビル6F", address_en: "6F, Shinjuku Gyoen 136 Bldg, 1-36-3 Shinjuku, Tokyo", tags: ["カラオケ","イベント多い",], icon: "https://unavatar.io/twitter/puzzleasobi2", note: "#", medium: "#",
+        description_jp: "住所は一丁目だけど雰囲気は二丁目！新築ビルに入ったH系列の店舗で、カラオケもダーツも楽しめるお店です。",
+        description_en: "The address is in Ic-chome, but it has a total Ni-chome vibe! A new H-series branch in a modern building, featuring both karaoke and darts."
+    },
 
-    // --- 【青森県】(1) ---
-    { "id": "CR-003", "region": "北日本", "pref": "青森県", "certified": "国", "name": "津軽塗", "type": "漆器", "history": "「変わり塗り」が特徴。何層も塗り重ねて研ぎ出すことで独特の模様が生まれる。", "tags": ["tough","no-machine","gift","cooking","guest","overseas","daily"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
+    // A系列 (A)
+    { 
+        name_jp: "agit", name_en: "agit", series: "A系列", seriesMark: "A", type: "ビアン", area: "東京", xId: "@agit_staff", snsUrl: "https://x.com/agit_staff", time: "19:00〜25:00,19:00～27:00", holiday: "月曜,火曜", address_jp: "東京都新宿区新宿2-15-11-1F", address_en: "1F, 2-15-11 Shinjuku, Tokyo", tags: ["穏やか","年齢層高め","変わったリキュール有",], icon: "https://unavatar.io/twitter/agit_staff", note: "#", medium: "#",
+        description_jp: "2026年に改修され入り口も一新した老舗。スナックのような落ち着いた雰囲気が魅力。ハブ酒やプロテインも楽しめます！",
+        description_en: "An established bar with a renovated entrance as of 2026. Enjoy a cozy 'Snack' bar atmosphere. They even serve Habu-shu (snake liquor) and protein shakes!"
+    },
+    { 
+        name_jp: "anchor rainbow port tokyo", name_en: "anchor", series: "A系列", seriesMark: "A", type: "MIX", area: "東京", xId: "@anchor_staff", snsUrl: "https://x.com/anchor_staff", time: "12:00〜25:00,12:00～5:00", holiday: "火曜,水曜", address_jp: "東京都新宿区新宿2丁目-12-15山原ハイツ2F", address_en: "2F, Yamahara Heights, 2-12-15 Shinjuku, Tokyo", tags: ["初心者向け","初心者多め","フード有",], icon: "https://unavatar.io/twitter/anchor_staff", note: "#", medium: "#",
+        description_jp: "二丁目では珍しく昼から開いているカフェバー。百合漫画を堪能するならここ一択！完全キャッシュレス決済のお店です。",
+        description_en: "A rare Ni-chome cafe-bar open from the daytime. The absolute best spot to enjoy Yuri manga! Please note they are a cashless-only establishment."
+    },
+    { 
+        name_jp: "艶櫻", name_en: "Adezakura", series: "A系列", seriesMark: "A", type: "MIX", area: "東京", xId: "@adezakura_staff", snsUrl: "https://x.com/adezakura_staff", time: "21:00〜5:00,21:00～6:00", holiday: "月曜,火曜", address_jp: "東京都新宿区新宿2丁目 15-11-1F", address_en: "1F, 2-15-11 Shinjuku, Tokyo", tags: ["初心者向け", "初心者多め", "イベント多い", "外国人多い","ノーチャージ","英語対応","変わったリキュール有"], icon: "https://unavatar.io/twitter/adezakura_staff", note: "#", medium: "#",
+        description_jp: "DJブースもあるショットバー。ビアンバーでスミノフアイスを置いているのはここだけかも？",
+        description_en: "A shot bar featuring a DJ booth. It might be the only lesbian-friendly bar in the area that serves Smirnoff Ice."
+    },
 
-    // --- 【岩手県】(4) ---
-    { "id": "CR-004", "region": "北日本", "pref": "岩手県", "certified": "国", "name": "秀衡塗", "type": "漆器", "history": "金箔の「雲華紋」と、漆の光沢が調和した豪華な器。", "tags": ["daily","no-machine","cooking","family","gift","overseas","guest", ], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-005", "region": "北日本", "pref": "岩手県", "certified": "国", "name": "浄法寺塗", "type": "漆器", "history": "良質な国産漆を贅沢に使用。使い込むほどに艶が増す実用の美。", "tags": ["daily","no-machine","aging","overseas","cooking","gift","guest", "tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-006", "region": "北日本", "pref": "岩手県", "certified": "国", "name": "岩谷堂箪笥", "type": "木工品", "history": "重厚な金具装飾と、美しい漆塗りが特徴の高級家具。", "tags": ["daily","gift","family","repair","aging","tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-007", "region": "北日本", "pref": "岩手県", "certified": "国", "name": "南部鉄器", "type": "金工品", "history": "独特の肌合いと重厚感。お湯をまろやかにする鉄瓶が有名。", "tags": ["daily", "gift","overseas","guest","no-machine","cooking","tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
+    // B系列 - Lグループ (B(L))
+    { 
+        name_jp: "LITTLE MONKEY", name_en: "LITTLE MONKEY", series: "B系列", seriesMark: "B(L)", type: "ビアン", area: "東京", xId: "@little_monkey80", snsUrl: "https://x.com/little_monkey80", time: "20:00〜5:00", holiday: "不定休", address_jp: "東京都新宿区新宿2丁目-14-7赤川ビル1階", address_en: "1F, Akagawa Bldg, 2-14-7 Shinjuku, Tokyo", tags: ["カラオケ", "喫煙可", "初心者向け", "初心者多め", "盛り上がる", "イベント多い", "持ち込み食べ物可", "穏やか"], icon: "https://unavatar.io/twitter/little_monkey80", note: "#", medium: "#",
+        description_jp: "L系列の1号店で、お猿の看板が目印。料金体系をSNSで公開している親切なお店。若い層に人気です！",
+        description_en: "The first L-series shop, marked by a monkey sign. A very welcoming bar that posts its prices on social media. Very popular with the younger crowd."
+    },
+    { 
+        name_jp: "LAUGH", name_en: "LAUGH", series: "B系列", seriesMark: "B(L)", type: "ビアン", area: "東京", xId: "@BARLAUGH07", snsUrl: "https://x.com/BARLAUGH07", time: "20:00〜5:00", holiday: "不定休", address_jp: "東京都新宿区新宿2丁目-18-7ふぁーぶる店舗2F", address_en: "2F, 2-18-7 Shinjuku, Tokyo", tags: ["カラオケ", "喫煙可", "初心者多め", "初心者向け", "イベント多い", "持ち込み食べ物可"], icon: "https://unavatar.io/twitter/BARLAUGH07", note: "#", medium: "#",
+        description_jp: "グルークファーストの2階。犬の歯のロゴが目印！若い子が多く、2面の窓が開放的なお店です。階段の登りづらさも体験してみて！",
+        description_en: "Located above Gluck First, featuring a dog-tooth logo. Popular with young people, the bar has two large windows. Give the uniquely steep stairs a try!"
+    },
+    { 
+        name_jp: "Lin9", name_en: "Lin9", series: "B系列", seriesMark: "B(L)", type: "MIX", area: "東京", xId: "@Lin993960", snsUrl: "https://x.com/Lin993960", time: "20:00〜5:00", holiday: "不定休", address_jp: "東京都新宿区新宿1丁目新宿御苑136ビル9F", address_en: "9F, Shinjuku Gyoen 136 Bldg, 1-36 Shinjuku, Tokyo", tags: ["カラオケ", "喫煙可","ボトルキープ有", "初心者向け", "イベント多い", "持ち込み食べ物可", "盛り上がる", "穏やか"], icon: "https://unavatar.io/twitter/Lin993960", note: "#", medium: "#",
+        description_jp: "オオカミのイラストがクール。昼は古着屋、夜はバー。ベランダから新宿のビル群を眺めながら飲めるお店です。",
+        description_en: "Features a cool wolf illustration. It's a vintage clothing store by day and a bar by night. You can enjoy a drink on the balcony while overlooking Shinjuku's skyline."
+    },
 
-    // --- 【宮城県】(4) ---
-    { "id": "CR-008", "region": "北日本", "pref": "宮城県", "certified": "国", "name": "鳴子漆器", "type": "漆器", "history": "「拭き漆」や「龍文塗」など、多様な技法が特徴。木目の美しさを生かす。", "tags": ["daily","tough","cooking","light","aging","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-009", "region": "北日本", "pref": "宮城県", "certified": "国", "name": "仙台箪笥", "type": "木工品", "history": "「野郎金物」と呼ばれる豪華な金具と、漆塗りの重厚な調和。", "tags": ["aging","tough","daily","family","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-010", "region": "北日本", "pref": "宮城県", "certified": "国", "name": "雄勝硯", "type": "文具", "history": "純黒色で光沢があり、粒子が細かく墨おりが非常に良い。", "tags": ["unique", "gift","overseas",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-011", "region": "北日本", "pref": "宮城県", "certified": "国", "name": "宮城伝統こけし", "type": "人形", "history": "鳴子、遠刈田など系統ごとに異なる表情と形が魅力。", "tags": ["kids","unique","overseas","museum","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
+    // B系列 - Gグループ (B(G))
+    { 
+        name_jp: "グルークファースト", name_en: "Gluck First", series: "B系列", seriesMark: "B(G)", type: "MIX", area: "東京", xId: "@gluck_mixbar", snsUrl: "https://x.com/gluck_mixbar", time: "20:00〜8:00", holiday: "不定休", address_jp: "東京都新宿区新宿2丁目-18-7ふぁーぶる店舗1階", address_en: "1F, 2-18-7 Shinjuku, Tokyo", tags: ["カラオケ", "喫煙可", "初心者向け", "初心者多め", "イベント多い", "持ち込み食べ物可", "ボトルキープ有", "盛り上がる", "穏やか"], icon: "https://unavatar.io/twitter/gluck_mixbar", note: "#", medium: "#",
+        description_jp: "大きな駐車場前で朝（昼？）まで営業中。黒を基調とした内装で夜の雰囲気たっぷり。紙タバコは外で吸うスタイルです。",
+        description_en: "Located in front of the large parking lot and open until morning (sometimes noon!). Features a sleek black interior. Cigarette smoking is allowed outside."
+    },
+    { 
+        name_jp: "グルークネクスト", name_en: "Gluck Next", series: "B系列", seriesMark: "B(G)", type: "MIX", area: "東京", xId: "@gluck_mixbar", snsUrl: "https://x.com/gluck_mixbar", time: "20:00〜5:00", holiday: "不定休", address_jp: "東京都新宿区新宿2丁目-12-11林ビル2階", address_en: "2F, Hayashi Bldg, 2-12-11 Shinjuku, Tokyo", tags: ["カラオケ", "喫煙可", "初心者多め", "初心者向け", "ボトルキープ有", "イベント多い", "盛り上がる", "穏やか"], icon: "https://unavatar.io/twitter/gluck_mixbar", note: "#", medium: "#",
+        description_jp: "二丁目のビアンバー界隈では最大級の広さ。ダーツ、カラオケ、ボードゲームと遊びが充実. 天使のインテリアが並んでいます。",
+        description_en: "One of the most spacious bars in the Ni-chome lesbian scene. Fully equipped with darts, karaoke, and games. The interior is decorated with many angel figures."
+    },
+    { 
+        name_jp: "グルークゼロ", name_en: "Gluck Zero", series: "B系列", seriesMark: "B(G)", type: "MIX", area: "東京", xId: "@gluck_mixbar", snsUrl: "https://x.com/gluck_mixbar", time: "20:00〜5:00,19:00~5:00", holiday: "不定休", address_jp: "東京都新宿区新宿2丁目-12-15 山原ハイツB1", address_en: "B1, Yamahara Heights, 2-12-15 Shinjuku, Tokyo", tags: ["カラオケ", "喫煙可", "初心者向け", "初心者多め", "ボトルキープ有", "イベント多い", "穏やか", "盛り上がる", "持ち込み食べ物可"], icon: "https://unavatar.io/twitter/gluck_mixbar", note: "#", medium: "#",
+        description_jp: "白基調の店内で、B系列初の仲通り沿い店舗。ボードゲームが豊富。地下なのでWi-Fiの強さをぜひ現地で試してみて！",
+        description_en: "A white-themed interior and the first B-series bar along Naka-dori. Plenty of board games available. Since it's on B1F, go test the Wi-Fi strength for yourself!"
+    },
+    { 
+        name_jp: "GILLTY", name_en: "GILLTY", series: "B系列", seriesMark: "B(G)", type: "MIX", area: "東京", xId: "Instagramのみ", snsUrl: "https://www.instagram.com/gillty__mixbar", time: "20:00〜27:00", holiday: "不定休", address_jp: "東京都新宿区新宿1丁目-36-3新宿御苑136ビル1階", address_en: "1F, Shinjuku Gyoen 136 Bldg, 1-36-3 Shinjuku, Tokyo", tags: ["喫煙可", "ボトルキープ有", "穏やか", "持ち込み食べ物可", "イベント多い"], icon: "instagram", note: "#", medium: "#",
+        description_jp: "昼はカフェ、夜はバー。コンセント完備のカウンター席があり、プロジェクター映像も楽しめます。完全キャッシュレス決済です。",
+        description_en: "A cafe by day and a bar by night. Features counter seats with power outlets and projected visuals. This is a cashless-only establishment."
+    },
 
-    // --- 【秋田県】(4) ---
-    { "id": "CR-012", "region": "北日本", "pref": "秋田県", "certified": "国", "name": "川連漆器", "type": "漆器", "history": "「沈金」や「蒔絵」の装飾が美しく、堅牢な下地作りが特徴。", "tags": ["daily","reasonable","unique","overseas","no-machine","tough","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-013", "region": "北日本", "pref": "秋田県", "certified": "国", "name": "樺細工", "type": "木工品", "history": "ヤマザクラの樹皮を利用。独特の光沢と、優れた防湿・防虫効果。", "tags": ["gift","aging","light","reasonable","family","daily","unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-014", "region": "北日本", "pref": "秋田県", "certified": "国", "name": "大館曲げわっぱ", "type": "木工品", "history": "秋田杉の香りと、吸湿性がご飯を美味しく保つ逸品。", "tags": ["daily","gift","overseas","no-machine","aging","light","cooking"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-015", "region": "北日本", "pref": "秋田県", "certified": "国", "name": "秋田杉桶樽", "type": "木工品", "history": "秋田杉の柾目を使用。水漏れせず、酒や食品の保存に適す。", "tags": ["daily","tough","overseas","gift","aging","cooking","no-machine","family"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
+    // 特別マークグループ
+    { 
+        name_jp: "GOLD FINGER", name_en: "GOLD FINGER", series: "GF系", seriesMark: "☝️", type: "MIX", area: "東京", xId: "@GOLDFINGERTOKYO", snsUrl: "https://x.com/GOLDFINGERTOKYO", time: "17:00〜24:00,17:00~28:00", holiday: "不定休", address_jp: "東京都新宿区新宿2丁目 12-11林ビル1階", address_en: "1F, Hayashi Bldg, 2-12-11 Shinjuku, Tokyo", tags: ["初心者多め","外国人多い","ノーチャージ","英語対応", "初心者向け"], icon: "https://unavatar.io/twitter/GOLDFINGERTOKYO", note: "#", medium: "#",
+        description_jp: "世界的に有名なショットバー。外国人の客層が多く、とにかくたくさんの人と出会いたい時にピッタリな場所です。",
+        description_en: "A world-famous shot bar. Very popular with international visitors. The perfect spot if you want to meet a large number of people in one night."
+    },
+    { 
+        name_jp: "ラブHOT", name_en: "LOVE HOT", series: "GF系", seriesMark: "☝️", type: "ビアン", area: "東京", xId: "@GOLDFINGERTOKYO", snsUrl: "https://x.com/GOLDFINGERTOKYO", time: "19:00~26:00", holiday: "金曜と土曜以外", address_jp: "東京都新宿区新宿2丁目 12-2-3、4、5階", address_en: "3-5F, 2-12-2 Shinjuku, Tokyo", tags: ["初心者多め","カラオケ","外国人多い","ノーチャージ",], icon: "https://unavatar.io/twitter/GOLDFINGERTOKYO", note: "#", medium: "#",
+        description_jp: "GF系列のスナック風バー。週末限定で、複数フロアごとに異なる雰囲気が楽しめます。ノーチャージなのでハシゴにも最適！",
+        description_en: "A snack-style bar from the GF series. Open on weekends, you can enjoy different vibes across multiple floors. No cover charge makes it perfect for bar hopping!"
+    },
+    { 
+        name_jp: "どん浴", name_en: "Donyoku", series: "船系", seriesMark: "🚢", type: "MIX", area: "東京", xId: "@donyoku2018", snsUrl: "https://x.com/donyoku2018", time: "14:00〜22:00", holiday: "火曜", address_jp: "東京都新宿区新宿2丁目-7-3ヴェラハイツ新宿御苑203", address_en: "203, Vera Heights, 2-7-3 Shinjuku, Tokyo", tags: ["初心者多め","初心者向け","フード有",], icon: "https://unavatar.io/twitter/donyoku2018", note: "#", medium: "#",
+        description_jp: "足湯が楽しめるカフェ。看板ロボットに癒やされながら、お昼からご飯とリラックスタイムを過ごせます。",
+        description_en: "A cafe where you can enjoy a footbath. Relax with their mascot robot while enjoying a meal and a soothing soak starting from the afternoon."
+    },
+    { 
+        name_jp: "どろぶね", name_en: "Dorobune", series: "船系", seriesMark: "🚢", type: "ビアン", area: "東京", xId: "@dorobune1222", snsUrl: "https://x.com/dorobune1222", time: "19:00〜23:00", holiday: "不定休", address_jp: "東京都新宿区新宿2-7-3ヴェラハイツ新宿御苑205", address_en: "205, Vera Heights, 2-7-3 Shinjuku, Tokyo", tags: ["初心者多め","初心者向け","フード有",], icon: "https://unavatar.io/twitter/dorobune1222", note: "#", medium: "#",
+        description_jp: "「女酒場」としてリニューアル。定期的にコラボイベントやオフ会を開催しており、コミュニティを広げたい方におすすめ。",
+        description_en: "Renewed as a 'Female Tavern.' They frequently host collaboration events and meetups, making it a great place to expand your social circle."
+    },
 
-    // --- 【山形県】(5) ---
-    { "id": "CR-016", "region": "北日本", "pref": "山形県", "certified": "国", "name": "置賜紬", "type": "織物", "history": "米沢、長井、白鷹の三地区の伝統的な紬の総称。", "tags": ["family","light","overseas","tough","reasonable","guest","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-017", "region": "北日本", "pref": "山形県", "certified": "国", "name": "羽越しな布", "type": "織物", "history": "シナノキの樹皮を糸にして織る。日本最古の織物の一つ。", "tags": ["unique","gift","reasonable","overseas","daily"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-018", "region": "北日本", "pref": "山形県", "certified": "国", "name": "山形鋳物", "type": "金工品", "history": "「薄肉美麗」と言われる精緻な文様と、薄い鋳造技術。", "tags": ["daily","gift","no-machine","family","cooking","tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-019", "region": "北日本", "pref": "山形県", "certified": "国", "name": "山形仏壇", "type": "木工品", "history": "彫刻、金具、漆塗りの各工程に高い技術が結集されている。", "tags": ["unique", "tough","family"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-020", "region": "北日本", "pref": "山形県", "certified": "国", "name": "天童将棋駒", "type": "その他", "history": "全国の将棋駒の大部分を生産。書き駒から彫り駒まで多様。", "tags": ["gift","family","light","tough","daily","aging","kids"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
+    // その他
+    { 
+        name_jp: "LAGOON", name_en: "LAGOON", type: "ビアン", area: "東京", xId: "@lagoon0410", snsUrl: "https://x.com/lagoon0410", time: "18:00〜24:00,18:00～25:00", holiday: "日曜,月曜,木曜", address_jp: "東京都新宿区新宿2丁目-18-10新千鳥街の中", address_en: "Shin-Chidorigai, 2-18-10 Shinjuku, Tokyo", tags: ["初心者向け", "初心者多め", "フード有", "お通し有", "変わったリキュール有", "穏やか", "年齢層高め"], icon: "https://unavatar.io/twitter/lagoon0410", note: "https://note.com/412357siki/n/n44f1fe5eaca6", medium: "#",
+        description_jp: "新千鳥街にある、海岸がコンセプトのまったりしたお店. ビールサーバー完備。葉っぱの看板が目印です。",
+        description_en: "A chill, beach-themed bar in Shin-Chidorigai. Equipped with a beer server and marked by its distinctive leaf sign."
+    },
+    { 
+        name_jp: "ELLVIE", name_en: "ELLVIE", type: "ビアン", area: "東京", xId: "@Ellevie_", snsUrl: "https://x.com/Ellevie_", time: "18:00〜24:00,18:00～4:00", holiday: "不定休", address_jp: "東京都新宿区新宿2丁目18-10新千鳥街の中", address_en: "Shin-Chidorigai, 2-18-10 Shinjuku, Tokyo", tags: ["初心者多め", "初心者向け", "フード有", "変わったリキュール有", "穏やか", "ボトルキープ有", "年齢層高め"], icon: "https://unavatar.io/twitter/Ellevie_", note: "https://note.com/412357siki/n/n416d22497985?sub_rt=share_pb", medium: "#",
+        description_jp: "密集地帯にあるカウンターとテーブル席のお店。窓があり開放的で、食事メニューも充実しています。",
+        description_en: "A bar with both counter and table seating in a densely packed area. It's airy with windows and offers an extensive food menu."
+    },
+    { 
+        name_jp: "YES", name_en: "YES", type: "ビアン", area: "東京", xId: "@BAR_YES_201", snsUrl: "https://x.com/BAR_YES_201", time: "18:00〜last", holiday: "不定休", address_jp: "東京都新宿区新宿2丁目 18-10-201", address_en: "201, 2-18-10 Shinjuku, Tokyo", tags: ["穏やか", "年齢層高め", "変わったリキュール有", "お通し有", "ボトルキープ有", "持ち込み食べ物可"], icon: "https://unavatar.io/twitter/BAR_YES_201", note: "https://note.com/412357siki/n/n9f915b56c341", medium: "#",
+        description_jp: "新千鳥街の階段を登った先にあるカウンターのみのお店。営業しているかは運次第なところも魅力！？",
+        description_en: "A counter-only bar up the stairs in Shin-Chidorigai. Part of its charm is that whether it's open depends on your luck!"
+    },
+    { 
+        name_jp: "AVANTY", name_en: "AVANTY", type: "ビアン", area: "東京", xId: "@yumineesan", snsUrl: "https://x.com/yumineesan", time: "20:00〜last", holiday: "月曜,木曜", address_jp: "東京都新宿区新宿2丁目 18-10-1階", address_en: "1F, 2-18-10 Shinjuku, Tokyo", tags: ["穏やか", "お通し有", "フード有", "ボトルキープ有", "年齢層高め", "喫煙可"], icon: "https://unavatar.io/twitter/yumineesan", note: "https://note.com/412357siki/n/n8f9da14b0fef", medium: "#",
+        description_jp: "赤いドアの小窓が目印のカウンターバー。日替わりの手作りお通しが絶品。SNSをチェックして行ってみて！",
+        description_en: "A counter bar marked by a small window in a red door. Their daily handmade appetizers are excellent. Check their social media before you go!"
+    },
+    { 
+        name_jp: "バーファイブ5", name_en: "Bar Five5", type: "ビアン", area: "東京", xId: "@BAR_Five5", snsUrl: "https://x.com/BAR_Five5", time: "18:00〜24:00", holiday: "月曜,火曜", address_jp: "東京都新宿区新宿2丁目-15-8-2F", address_en: "2F, 2-15-8 Shinjuku, Tokyo", tags: ["年齢層高め","穏やか",], icon: "https://unavatar.io/twitter/BAR_Five5", note: "#", medium: "#",
+        description_jp: "通称「百合の小道」にある老舗。青い看板が目印で、2階の窓から通りを見下ろせる落ち着いた空間です。",
+        description_en: "An established bar on 'Yuri Alley.' Look for the blue sign. A calm space on the 2nd floor where you can look out over the street."
+    },
+    { 
+        name_jp: "あじゃら", name_en: "Ajara", type: "MIX", area: "東京", xId: "@ajara_chibar", snsUrl: "https://x.com/ajara_chibar", time: "18:00〜25:00", holiday: "日曜", address_jp: "東京都新宿区新宿2丁目 15-8", address_en: "2-15-8 Shinjuku, Tokyo", tags: ["初心者向け", "穏やか", "変わったリキュール有", "フード有", "年齢層高め", "喫煙可"], icon: "https://unavatar.io/twitter/ajara_chibar", note: "#", medium: "#",
+        description_jp: "百合の小道の曇りガラスのお店。自家製サングリアや洋風おつまみが豊富。間借り営業なども行っています。",
+        description_en: "A bar with frosted glass windows on Yuri Alley. Offers homemade sangria and various Western-style snacks. They also host guest kitchen events."
+    },
+    { 
+        name_jp: "SUPERMODEL", name_en: "SUPERMODEL", type: "MIX", area: "東京", xId: "@supermodel0412", snsUrl: "https://x.com/supermodel0412", time: "20:00〜27:00,20:00~29:00", holiday: "火曜", address_jp: "東京都新宿区新宿2丁目-15-8中村建物ビル1階", address_en: "1F, Nakamura Bldg, 2-15-8 Shinjuku, Tokyo", tags: ["カラオケ", "初心者多め", "喫煙可", "変わったリキュール有", "盛り上がる"], icon: "https://unavatar.io/twitter/supermodel0412", note: "#", medium: "#",
+        description_jp: "百合の小道にあり、外国人も多い賑やかなお店。ゲイバーのようなノリでカラオケを楽しめます！",
+        description_en: "A lively spot on Yuri Alley that attracts many international guests. Enjoy karaoke with an upbeat atmosphere similar to a gay bar!"
+    },
+    { 
+        name_jp: "うーたん", name_en: "U-tan", type: "ビアン", area: "東京", xId: "@3oKOFLjgPthoJF6", snsUrl: "https://x.com/3oKOFLjgPthoJF6", time: "20:00〜26:00", holiday: "日曜,月曜", address_jp: "東京都新宿区新宿2丁目-16-3第三宏和ビル2階", address_en: "2F, Dai-san Kowa Bldg, 2-16-3 Shinjuku, Tokyo", tags: ["カラオケ", "穏やか", "盛り上がる", "喫煙可", "お通し有"], icon: "https://unavatar.io/twitter/3oKOFLjgPthoJF6", note: "#", medium: "#",
+        description_jp: "コインロッカーがあるビルの2階。常連さんが多めですが、アットホームで盛り上がれるレズビアンバーです。",
+        description_en: "On the 2nd floor of a building with coin lockers. While it has many regulars, it's a very welcoming and fun lesbian bar."
+    },
+    { 
+        name_jp: "バー絆", name_en: "Bar Kizuna", type: "ビアン", area: "東京", xId: "@kizunamio", snsUrl: "https://x.com/kizunamio", time: "19:00〜23:00", holiday: "月曜,火曜,木曜", address_jp: "東京都新宿区新宿2丁目-16-3第三宏和ビル3階", address_en: "3F, Dai-san Kowa Bldg, 2-16-3 Shinjuku, Tokyo", tags: ["年齢層高め","穏やか",], icon: "https://unavatar.io/twitter/kizunamio", note: "#", medium: "#",
+        description_jp: "大きな駐車場近くのビル3階。年齢層は高めで、ゆっくりお酒を楽しみたい時に最適な老舗です。",
+        description_en: "Located on the 3rd floor near the large parking lot. An established bar with an older clientele, ideal for when you want to drink peacefully."
+    },
+    { 
+        name_jp: "バーSTELLA", name_en: "Bar STELLA", type: "MIX", area: "東京", xId: "@bar_lunastella", snsUrl: "https://x.com/bar_lunastella", time: "20:00〜5:00", holiday: "不定休", address_jp: "東京都新宿区新宿2丁目-10-3ユニビル3階", address_en: "3F, Uni-Bldg, 2-10-3 Shinjuku, Tokyo", tags: ["イベント多い","カラオケ",], icon: "https://unavatar.io/twitter/bar_lunastella", note: "#", medium: "#",
+        description_jp: "お寺の近く、ビルの3階にある比較的新しいお店。カラオケや多彩なイベントで賑わっています。",
+        description_en: "A relatively new shop on the 3rd floor near the temple. Always lively with karaoke and various events."
+    },
+    { 
+        name_jp: "TAMAGO", name_en: "TAMAGO", type: "MIX", area: "東京", xId: "@TAMAGO_BAR", snsUrl: "https://x.com/TAMAGO_BAR", time: "21:00〜26:00", holiday: "月曜", address_jp: "東京都新宿区新宿2丁目", address_en: "2-chome, Shinjuku, Tokyo", tags: ["カラオケ", "喫煙可", "穏やか", "年齢層高め", "盛り上がる"], icon: "https://unavatar.io/twitter/TAMAGO_BAR", note: "#", medium: "#",
+        description_jp: "女性向けカプセルホテル近くの、レズビアンバーからMIXバーになったお店。カラオケもあり落ち着いて楽しめます。",
+        description_en: "Formerly a lesbian bar, now a MIX bar located near the women's capsule hotel. Karaoke available in a relaxed setting."
+    },
+    { 
+        name_jp: "DIAMOND HOLIC", name_en: "DIAMOND HOLIC", type: "ビアン", area: "東京", xId: "@DIAMOND_HOLIC", snsUrl: "https://x.com/DIAMOND_HOLIC", time: "19:00〜23:30,19:00~5:00", holiday: "月曜", address_jp: "東京都新宿区新宿2丁目-18-8栗原ビル2階", address_en: "2F, Kurihara Bldg, 2-18-8 Shinjuku, Tokyo", tags: ["イベント多い","ノーチャージ","盛り上がる",], icon: "https://unavatar.io/twitter/DIAMOND_HOLIC", note: "#", medium: "#",
+        description_jp: "ノーチャージで楽しめるショットバースタイルのビアンバー。有名イベント「ダイヤモンドカッター」と一緒に楽しむのも最高！",
+        description_en: "A shot-bar style lesbian bar with no cover charge. Perfect to visit alongside the famous 'Diamond Cutter' party events."
+    },
+    { 
+        name_jp: "SUNNY", name_en: "SUNNY", type: "ビアン", area: "東京", xId: "@natsuyo32", snsUrl: "https://x.com/natsuyo32", time: "21:00〜", holiday: "日曜,月曜", address_jp: "東京都新宿区新宿2丁目-15-8中村建物ビル2階", address_en: "2F, Nakamura Bldg, 2-15-8 Shinjuku, Tokyo", tags: ["年齢層高め","カラオケ",], icon: "https://unavatar.io/twitter/natsuyo32", note: "#", medium: "#",
+        description_jp: "百合の小道にある老舗。落ち着いた年齢層が多く、階段を登った先で大人の社会勉強ができる場所です。",
+        description_en: "An established bar in Yuri Alley with an older crowd. Located up the stairs, it's a great place for some mature 'social education'."
+    },
+    { 
+        name_jp: "MIMOSA", name_en: "MIMOSA", type: "ビアン", area: "東京", xId: "@YuikaMimosa", snsUrl: "https://x.com/YuikaMimosa", time: "20:00〜23:00", holiday: "月曜,火曜", address_jp: "東京都新宿区新宿2丁目-18-10 1階", address_en: "1F, 2-18-10 Shinjuku, Tokyo", tags: ["年齢層高め","穏やか","変わったリキュール有",], icon: "https://unavatar.io/twitter/YuikaMimosa", note: "#", medium: "#",
+        description_jp: "密集地帯の路地裏にひっそりと佇むお店。静かにまったり飲みたい時、変わったリキュールを楽しみたい時に最適。",
+        description_en: "A hidden gem tucked away in a quiet alley. Perfect for a calm night or exploring their selection of unique liqueurs."
+    },
+    { 
+        name_jp: "HUNEY BUNNY", name_en: "HUNEY BUNNY", type: "ビアン", area: "東京", xId: "@HUNEY_BUNNY8282", snsUrl: "https://x.com/HUNEY_BUNNY8282", time: "21:00〜4:00", holiday: "日曜,月曜", address_jp: "東京都新宿区新宿2丁目-12-11林ビルB1", address_en: "B1, Hayashi Bldg, 2-12-11 Shinjuku, Tokyo", tags: ["カラオケ", "喫煙可", "穏やか", "年齢層高め", "フード有", "お通し有", "盛り上がる"], icon: "https://unavatar.io/twitter/HONEY_BUNNY8282", note: "#", medium: "#",
+        description_jp: "GFビルの地下にある老舗。広いカウンターやボックス席があり、カラオケやWi-Fi、本格的なおつまみも充実しています。",
+        description_en: "An established bar on B1F of the GF building. Features a large counter and booths, plus karaoke, Wi-Fi, and a solid food menu."
+    },
+    { 
+        name_jp: "villain", name_en: "villain", type: "MIX", area: "東京", xId: "@bar_villains", snsUrl: "https://x.com/bar_villains", time: "21:00〜9:00", holiday: "不定休", address_jp: "東京都新宿区新宿2丁目-12-16セントフォービル901", address_en: "901, St. Four Bldg, 2-12-16 Shinjuku, Tokyo", tags: ["カラオケ", "喫煙可", "穏やか", "初心者向け", "フード有", "盛り上がる", "持ち込み食べ物可", "ボトルキープ有","イベント多い"], icon: "https://unavatar.io/twitter/bar_villains", note: "#", medium: "#",
+        description_jp: "二丁目の中心にあるビルの9階。ダーツやカラオケが楽しめ、ソファ席でゆったり朝まで過ごせるMIXバーです。",
+        description_en: "Located on the 9th floor in the heart of Ni-chome. A MIX bar with darts and karaoke where you can relax on sofas until morning."
+    },
+    { 
+        name_jp: "パンドラ", name_en: "Pandora", type: "MIX", area: "東京", xId: "@_pandora_2017", snsUrl: "https://x.com/_pandora_2017", time: "22:00〜5:00", holiday: "不定休", address_jp: "東京都新宿区新宿2丁目-12-16セントフォービル201", address_en: "201, St. Four Bldg, 2-12-16 Shinjuku, Tokyo", tags: ["カラオケ", "喫煙可", "穏やか", "盛り上がる", "ボトルキープ有", "持ち込み食べ物可"], icon: "https://unavatar.io/twitter/_pandora_2017", note: "#", medium: "#",
+        description_jp: "ビルの2階（階段推奨）。お通しテキーラが出てくるなど、ビアンバーとはまた違った刺激的な世界を味わえるお店です。",
+        description_en: "On the 2nd floor (stairs recommended). Known for 'Otoshi Tequila,' it offers a thrilling experience different from typical lesbian bars."
+    },
+    { 
+        name_jp: "YOTTA", name_en: "YOTTA", type: "MIX", area: "東京", xId: "@YOTTA0701", snsUrl: "https://x.com/YOTTA0701", time: "20:00〜5:00", holiday: "不定休", address_jp: "東京都新宿区新宿2丁目-11-11近藤ビル201", address_en: "201, Kondo Bldg, 2-11-11 Shinjuku, Tokyo", tags: ["カラオケ","ボトルキープ有","盛り上がる","喫煙可",], icon: "https://unavatar.io/twitter/YOTTA0701", note: "#", medium: "#",
+        description_jp: "少し隠れた場所にある、カラオケと喫煙OKなお店。1階奥の階段からどうぞ。SNSでのハッシュタグ使いも独特です。",
+        description_en: "A slightly hidden spot with karaoke and smoking allowed. Use the stairs at the end of the 1st-floor hallway. They have a unique social media style."
+    },
+    { 
+        name_jp: "BAR Nico", name_en: "BAR Nico", type: "MIX", area: "東京", xId: "@BarNico0627", snsUrl: "https://x.com/BarNico0627", time: "20:00〜5:00,20:00~8:00", holiday: "不定休", address_jp: "東京都新宿区新宿1丁目-36-3新宿御苑136ビル2階", address_en: "2F, Shinjuku Gyoen 136 Bldg, 1-36-3 Shinjuku, Tokyo", tags: ["カラオケ","ボトルキープ有","喫煙可","盛り上がる",], icon: "https://unavatar.io/twitter/BarNico0627", note: "#", medium: "#",
+        description_jp: "新宿一丁目のビルにあるMIXバー。カラオケやダーツが楽しめ、朝まで賑やかに過ごせます。",
+        description_en: "A MIX bar in an Ic-chome building. You can enjoy karaoke and darts in a lively atmosphere until early morning."
+    },
+    { 
+        name_jp: "Lily and", name_en: "Lily and", type: "MIX", area: "東京", xId: "@lilyand2mixbar", snsUrl: "https://x.com/lilyand2mixbar", time: "18:00〜23:00,20:00~26:00", holiday: "不定休", address_jp: "東京都新宿区新宿2丁目 12-15山原ハイツ401", address_en: "401, Yamahara Heights, 2-12-15 Shinjuku, Tokyo", tags: ["カラオケ","喫煙可","変わったリキュール有","フード有",], icon: "https://unavatar.io/twitter/lilyand2mixbar", note: "#", medium: "#",
+        description_jp: "レズビアンのお客さんも多いMIXバー。果実酒が豊富で、仲通りから少し入ったエレベーターから上がれます。",
+        description_en: "A MIX bar popular with lesbian customers. Offers a wide variety of fruit liqueurs. The elevator entrance is just off Naka-dori."
+    },
+    { 
+        name_jp: "bar belle by あじゃり", name_en: "Bar Belle", type: "ビアン", area: "東京", xId: "@barbelless", snsUrl: "https://x.com/barbelless", time: "21:00〜5:00", holiday: "不定休", address_jp: "東京都新宿区新宿2丁目-15-14パンチョスタワー4F", address_en: "4F, Panchos Tower, 2-15-14 Shinjuku, Tokyo", tags: ["カラオケ", "喫煙可", "フード有", "イベント多い", "穏やか"], icon: "https://unavatar.io/twitter/barbelless", note: "#", medium: "#",
+        description_jp: "特徴的な外装のビル4階。白基調の綺麗な店内で、コの字カウンターが特徴。勇気を出して奥のエレベーターへ！",
+        description_en: "On the 4th floor of a unique-looking building. Features a beautiful white-themed interior with a U-shaped counter. Be brave and head to the back elevator!"
+    },
+    { 
+        name_jp: "BELLUS", name_en: "BELLUS", type: "MIX", area: "東京", xId: "@BELLUS2023", snsUrl: "https://x.com/BELLUS2023", time: "21:00〜27:00", holiday: "不定休", address_jp: "東京都新宿区新宿2丁目-18-10", address_en: "2-18-10 Shinjuku, Tokyo", tags: ["カラオケ", "変わったリキュール有", "穏やか", "持ち込み食べ物可"], icon: "https://unavatar.io/twitter/BELLUS2023", note: "#", medium: "#",
+        description_jp: "駐車場前の超コンパクトなお店。カウンター数席のみの密な空間で、まったりカラオケも楽しめます。",
+        description_en: "A super-compact bar in front of the parking lot. A cozy space with just a few counter seats where you can enjoy karaoke."
+    },
+    { 
+        name_jp: "香まり", name_en: "Kamari", type: "MIX", area: "東京", xId: "@sexual_mix", snsUrl: "https://x.com/sexual_mix", time: "19:30〜", holiday: "不定休", address_jp: "東京都新宿区新宿2丁目-18-10新千鳥街1F", address_en: "1F, Shin-Chidorigai, 2-18-10 Shinjuku, Tokyo", tags: ["喫煙可","年齢層高め","穏やか",], icon: "https://unavatar.io/twitter/sexual_mix", note: "#", medium: "#",
+        description_jp: "新千鳥街1階にある、カウンターのみのMIXバー。年齢層は高めで、落ち着いて社会勉強ができる雰囲気です。",
+        description_en: "A counter-only MIX bar on the 1st floor of Shin-Chidorigai. Attracts an older crowd; a great place for some quiet 'social education'."
+    },
+    { 
+        name_jp: "QUEEN TOKYO", name_en: "QUEEN TOKYO", type: "MIX", area: "東京", xId: "Instagramのみ", snsUrl: "https://www.instagram.com/queentokyobar", time: "18:00〜26:30", holiday: "不定休", address_jp: "東京都新宿区新宿2丁目-11-7-108", address_en: "108, 2-11-7 Shinjuku, Tokyo", tags: ["喫煙可", "カラオケ", "盛り上がる","外国人多い","ノーチャージ","英語対応", "持ち込み食べ物可", "初心者多い"], icon: "instagram", note: "#", medium: "#",
+        description_jp: "KING系列の外国人向けバー。ノーチャージでカラオケもあり、グローバルな雰囲気が漂う週末を過ごせます。",
+        description_en: "A KING-series bar designed for international guests. No cover charge and karaoke available—perfect for a global weekend vibe."
+    }, 
 
-    // --- 【福島県】(5) ---
-    { "id": "CR-021", "region": "北日本", "pref": "福島県", "certified": "国", "name": "会津塗", "type": "漆器", "history": "多彩な加飾技法と、暮らしに馴染む丈夫さが共存。", "tags": ["daily","gift","no-machine","cooking","family","unique","light","overseas","tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-022", "region": "北日本", "pref": "福島県", "certified": "国", "name": "会津本郷焼", "type": "陶磁器", "history": "陶器と磁器の両方を制作。飴釉の深い色が特徴。", "tags": ["daily","no-machine","cooking","overseas","unique","guest","tough","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-023", "region": "北日本", "pref": "福島県", "certified": "国", "name": "大堀相馬焼", "type": "陶磁器", "history": "「走り駒」の絵付けと、二重焼きによる保温性が特徴。", "tags": ["unique","gift","tough","family","cooking","guest","no-machine","overseas","daily"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-024", "region": "北日本", "pref": "福島県", "certified": "国", "name": "奥会津昭和からむし織", "type": "織物", "history": "上質な苧麻（からむし）を使用。雪国が育んだ清涼な風合い。", "tags": ["unique", "gift","overseas","aging","light","reasonable","family","guest",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-025", "region": "北日本", "pref": "福島県", "certified": "国", "name": "奥会津編み組細工", "type": "木工品", "history": "山ブドウなどの自然素材を編み上げる。使うほどに艶が出る。", "tags": ["gift","daily","light", "unique","aging","family"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-    // --- 【茨城県】(3) ---
-    { "id": "CR-026", "region": "関東", "pref": "茨城県", "certified": "国", "name": "結城紬", "type": "織物", "history": "手つむぎ糸を使い、地機で織り上げる。究極の着心地。", "tags": ["gift","overseas","light","guest","unique","family","daily","cooking", "aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-027", "region": "関東", "pref": "茨城県", "certified": "国", "name": "笠間焼", "type": "陶磁器", "history": "「特徴がないのが特徴」と言われ、自由な作風を許容する産地。", "tags": ["daily","unique","no-machine","tough","guest","gift","family","cooking", "gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-028", "region": "関東", "pref": "茨城県", "certified": "国", "name": "真壁石燈籠", "type": "石工品", "history": "繊細な彫刻技術が特徴。柔らかみのある石質を生かす。", "tags": ["gift","unique","tough","aging", "family"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-    // --- 【栃木県】(2) ---
-    { "id": "CR-029", "region": "関東", "pref": "栃木県", "certified": "国", "name": "結城紬", "type": "織物", "history": "（茨城と共通指定）重要無形文化財。最高級の絹織物。", "tags": ["gift","overseas","light","guest","unique","family","daily","cooking", "aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-030", "region": "関東", "pref": "栃木県", "certified": "国", "name": "益子焼", "type": "陶磁器", "history": "濱田庄司により民藝運動の拠点となった、素朴で重厚な器。", "tags": ["daily", "tough","unique","gift","no-machine"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-    // --- 【群馬県】(2) ---
-    { "id": "CR-031", "region": "関東", "pref": "群馬県", "certified": "国", "name": "桐生織", "type": "織物", "history": "「西の西陣、東の桐生」。多種多様な技法を使い分ける。", "tags": ["gift","family","unique","guest","overseas","reasonable","museum"," light","daily"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-032", "region": "関東", "pref": "群馬県", "certified": "国", "name": "伊勢崎絣", "type": "織物", "history": "併用絣など高度な技法を用い、現代的なデザインも豊富。", "tags": ["gift","daily","geust","aging","light","overseas","family", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-    // --- 【埼玉県】(5) ---
-    { "id": "CR-033", "region": "関東", "pref": "埼玉県", "certified": "国", "name": "秩父銘仙", "type": "織物", "history": "「ほぐし織」による、裏表のない大胆な図案が特徴。", "tags": ["aging","daily","light","gift","overseas","family", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-034", "region": "関東", "pref": "埼玉県", "certified": "国", "name": "行田足袋", "type": "その他", "history": "かつて日本一の生産量を誇った。熟練の縫製技術が光る。", "tags": ["daily","gift","family","light","unique","aging","overseas","reasonable", "tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-035", "region": "関東", "pref": "埼玉県", "certified": "国", "name": "春日部桐箪笥", "type": "木工品", "history": "日光東照宮の職人の流れを汲む、精緻な桐細工。", "tags": ["gift", "family","unique","daily","aging","tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-036", "region": "関東", "pref": "埼玉県", "certified": "国", "name": "江戸木目込人形", "type": "人形", "history": "（東京と共通）木の粉を固めたボディに布を木目込む技法。", "tags": ["kids","repeir","unique","gift","daily","light","overseas","family","aging", "gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-037", "region": "関東", "pref": "埼玉県", "certified": "国", "name": "岩槻人形", "type": "人形", "history": "伝統的な桐粉を練った下地。気品ある顔立ちが特徴。", "tags": ["kids","daily","overseas","repeir","family","light","unique","aging", "gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-    // --- 【千葉県】(2) ---
-    { "id": "CR-038", "region": "関東", "pref": "千葉県", "certified": "国", "name": "房州うちわ", "type": "その他", "history": "丸竹をそのまま使い、竹の弾力を最大限に生かした形。", "tags": ["daily", "light","gift","overseas","family","aging","guest","unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-039", "region": "関東", "pref": "千葉県", "certified": "国", "name": "千葉工匠具", "type": "金工品", "history": "農業や林業の現場を支えてきた、頑丈で鋭い切れ味の刃物。", "tags": ["gift", "unique","family","no-machine","daily","aging","tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-     // --- 【神奈川県】(3) ---
-     { "id": "CR-040", "region": "関東", "pref": "神奈川県", "certified": "国", "name": "鎌倉彫", "type": "漆器", "history": "力強い彫刻と、深い赤や黒の漆。彫刻美を強調する塗り。", "tags": ["unique","cooking","daily","gift","guest","overseas","family","light","reasonable","aging", "no-machine"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-     { "id": "CR-041", "region": "関東", "pref": "神奈川県", "certified": "国", "name": "小田原漆器", "type": "漆器", "history": "ケヤキ等の木目を透かして見せる「摺漆」が特徴。", "tags": ["daily","aging","gift","cooking","no-machine","overseas","reasonable","unique","family", "tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-     { "id": "CR-042", "region": "関東", "pref": "神奈川県", "certified": "国", "name": "箱根寄木細工", "type": "木工品", "history": "多種多様な天然の木を組み合わせ、幾何学模様を描き出す。", "tags": ["unique","museum","light","daily","reasonable","kids","overseas", "gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-// --- 【東京都】(23) ---
-{ "id": "CR-043", "region": "関東", "pref": "東京都", "certified": "国", "name": "村山大島紬", "type": "織物", "history": "板締絣の技法を用いた精緻な模様が特徴。軽くて丈夫な絹織物。", "tags": ["gift", "guest","overseas","unique","museum","reasonable","family","light", "daily"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-044", "region": "関東", "pref": "東京都", "certified": "国", "name": "本場黄八丈", "type": "織物", "history": "八丈島の植物で染める黄金色の絹織物。孫の代まで色褪せないと言われる。", "tags": ["gift","workshop","aging","overseas","reasonable","family","kids","tough","light", "daily", "museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-045", "region": "関東", "pref": "東京都", "certified": "国", "name": "多摩織", "type": "織物", "history": "紬、お召し、風通など多様な織り。絣の技法が美しい伝統の織物。", "tags": ["gift", "daily", "overseas","aging","reasonable","light","family","museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-046", "region": "関東", "pref": "東京都", "certified": "国", "name": "東京染小紋", "type": "織物", "history": "極小の模様を型紙で染め上げる。遠目には無地に見える江戸の粋。", "tags": ["gift","guest","museum","overseas","museum", "daily","reasonable","light", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-047", "region": "関東", "pref": "東京都", "certified": "国", "name": "東京手描友禅", "type": "織物", "history": "構想から仕上げまで一貫制作。都会的なデザインと洗練された色使い。", "tags": ["gift","reasonable","unique","overseas","workshop","light", "museum", "daily","family","kids"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-048", "region": "関東", "pref": "東京都", "certified": "国", "name": "東京無地染", "type": "織物", "history": "一色でムラなく染め上げる高度な技術。落ち着いた気品ある仕上がり。", "tags": ["gift", "daily", "light","overseas","aging","reasonable","family","guest","light","unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-049", "region": "関東", "pref": "東京都", "certified": "国", "name": "東京本染注染", "type": "織物", "history": "一度に多色を染める「注染」技法。浴衣や手ぬぐいに見られる鮮やかな発色。", "tags": ["workshop","gift","aging","overseas","reasonable","light", "daily", "kids","unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-050", "region": "関東", "pref": "東京都", "certified": "国", "name": "江戸和竿", "type": "その他", "history": "竹本来の形と弾力を生かす。釣り人の好みに合わせた究極の一点物。", "tags": ["gift", "factory","museum","aging", "unique","family","daily","tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-051", "region": "関東", "pref": "東京都", "certified": "国", "name": "江戸指物", "type": "木工品", "history": "木目を生かしたシンプルで粋な造り。釘を使わない堅牢な組み継ぎ。", "tags": ["unique", "tough", "light","gift","reasonable","aging","daily","kids","family","museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-052", "region": "関東", "pref": "東京都", "certified": "国", "name": "東京銀器", "type": "金工品", "history": "銀の光沢を生かした手打ち技法。繊細な彫金が施された贅沢な品。", "tags": ["factory","reasonable","cooking", "gift", "guest","overseas","light","aging","daily","family"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-053", "region": "関東", "pref": "東京都", "certified": "国", "name": "東京アンチモニー工芸品", "type": "金工品", "history": "アンチモニー合金を用いた鋳物。緻密な模様と重厚な質感が特徴。", "tags": ["unique", "daily","family","overseas","aging","tough","reasonable","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-054", "region": "関東", "pref": "東京都", "certified": "国", "name": "江戸木目込人形", "type": "人形", "history": "丸みを帯びた姿が特徴。衣装を溝に埋め込んで作る優美な人形。", "tags": ["kids","repeir","unique","gift","daily","light","overseas","family","aging", "gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-055", "region": "関東", "pref": "東京都", "certified": "国", "name": "江戸節句人形", "type": "人形", "history": "武者人形や雛人形。江戸の粋を反映した、凛々しく写実的な表現。", "tags": ["kids","repeir","unique","gift","daily","light","overseas","family","aging", "gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-056", "region": "関東", "pref": "東京都", "certified": "国", "name": "江戸押絵", "type": "その他", "history": "厚紙を布で包み、綿を入れて立体的に仕上げる。羽子板などの装飾に用いられる。", "tags": ["kids","family","daily","light","overseas","guest","reasonable", "unique", "gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-057", "region": "関東", "pref": "東京都", "certified": "国", "name": "江戸からかみ", "type": "その他", "history": "襖紙として発展。木版や雲母（きら）を使った優雅で粋な文様。", "tags": ["daily","gift","light","family","overseas", "guest", "unique","kids","cooking","no-machine","reasonable"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-058", "region": "関東", "pref": "東京都", "certified": "国", "name": "江戸切子", "type": "その他", "history": "ガラス表面に繊細なカットを施す。光を反射する輝きと透明感が魅力。", "tags": ["daily", "gift","overseas","museum","unique","light","cooking","family","reasoable", "guest"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-059", "region": "関東", "pref": "東京都", "certified": "国", "name": "江戸木版画", "type": "その他", "history": "絵師、彫師、摺師の分業技。浮世絵からの伝統を継承する色彩美。", "tags": ["factory","guest","light","kids","family","unique","reasonable", "gift", "overseas"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-060", "region": "関東", "pref": "東京都", "certified": "国", "name": "江戸硝子", "type": "その他", "history": "竿で膨らませて形を作る。職人の手仕事による温かみのある表情。", "tags": ["daily", "gift","overseas","unique","light","family","reasoable","cooking", "guest"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-061", "region": "関東", "pref": "東京都", "certified": "国", "name": "江戸べっ甲", "type": "その他", "history": "タイマイの甲羅を接合。つなぎ目のない、透き通った黄金色の美しさ。", "tags": ["repeir","light","family","kids","daily","aging","tough","reasonable", "gift", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-062", "region": "関東", "pref": "東京都", "certified": "国", "name": "東京手彫り印章", "type": "その他", "history": "一本一本手彫りで仕上げる。唯一無二の書体と重厚な印影が特徴。", "tags": ["museum","light","toigh", "unique", "gift","reasonable","family","kids",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-063", "region": "関東", "pref": "東京都", "certified": "国", "name": "東京三味線", "type": "その他", "history": "厳選された木材と皮を使用。江戸の音色を今に伝える繊細な楽器。", "tags": ["repeir","gift","daily","kids","family", "unique", "overseas","light","tough","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-064", "region": "関東", "pref": "東京都", "certified": "国", "name": "東京琴", "type": "その他", "history": "美しい木目と響き。職人の緻密な調整により、豊かな音色を生み出す。", "tags": ["repeir", "unique", "gift","kids","tough","family","aging","daily","guest"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-065", "region": "関東", "pref": "東京都", "certified": "国", "name": "江戸表具", "type": "その他", "history": "書画を引き立てる装丁技術。江戸好みのすっきりとした仕上がり。", "tags": ["museum", "gift", "daily","family","overseas","guest","unique","reasonable","tough","light","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- 
-// --- 【富山県】(6) ---
-    { "id": "CR-066", "region": "中部", "pref": "富山県", "certified": "国", "name": "高岡銅器", "type": "金工品", "history": "鋳造技術の粋。仏具から芸術作品まで幅広く手がける。", "tags": ["unique","gift","familY","daily","overseas","aging","tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-067", "region": "中部", "pref": "富山県", "certified": "国", "name": "井波彫刻", "type": "木工品", "history": "欄間彫刻で培われた立体感あふれる精緻な彫り。", "tags": ["unique","family","overseas","aging","reasonable","daily","gift","tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-068", "region": "中部", "pref": "富山県", "certified": "国", "name": "高岡漆器", "type": "漆器", "history": "「勇助塗」や螺鈿（らでん）を駆使した華やかな装飾。", "tags": ["unique","daily","aging","overseas","guest","light","cooking","no-machine", "gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-069", "region": "中部", "pref": "富山県", "certified": "国", "name": "越中和紙", "type": "和紙", "history": "八尾・五箇山・蛭谷の三産地。丈夫で温かみがある。", "tags": ["daily", "gift","tough","light","overseas","kids","family","unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-070", "region": "中部", "pref": "富山県", "certified": "国", "name": "庄川挽物木地", "type": "木工品", "history": "天然木の木目を生かした、美しい回転体の器や盆。", "tags": ["unique","daily","family","reasonable","overseas","cooking","no-machine","guest","light","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-071", "region": "中部", "pref": "富山県", "certified": "国", "name": "越中福岡の菅笠", "type": "その他", "history": "厳選されたスゲを使い、手編みで仕上げる実用美。", "tags": ["unique", "overseas","famiily","daily","kids","light","reasonable","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-       // --- 【三重県】(5) ---
-       { "id": "CR-072", "region": "近畿", "pref": "三重県", "certified": "国", "name": "伊賀くみひも", "type": "その他", "history": "絹糸の交差が作り出す幾何学模様。美しく、かつ強靭。", "tags": ["daily","family","unique","light","reasonable","overseas","tough","workshop","factory","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-       { "id": "CR-073", "region": "近畿", "pref": "三重県", "certified": "国", "name": "四日市萬古焼", "type": "陶磁器", "history": "耐熱性に優れ、土鍋のシェアは圧倒的。紫泥の急須も有名。", "tags": ["daily", "no-machine","gift","light","tough","overseas","family","unique","museum","coooking"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-       { "id": "CR-074", "region": "近畿", "pref": "三重県", "certified": "国", "name": "伊賀焼", "type": "陶磁器", "history": "高温で焼成されることによる「ビードロ釉」が力強く野性的な魅力。", "tags": ["daily", "gift","family","overseas","tough","unique","aging","no-machine","reasonable","museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-       { "id": "CR-075", "region": "近畿", "pref": "三重県", "certified": "国", "name": "鈴鹿墨", "type": "文具", "history": "発色が良く、粒子が細かいため伸びが非常に良い。高級書道用。", "tags": ["unique","light","gift","overseas","family","reasonable", "museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-       { "id": "CR-076", "region": "近畿", "pref": "三重県", "certified": "国", "name": "伊勢形紙", "type": "その他", "history": "着物の文様を染めるための型紙。それ自体が緻密な芸術品。", "tags": ["family","kids","light","unique","reasonable","tough","museum","overseas", "gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-   
-       // --- 【滋賀県】(3) ---
-       { "id": "CR-077", "region": "近畿", "pref": "滋賀県", "certified": "国", "name": "信楽焼", "type": "陶磁器", "history": "狸の置物で有名。粗い土質を生かした素朴で温かい風合い。", "tags": ["daily","overseas","no-machine","cooking","light","tough","aging","family","unique","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-       { "id": "CR-078", "region": "近畿", "pref": "滋賀県", "certified": "国", "name": "近江上布", "type": "織物", "history": "琵琶湖の湿気を利用して織る。独特のシボがあり非常に涼しい。", "tags": ["gift","kids","family","tough","light","aging","overseas","museum","unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-       { "id": "CR-079", "region": "近畿", "pref": "滋賀県", "certified": "国", "name": "彦根仏壇", "type": "木工品", "history": "金箔の輝きを最大限に生かす。木地、彫刻、漆、金箔の結集。", "tags": ["gift", "unique","family","tough","aging","museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- 
-          // --- 【山梨県】(3) ---
-    { "id": "CR-080", "region": "中部", "pref": "山梨県", "certified": "国", "name": "甲州水晶貴石細工", "type": "宝石・貴石細工", "history": "水晶の産地として発展。高度な彫り技術は世界屈指。", "tags": ["museum","daily","overseas","unique","kids","family","tough","light", "gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-081", "region": "中部", "pref": "山梨県", "certified": "国", "name": "甲州印伝", "type": "その他", "history": "鹿革に漆で模様をつける。使い込むほど手に馴染む。", "tags": ["daily","overseas","unique","family","museum","gift","aging","tough","reasonable","light",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-082", "region": "中部", "pref": "山梨県", "certified": "国", "name": "甲州手彫印章", "type": "その他", "history": "一刀一刀、魂を込めて彫り上げる完全手彫りの印鑑。", "tags": ["gift","daily","museum","light","tough","aging","reasonable","family","kids","unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
+   {     name_jp: "bar空 urue", name_en: "bar urue", type: "ビアン", area: "東京", xId: "@urueaya", snsUrl: "https://x.com/urueaya", time: "19:00〜23:00", holiday: "水曜、木曜", address_jp: "東京都豊島区池袋2-61-15 1階", address_en: "1F, 2-61-15 Ikebukuro, Toshima-ku, Tokyo", tags: ["初心者向け", "穏やか", "フード有"], icon: "https://unavatar.io/twitter/urueaya", note: "#", medium: "#",
+       　description_jp: "未訪問、現在調査中訪問次第載せます。料理をツイートしてる店。",
+     　  description_en: "Coming soon! (I haven't visited yet, but planning to!)."
+   },
+   { 
+          name_jp: "呑み処 ゆり", name_en: "nomidokoro yuri", type: "ビアン", area: "東京", xId: "@womanonly_yuri", snsUrl: "https://x.com/womanonly_yuri", time: "19:00〜25:00、19:00~29:00", holiday: "月曜", address_jp: "東京都豊島区池袋2-12-14 第８前島ビル201", address_en: "#201 Dai-8 Maejima Bldg, 2-12-14 Ikebukuro, Toshima-ku, Tokyo", tags: ["初心者向け", "穏やか", "フード有"], icon: "https://unavatar.io/twitter/womanonly_yuri", note: "#", medium: "#",
+       description_jp: "未訪問、現在調査中訪問次第載せます。",
+       description_en: "Coming soon! (I haven't visited yet, but planning to!)."
+    },
+   { 
+        name_jp: "barあんたの居場所。", name_en: "bar antanoibasho", type: "ビアン", area: "東京", xId: "@antanoibasho", snsUrl: "https://x.com/antanoibasho", time: "20:00〜27:00", holiday: "日曜", address_jp: "東京都港区赤坂3-21-17 ASK赤坂ビル6階", address_en: "6F ASK Akasaka Bldg, 3-21-17 Akasaka, Minato-ku, Tokyo", tags: ["初心者向け", "穏やか", "カラオケ"], icon: "https://unavatar.io/twitter/antanoibasho", note: "#", medium: "#",
+        description_jp: "未訪問、現在調査中訪問次第載せます。ドラマのロケ地にも使用された店",
+        description_en: "Coming soon! (I haven't visited yet, but planning to!)."
+    },
+    { 
+        name_jp: "渋谷501", name_en: "shibuya501", type: "ビアン", area: "東京", xId: "@shibuya501", snsUrl: "https://x.com/shibuya501", time: "18:00〜24:00,19:00~24:00", holiday: "不定休", address_jp: "東京都渋谷区宇田川町41-31 ユニデン渋谷ビル 5階", address_en: "5F Uniden Shibuya Bldg, 41-31 Udagawacho, Shibuya-ku, Tokyo", tags: ["初心者向け", "穏やか", "イベント多い"], icon: "https://unavatar.io/twitter/shibuya501", note: "#", medium: "#",
+        description_jp: "未訪問、現在調査中訪問次第載せます。オフ会が多い店",
+        description_en: "Coming soon! (I haven't visited yet, but planning to!)."
+    },
+    { 
+        name_jp: "酒と肴やぶれ", name_en: "Yabure", type: "ビアン", area: "西日本", xId: "@yabure1911", snsUrl: "https://x.com/yabure1911", time: "17:00〜23:00,17:00~24:00", holiday: "不定休", address_jp: "福岡県福岡市中央区今泉1-23-4 REMIX天神2F", address_en: "2F REMIX Tenjin, 1-23-4 Imaizumi, Chuo-ku, Fukuoka-shi, Fukuoka", tags: ["初心者向け", "穏やか", "フード有"], icon: "https://unavatar.io/twitter/yabure1911", note: "#", medium: "#",
+        description_jp: "未訪問、現在調査中訪問次第載せます。",
+        description_en: "Coming soon! (I haven't visited yet, but planning to!)."
+    },
+    { 
+        name_jp: "cafebar YOLO", name_en: "cafebar YOLO", type: "ビアン", area: "西日本", xId: "@cafebarYOLO", snsUrl: "https://x.com/cafebarYOLO", time: "20:00〜27:00", holiday: "火曜、水曜、木曜", address_jp: "福岡県福岡市中央区今泉1-21-5 アデッソ今泉4F", address_en: "4F Adesso Imaizumi, 1-21-5 Imaizumi, Chuo-ku, Fukuoka-shi, Fukuoka", tags: ["初心者向け", "穏やか", "フード有"], icon: "https://unavatar.io/twitter/cafebarYOLO", note: "#", medium: "#",
+        description_jp: "未訪問、現在調査中訪問次第載せます。",
+        description_en: "Coming soon! (I haven't visited yet, but planning to!)."
+    }, 
+    { 
+        name_jp: "LOL101", name_en: "LOL101", type: "ビアン", area: "西日本", xId: "@barlol101", snsUrl: "https://x.com/barlol101", time: "19:00〜26:00", holiday: "不定休", address_jp: "福岡県福岡市中央区天神2-4-20 天神プラッサ地下1F", address_en: "B1F Tenjin Plassa, 2-4-20 Tenjin, Chuo-ku, Fukuoka-shi, Fukuoka", tags: ["初心者向け", "穏やか", "フード有"], icon: "https://unavatar.io/twitter/barlol101", note: "#", medium: "#",
+        description_jp: "未訪問、現在調査中訪問次第載せます。",
+        description_en: "Coming soon! (I haven't visited yet, but planning to!)."
+    }
     
-    // --- 【長野県】(7) ---
-    { "id": "CR-083", "region": "中部", "pref": "長野県", "certified": "国", "name": "信州紬", "type": "織物", "history": "松本、上田など各地の紬の総称。草木染めの素朴な美。", "tags": ["daily", "museum","reasonable","kids","aging","tough","light","gift","unique","overseas"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-084", "region": "中部", "pref": "長野県", "certified": "国", "name": "木曽漆器", "type": "漆器", "history": "「春慶塗」や「堆朱」など。中山道の宿場町で発展。", "tags": ["daily","cooking","gift","overseas","reasonable","family","tough","light","aging","no-machine"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-085", "region": "中部", "pref": "長野県", "certified": "国", "name": "松本家具", "type": "木工品", "history": "ミズメザクラを使用。和洋どちらにも合う洗練された美。", "tags": ["gift","tough","family","aging","repair","museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-086", "region": "中部", "pref": "長野県", "certified": "国", "name": "南木曽ろくろ細工", "type": "木工品", "history": "一本の丸太から削り出す。木の呼吸を感じる器。", "tags": ["daily","gift","museum","tough","no-machine","unique","light","overseas","cooking"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-087", "region": "中部", "pref": "長野県", "certified": "国", "name": "内山紙", "type": "和紙", "history": "雪の上で晒すことで自然な白さになる。障子紙に最適。", "tags": ["daily", "tough","workshop","guest","museum","light","overseas","kids","gift","unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-088", "region": "中部", "pref": "長野県", "certified": "国", "name": "信州打刃物", "type": "金工品", "history": "山林用の刃物が中心。厳しい寒さに耐える強靭な造り。", "tags": ["museum","gift","overseas","tough","daily","family", "tough","light","unique","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-089", "region": "中部", "pref": "長野県", "certified": "国", "name": "飯山仏壇", "type": "木工品", "history": "「弓法」による美しい曲線美。雪国の信仰の証。", "tags": ["unique","family","tough","aging","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-      // --- 【福井県】(7) ---
-      { "id": "CR-090", "region": "中部", "pref": "福井県", "certified": "国", "name": "越前漆器", "type": "漆器", "history": "業務用食器としてもシェアが高く、丈夫で美しい塗り。", "tags": ["daily", "unique","museum","gift","family","overseas","light","guest","aging","reasonable","cooking","no-machine","tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-      { "id": "CR-091", "region": "中部", "pref": "福井県", "certified": "国", "name": "越前和紙", "type": "和紙", "history": "1500年の歴史。公用紙としても使われてきた高品質な紙。", "tags": ["daily","museum","overseas","light","reasonable","daily","kids","tough","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-      { "id": "CR-092", "region": "中部", "pref": "福井県", "certified": "国", "name": "越前打刃物", "type": "金工品", "history": "二枚広げ等の独自技法。軽く、鋭い切れ味が世界で評価。", "tags": ["museum","gift","family","guest","overseas","daily","unique","repeir","aging", "tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-      { "id": "CR-093", "region": "中部", "pref": "福井県", "certified": "国", "name": "越前焼", "type": "陶磁器", "history": "日本六古窯の一つ。灰釉の素朴で力強い風合い。", "tags": ["daily", "overseas","family","guest","unique","tough","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-      { "id": "CR-094", "region": "中部", "pref": "福井県", "certified": "国", "name": "越前箪笥", "type": "木工品", "history": "独自の金具装飾と、漆塗りの重厚な仕上げが特徴。", "tags": ["family","daily","tough","unique","aging", "gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-      { "id": "CR-095", "region": "中部", "pref": "福井県", "certified": "国", "name": "若狭塗", "type": "漆器", "history": "貝殻や卵殻を埋め込み、研ぎ出す「研出蒔絵」が宝石のよう。", "tags": ["family","daily","coooking","no-machine","unique","museum", "gift","light"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-      { "id": "CR-096", "region": "中部", "pref": "福井県", "certified": "国", "name": "若狭めのう細工", "type": "宝石・貴石細工", "history": "熱処理で発色させる。硬い瑪瑙に精緻な彫刻を施す。", "tags": ["museum","light","overseas","unique","tough","daily","kids","family","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-     // --- 【兵庫県】(6) ---
-     { "id": "CR-097", "region": "近畿", "pref": "兵庫県", "certified": "国", "name": "丹波立杭焼", "type": "陶磁器", "history": "日本六古窯の一つ。穴窯で焼かれる、素朴な「灰被り」の美。", "tags": ["daily","museum","family","cooking","no-machine","guest","tough","unique","overseas","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-     { "id": "CR-098", "region": "近畿", "pref": "兵庫県", "certified": "国", "name": "播州そろばん", "type": "その他", "history": "珠の動きが滑らかで、計算の正確さを支える日本一のそろばん。", "tags": ["daily","family","museum","light","overseas","aging","gift","kids"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-     { "id": "CR-099", "region": "近畿", "pref": "兵庫県", "certified": "国", "name": "播州三木打刃物", "type": "金工品", "history": "大工道具の産地として有名。一丁ごとに魂がこもった切れ味。", "tags": ["gift","museum","family","cooking","no-machine","unique","aging", "tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-     { "id": "CR-100", "region": "近畿", "pref": "兵庫県", "certified": "国", "name": "播州毛鉤", "type": "その他", "history": "鮎釣りに使用。金箔や鳥の羽を使い、水中の虫を精緻に模写。", "tags": ["light","aging","gift","museum","family", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-     { "id": "CR-101", "region": "近畿", "pref": "兵庫県", "certified": "国", "name": "出石焼", "type": "陶磁器", "history": "透き通るような白磁が特徴。繊細な浮き彫りや彫刻が施される。", "tags": ["gift","tough","cooking","no-machine", "museum","daily","family","overseas","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-     { "id": "CR-102", "region": "近畿", "pref": "兵庫県", "certified": "国", "name": "豊岡杞柳細工", "type": "木工品", "history": "コリヤナギと竹を編み上げる。丈夫で使い込むほど手に馴染む。", "tags": ["gift", "cooking","no-machine","museum","light","tough","unique","daily","family","overseas",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-   
-      // --- 【和歌山県】(3) ---
-      { "id": "CR-103", "region": "近畿", "pref": "和歌山県", "certified": "国", "name": "紀州漆器", "type": "漆器", "history": "別名「根来塗（ねごろぬり）」。朱漆の下から黒漆が覗く、使い古したような美。", "tags": ["daily","gift","cooking","no-machine","overseas","family","aging","tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-      { "id": "CR-104", "region": "近畿", "pref": "和歌山県", "certified": "国", "name": "紀州簞笥", "type": "木工品", "history": "桐の特性を活かした高い気密性。一生ものの婚礼家具として有名。", "tags": ["gift","aging","tough","repeir","family","kids", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-      { "id": "CR-105", "region": "近畿", "pref": "和歌山県", "certified": "国", "name": "紀州へら竿", "type": "その他", "history": "ヘラブナ釣り専用。竹の節を活かした絶妙な「しなり」が命。", "tags": ["aging","gift","daily","tough","overseas","family", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-  
- // --- 【新潟県】(17) ---
- { "id": "CR-106", "region": "中部", "pref": "新潟県", "certified": "国", "name": "羽越しな布", "type": "織物", "history": "（山形と共通）しなの木の皮から作る日本最古の織物の一つ。素朴で強い風合い。", "tags": ["unique","gift","reasonable","overseas","daily"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-107", "region": "中部", "pref": "新潟県", "certified": "国", "name": "塩沢紬", "type": "織物", "history": "独特のシボがあり、さらりとした肌触り。雪国の静寂を映したような伝統の紬。", "tags": ["gift","family","overseas","guest","reasonable","light", "daily", "museum","unique","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-108", "region": "中部", "pref": "新潟県", "certified": "国", "name": "本塩沢", "type": "織物", "history": "強い撚りをかけた糸で織り上げ、湯もみでシボを出す。独特のシャリ感が魅力。", "tags": ["daily","gift","overseas","family","guest","aging","reasonable","light", "museum", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-109", "region": "中部", "pref": "新潟県", "certified": "国", "name": "小千谷縮", "type": "織物", "history": "苧麻100％。雪上での「雪さらし」により色が冴え、さらりと涼しい夏の最高級品。", "tags": ["gift","family","overseas","guest","reasonable","light", "daily", "museum","unique","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-110", "region": "中部", "pref": "新潟県", "certified": "国", "name": "小千谷紬", "type": "織物", "history": "手つむぎ糸を使用。素朴な風合いの中に気品が漂う、着込むほどに馴染む一品。", "tags": ["gift","family","overseas","guest","reasonable","light", "daily", "museum","unique","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-111", "region": "中部", "pref": "新潟県", "certified": "国", "name": "十日町絣", "type": "織物", "history": "精緻な絣模様が特徴。先染め織物の産地として、職人の高い技術が息づく。", "tags": ["gift","family","overseas","reasonable","guest","light", "daily", "museum","unique","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-112", "region": "中部", "pref": "新潟県", "certified": "国", "name": "十日町明石ちぢみ", "type": "織物", "history": "「セミの羽」と称されるほど薄く軽い。透け感のある涼しげな夏の正装。", "tags": ["gift","family","overseas","reasonable","guest","light", "daily", "museum","unique","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-113", "region": "中部", "pref": "新潟県", "certified": "国", "name": "佐渡無名異焼", "type": "陶磁器", "history": "佐渡金山から採れる酸化鉄を含む泥土を使用。使うほどに金属のような光沢が出る。", "tags": ["unique","no-machine","cooking","guest", "daily","family", "gift","museum","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-114", "region": "中部", "pref": "新潟県", "certified": "国", "name": "村上木彫堆朱", "type": "漆器", "history": "繊細な彫刻の上に漆を塗り重ねる。使い込むほどに色が鮮やかに、艶が増していく。", "tags": ["workshop","factory","kids","overseas","gift","guest","museum","cooking","no-machine", "daily","agong","light","tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-115", "region": "中部", "pref": "新潟県", "certified": "国", "name": "新潟漆器", "type": "漆器", "history": "「竹塗」など変り塗りの宝庫。他の素材の質感を漆で表現する多彩な技法が特徴。", "tags": ["daily","museum","cooking","no-machine","gift","overseas","family","guest","light", "unique", "tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-116", "region": "中部", "pref": "新潟県", "certified": "国", "name": "加茂桐箪笥", "type": "木工品", "history": "桐の特性を最大限に活かした気密性の高い造り。日本一の生産量を誇る収納の王様。", "tags": ["family","unique","daily", "gift","aging","repeir", "tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-117", "region": "中部", "pref": "新潟県", "certified": "国", "name": "燕鎚起銅器", "type": "金工品", "history": "一枚の銅板を叩いて立体に仕上げる。継ぎ目のない堅牢さと美しい鎚目が特徴。", "tags": ["unique","workshop","factory", "daily", "museum", "family","overseas","gift","cooking","no-machine","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-118", "region": "中部", "pref": "新潟県", "certified": "国", "name": "越後三条打刃物", "type": "金工品", "history": "伝統的な火造り鍛造による強靭な刃。プロの料理人や職人が厚い信頼を寄せる。", "tags": ["museum","light","family","gift","aging", "tough","aging","cooking","no-machine", "daily"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-119", "region": "中部", "pref": "新潟県", "certified": "国", "name": "越後与板打刃物", "type": "金工品", "history": "鉋（かんな）や鑿（のみ）など、名工たちが磨き上げた鋭い切れ味の大工道具。", "tags": ["family","daily","light","aging", "gift", "tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-120", "region": "中部", "pref": "新潟県", "certified": "国", "name": "新潟・白根仏壇", "type": "木工品", "history": "豪華な彫刻、蒔絵、錺金具を施す。地域の信仰と職人技が凝縮された堅牢な造り。", "tags": ["family","repeir","aging","tough","unique", "daily", "gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-121", "region": "中部", "pref": "新潟県", "certified": "国", "name": "長岡仏壇", "type": "木工品", "history": "三ツ屋根造りなど、独特の豪華な構法が特徴。高い木工技術と漆塗りの結晶。", "tags": ["museum", "family","repeir","tough","unique","gift" ,"aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-122", "region": "中部", "pref": "新潟県", "certified": "国", "name": "三条仏壇", "type": "木工品", "history": "「三条造り」と呼ばれる重厚な形式。木地から仕上げまで一貫した高い専門性。", "tags": ["family", "tough", "repeir","unique","gift","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-  
- // --- 【石川県】(10) ---
-    { "id": "CR-123", "region": "中部", "pref": "石川県", "certified": "国", "name": "九谷焼", "type": "陶磁器", "history": "「五彩」による鮮やかな色彩と大胆な絵付けが魅力。", "tags": ["gift","daily","unique","overseas","family","aging","light","guest", "cooking","no-machine","museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-124", "region": "中部", "pref": "石川県", "certified": "国", "name": "輪島塗", "type": "漆器", "history": "地の粉を使った堅牢な下地。沈金や蒔絵の豪華な装飾。", "tags": ["museum","daily","gift","overseas","family","cooking","no-machine","guest","light","unique","aging", "tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-125", "region": "中部", "pref": "石川県", "certified": "国", "name": "山中漆器", "type": "漆器", "history": "「轆轤（ろくろ）挽き」の技術が日本一。木目を生かす塗り。", "tags": ["daily", "museum","overseas","aging","light","cooking","no-machine","unique","family","guest","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-126", "region": "中部", "pref": "石川県", "certified": "国", "name": "金沢漆器", "type": "漆器", "history": "加賀文化の粋を集めた、格調高く繊細な蒔絵が特徴。", "tags": ["workshop","museum","kids","gift","aging","light","family","cooking","no-machine", "factory","overseas","daily","tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-127", "region": "中部", "pref": "石川県", "certified": "国", "name": "金沢箔", "type": "金工品", "history": "極限まで薄く延ばされた金箔。全国シェアの殆どを占める。", "tags": ["museum","factory","workshop","light","cooking","no-machine","gift","overseas","family","aging","daily","guest", "kids"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-128", "region": "中部", "pref": "石川県", "certified": "国", "name": "金沢仏壇", "type": "木工品", "history": "彫刻、漆、蒔絵、金箔の技術が最高峰で融合した芸術品。", "tags": ["gift","aging","daily","family","tough","unique", "museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-129", "region": "中部", "pref": "石川県", "certified": "国", "name": "加賀友禅", "type": "織物", "history": "「加賀五彩」による落ち着いた色調。写実的な草花模様。", "tags": ["museum", "gift","aging","light","guest","overseas","unique","family","daily"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-130", "region": "中部", "pref": "石川県", "certified": "国", "name": "加賀縫", "type": "織物", "history": "繊細な刺繍技法。立体感と絹の光沢が美しい。", "tags": ["factory","museum","gift","aging","kids","guest","overseas","family","daily","light", "workshop"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-131", "region": "中部", "pref": "石川県", "certified": "国", "name": "牛首紬", "type": "織物", "history": "釘を抜けるほど丈夫と言われる。独特の節と光沢。", "tags": ["factory","museum","workshop","gift","unique","overseas","aging","family","daily","guest","light", "kids","tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-132", "region": "中部", "pref": "石川県", "certified": "国", "name": "七尾仏壇", "type": "木工品", "history": "能登の信仰を支える。堅牢な造りと気品ある装飾。", "tags": ["museum","gift","family","unique","aging","daily", "tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
- // --- 【岐阜県】(6) ---
- { "id": "CR-133", "region": "中部", "pref": "岐阜県", "certified": "国", "name": "美濃焼", "type": "陶磁器", "history": "和食器の全国シェアの半分以上を占める。織部・志野・黄瀬戸など多彩な様式が魅力。", "tags": ["daily", "museum","no-machine","family","gift","overseas","guest","unique","aging","light", "cooking"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-134", "region": "中部", "pref": "岐阜県", "certified": "国", "name": "飛騨春慶", "type": "漆器", "history": "透明度の高い漆を塗り、天然の木目を美しく透かして見せる。飛騨の匠の技が光る逸品。", "tags": ["family", "gift", "guest","cooking","no-machine","overseas","unique","light","aging","daily"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-135", "region": "中部", "pref": "岐阜県", "certified": "国", "name": "一位一刀彫", "type": "木工品", "history": "飛騨の銘木「イチイ」を使用。彩色せず、鋭い彫り跡と木目の美しさだけで表現する彫刻。", "tags": ["museum", "gift", "family","daily","guest","overseas","tough","light","aging", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-136", "region": "中部", "pref": "岐阜県", "certified": "国", "name": "岐阜和傘", "type": "その他", "history": "100以上の工程を分業で制作。美濃和紙とエゴノキを用い、実用性と装飾美を兼ね備える。", "tags": ["daily", "gift", "unique", "art", "light"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-137", "region": "中部", "pref": "岐阜県", "certified": "国", "name": "美濃和紙", "type": "和紙", "history": "ユネスコ無形文化遺産。薄くムラがない強靭な紙質は、書道だけでなく障子や提灯にも最適。", "tags": ["daily", "museum", "gift","kids","family","overseas","unique","light"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-138", "region": "中部", "pref": "岐阜県", "certified": "国", "name": "岐阜提灯", "type": "その他", "history": "極細の竹ひごに薄い和紙を張り、繊細な秋草などの絵付けを施す。上品で涼しげな灯りが特徴。", "tags": ["daily", "gift","guest","family","aging","unique", "light"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-     // --- 【愛知県】(15) --- ※中部・東海ブロックの締め
-    { "id": "CR-139", "region": "中部", "pref": "愛知県", "certified": "国", "name": "有松・鳴海絞", "type": "織物", "history": "100種類以上の絞り技法。複雑で美しい模様が世界的に評価。", "tags": ["museum", "gift","guest","overseas","family","daily","light","kids","unique","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-140", "region": "中部", "pref": "愛知県", "certified": "国", "name": "名古屋友禅", "type": "織物", "history": "落ち着いた色調の「渋木」や「型友禅」。都会的で粋な美しさ。", "tags": ["factory","museum", "workshop","gift","guest","light","family","daily","aging","overseas"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-141", "region": "中部", "pref": "愛知県", "certified": "国", "name": "名古屋黒紋付染", "type": "織物", "history": "「黒よりも黒い」と言われる深い黒。紋を白く抜く高度な技術。", "tags": ["gift", "daily","family","overseas","light","unique","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-142", "region": "中部", "pref": "愛知県", "certified": "国", "name": "赤津焼", "type": "陶磁器", "history": "瀬戸七彩と呼ばれる多彩な釉薬と、手おこしなどの技法が特徴。", "tags": ["daily", "factory","museum","gift","family","cooking","no-machine","unique","aging","light","guest"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-143", "region": "中部", "pref": "愛知県", "certified": "国", "name": "瀬戸染付焼", "type": "陶磁器", "history": "白磁に呉須（青色の顔料）で写実的な草花を描く。透き通るような美。", "tags": ["daily", "museum","cooking","no-machine","family","light","unique","aging","gift","guest",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-144", "region": "中部", "pref": "愛知県", "certified": "国", "name": "常滑焼", "type": "陶磁器", "history": "日本六古窯の一つ。酸化鉄を含む泥釉の急須は、お茶を美味しくする。", "tags": ["daily", "museum","cooking","no-machine","gift","guest","light","overseas","family","aging","unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-145", "region": "中部", "pref": "愛知県", "certified": "国", "name": "名古屋仏壇", "type": "木工品", "history": "「台屋根」や「高欄」など、豪華な木工・彫刻・漆塗りが集結。", "tags": ["gift", "family","unique","daily","unique","tough","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-146", "region": "中部", "pref": "愛知県", "certified": "国", "name": "三河仏壇", "type": "木工品", "history": "「うねり」のある装飾など、独特の重厚感がある。", "tags": ["gift", "family","factory","unique","daily","unique","tough","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-147", "region": "中部", "pref": "愛知県", "certified": "国", "name": "尾張仏具", "type": "その他", "history": "寺院用の巨大な仏具から家庭用まで。金属加工と木工の粋。", "tags": ["gift", "family","daily","unique","aging","light"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },                               
-    { "id": "CR-148", "region": "中部", "pref": "愛知県", "certified": "国", "name": "尾張七宝", "type": "その他", "history": "銀の線を立てて色釉を差す「有線七宝」。宝石のような輝き。", "tags": ["factory", "museum","gift","daily","family","aging","light","guest","overseas",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-149", "region": "中部", "pref": "愛知県", "certified": "国", "name": "豊橋筆", "type": "文具", "history": "墨含みが良く、さらさらと書ける。高級な毛を配合する職人技。", "tags": ["factory", "kids","gift","family","daily","unique","overseas","light"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-150", "region": "中部", "pref": "愛知県", "certified": "国", "name": "岡崎石工品", "type": "石工品", "history": "灯籠などが有名。花崗岩を精緻に彫り上げる高度な彫刻技術。", "tags": ["gift", "tough","aging","family"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-151", "region": "中部", "pref": "愛知県", "certified": "国", "name": "名古屋桐箪笥", "type": "木工品", "history": "良質な桐材を厳選。湿気を防ぎ、大切な衣類を守る堅牢で美しい造り。", "tags": ["repeir","factory", "gift","aging","family","daily","unique", "tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-152", "region": "中部", "pref": "愛知県", "certified": "国", "name": "三州鬼瓦工芸品", "type": "その他", "history": "厄除けの願いを込めた力強い表情。粘土の成形から焼成まで職人が手掛ける。", "tags": ["unique", "gift", "family","daily","tough","aging",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-153", "region": "中部", "pref": "愛知県", "certified": "国", "name": "名古屋節句飾", "type": "その他", "history": "江戸時代から続く伝統。雛人形、五月人形、幟（のぼり）など多岐にわたる。", "tags": ["kids", "gift","daily","overseas","light","aging","guest","unique", "factory","family"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-          
-    // --- 【静岡県】 ---
-    { "id": "CR-154", "region": "中部", "pref": "静岡県", "certified": "国", "name": "駿河竹千筋細工", "type": "竹工品", "history": "丸竹ひごを一本ずつ輪に組み込む繊細な技法。駿河の竹細工ならではの優美な曲線が特徴。", "tags": ["daily","workshop", "gift", "overseas","daily","family","guest","unique","aging", "light", "kids"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-155", "region": "中部", "pref": "静岡県", "certified": "国", "name": "駿河雛具", "type": "その他", "history": "雛人形に添える精密なミニチュアの調度品。漆塗りや蒔絵を施した豪華な作りが魅力。", "tags": ["light","unique","aging", "family", "guest","kids", "gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-156", "region": "中部", "pref": "静岡県", "certified": "国", "name": "駿河雛人形", "type": "その他", "history": "胴体と頭を別々に作り上げる分業制。穏やかな表情と、丁寧な着付けによる美しいシルエットが特徴。", "tags": ["light", "unique", "daily","gift","guest", "family"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- // --- 【京都府】(17) ---
- { "id": "CR-157", "region": "近畿", "pref": "京都府", "certified": "国", "name": "西陣織", "type": "織物", "history": "先染め織物の王様。多種多様な技法による豪華絢爛な表現が特徴。", "tags": ["museum", "gift", "guest","aging","overseas","light","kids","unique","family","daily","tough",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-158", "region": "近畿", "pref": "京都府", "certified": "国", "name": "京鹿の子絞", "type": "織物", "history": "気が遠くなるような手作業で括る。凹凸のある繊細な模様が美しい。", "tags": ["museum","gift","guest","daily","family","unique","aging","light","overseas", "factory", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-159", "region": "近畿", "pref": "京都府", "certified": "国", "name": "京友禅", "type": "織物", "history": "手描きや型紙による華やかな染物。京都の伝統美の象徴とされる。", "tags": ["museum", "gift", "guest","light","aging","unique","daily","family","overseas",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-160", "region": "近畿", "pref": "京都府", "certified": "国", "name": "京小紋", "type": "織物", "history": "型紙を使い、単一の色で染め上げる。粋で都会的な美しさが魅力。", "tags": ["museum", "gift","guest","unique","overseas", "daily","aging","light","family"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-161", "region": "近畿", "pref": "京都府", "certified": "国", "name": "京黒紋付染", "type": "織物", "history": "深い黒を追求する染料技術。格調高い正装に用いられる伝統の技。", "tags": ["factory", "museum", "daily","family","gift","unique","aging","overseas","light"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-162", "region": "近畿", "pref": "京都府", "certified": "国", "name": "京繍", "type": "織物", "history": "平安時代より続く刺繍。絹糸の光沢と立体感による絵画のような表現。", "tags": ["factory", "museum", "workshop","light","unique","daily","family","overseas","kids","tough","gift","guest"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-163", "region": "近畿", "pref": "京都府", "certified": "国", "name": "京くみひも", "type": "その他", "history": "平安時代からの伝統。帯締めや装飾品として品格を添える手仕事の粋。", "tags": ["museum", "gift","guest","overseas","daily","family","kids","aging","light", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-164", "region": "近畿", "pref": "京都府", "certified": "国", "name": "京焼・清水焼", "type": "陶磁器", "history": "特定の様式を持たず、職人ごとの高い芸術性と技術が競われる多彩な美。", "tags": ["daily","museum","aging","cooking","no-machine","unique", "factory","gift","light","family", "guest"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-165", "region": "近畿", "pref": "京都府", "certified": "国", "name": "京漆器", "type": "漆器", "history": "繊細な造りと「のき」を利かせた形が特徴。茶道具としての格式が高い。", "tags": ["museum", "gift","overseas","cooking","no-machine","light","aging","family","daily", "guest"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-166", "region": "近畿", "pref": "京都府", "certified": "国", "name": "京指物", "type": "木工品", "history": "ホゾを組んで接合する。優雅で洗練された王朝文化の香り漂う家具。", "tags": ["factory","gift","kids","unique","guest","family","aging","daily", "museum", "tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-167", "region": "近畿", "pref": "京都府", "certified": "国", "name": "京仏壇", "type": "木工品", "history": "全国の仏壇の最高峰。各工程の専門職人が技を出し合い完成させる。", "tags": ["museum", "factory", "gift","family","daily","unique","tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-168", "region": "近畿", "pref": "京都府", "certified": "国", "name": "京仏具", "type": "その他", "history": "儀式に用いる法具。精密な金属加工と漆塗りの技術が凝縮されている。", "tags": ["museum", "factory", "workshop","gift","daily","family","aging","unique","light","kids"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-169", "region": "近畿", "pref": "京都府", "certified": "国", "name": "京石工芸品", "type": "石工品", "history": "白川石などを使用。上品で洗練された彫刻が特徴の庭園装飾品など。", "tags": ["museum", "gift","aging","family","tough","guest", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-170", "region": "近畿", "pref": "京都府", "certified": "国", "name": "京人形", "type": "人形", "history": "衣裳、顔、手足が完全分業。生きているかのような優美さが魅力。", "tags": ["museum", "gift","factory","guest","light","family","daily","unique","overseas","aging", "kids"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-171", "region": "近畿", "pref": "京都府", "certified": "国", "name": "京扇子", "type": "その他", "history": "扇面、扇骨すべて京都で制作。風雅な絵付けが魅力の伝統品。", "tags": ["gift", "daily","museum","family","guest","tough","aging", "light"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-172", "region": "近畿", "pref": "京都府", "certified": "国", "name": "京うちわ", "type": "その他", "history": "「挿し柄」構造が特徴。飾りうちわとしても美しい優雅な工芸品。", "tags": ["gift", "light", "museum","factory","workshop","aging","unique","daily","family","guest"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
- { "id": "CR-173", "region": "近畿", "pref": "京都府", "certified": "国", "name": "京表具", "type": "その他", "history": "書画を掛軸や屏風に仕立てる。作品を引き立てる洗練された装丁技術。", "tags": ["guest","aging","light","daily","family","unique","tough", "gift", "overseas","museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-// --- 【大阪府】(9) ---
-{ "id": "CR-174", "region": "近畿", "pref": "大阪府", "certified": "国", "name": "浪華本染め", "type": "織物", "history": "「注染（ちゅうせん）」技法により、布の芯まで染める。裏表のない鮮やかな発色の浴衣や手ぬぐい。", "tags": ["gift","guest","family","aging","overseas","light", "daily", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-175", "region": "近畿", "pref": "大阪府", "certified": "国", "name": "大阪欄間", "type": "木工品", "history": "緻密な透かし彫りや浮き彫り。和室の鴨居の上に飾られ、空間に奥行きと格調を与える。", "tags": ["daily", "museum", "light","tough","unique","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-176", "region": "近畿", "pref": "大阪府", "certified": "国", "name": "大阪唐木指物", "type": "木工品", "history": "紫檀、黒檀などの高級輸入材を使用。釘を使わず、木目の美しさと重厚な光沢を引き出す。", "tags": ["gift", "museum", "tough","unique","guest","aging","daily","family"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-177", "region": "近畿", "pref": "大阪府", "certified": "国", "name": "大阪泉州桐箪笥", "type": "木工品", "history": "最高級の桐材を厳選。精巧な組み継ぎ技術により、何十年も使える気密性と耐久性を誇る。", "tags": ["factory", "workshop","unique","repeir","aging","daily","family","gift", "tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-178", "region": "近畿", "pref": "大阪府", "certified": "国", "name": "大阪金剛簾", "type": "その他", "history": "金剛山麓の良質な竹を使用。一本一本手作業で編み上げ、涼やかな空間を演出する。", "tags": ["factory","family","gift","guest","aging","tough", "unique","light", "workshop"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-179", "region": "近畿", "pref": "大阪府", "certified": "国", "name": "堺打刃物", "type": "金工品", "history": "鋭い切れ味でプロの料理人のシェアは圧倒的。鍛造と研ぎの分業による最高峰の包丁。", "tags": ["museum", "cooking","no-machine","gift","overseas","repeir","aging","daily","family", "tough","unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-180", "region": "近畿", "pref": "大阪府", "certified": "国", "name": "大阪浪華錫器", "type": "金工品", "history": "お酒の雑味をとり、まろやかにすると言われる錫の器。重厚な光沢と程よい重みが特徴。", "tags": ["daily","factory","cooking","no-machine", "gift", "guest","overseas","light","family"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-181", "region": "近畿", "pref": "大阪府", "certified": "国", "name": "大阪仏壇", "type": "木工品", "history": "錺金具や豪華な彫刻、金箔が特徴。商人の町・大阪らしい堅牢さと華やかさを併せ持つ。", "tags": ["factory", "gift", "unique","daily","family","tough","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-182", "region": "近畿", "pref": "大阪府", "certified": "国", "name": "いずみガラス", "type": "その他", "history": "和泉市周辺で作られる人工真珠やガラス工芸。繊細な輝きと高度な成形技術が国内外で評価。", "tags": ["guest", "kids","overseas","daily","family","light","unique","aging", "gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-
-    // --- 【奈良県】(3) ---
-    { "id": "CR-183", "region": "近畿", "pref": "奈良県", "certified": "国", "name": "奈良筆", "type": "文具", "history": "「練り混ぜ」法で作られ、穂先のまとまりが抜群に良い。筆のルーツ。", "tags": ["factory", "workshop","museum","kids","gift","guest","light","daily","family","overseas","aging","unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-184", "region": "近畿", "pref": "奈良県", "certified": "国", "name": "奈良墨", "type": "文具", "history": "日本最大の産地。植物油の煤（すす）から作られ、香りと伸びが秀逸。", "tags": ["kids", "family","daily","light","unique","gift","aging",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-185", "region": "近畿", "pref": "奈良県", "certified": "国", "name": "高山茶筌", "type": "木工品", "history": "竹を細かく裂き、編み上げる。茶道の点前に欠かせない機能美。", "tags": ["workshop", "factory","museum","gift","overseas","family","daily","aging","light","kids"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-    // --- 【鳥取県】(3) ---
-    { "id": "CR-186", "region": "中国四国", "pref": "鳥取県", "certified": "国", "name": "因州和紙", "type": "和紙", "history": "書道用紙の生産量日本一。墨の吸い込みと発色が良く、書家に愛される。", "tags": ["daily", "museum","workshop","gift","kids","overseas","light","family","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-187", "region": "中国四国", "pref": "鳥取県", "certified": "国", "name": "弓浜絣", "type": "織物", "history": "伯州綿を使用。ざっくりとした風合いと、白砂青松を表す絵紋様が特徴。", "tags": ["daily","gift","guest","light","aging","family","overseas","tough","unique", "museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-188", "region": "中国四国", "pref": "鳥取県", "certified": "国", "name": "出雲石燈ろう", "type": "石工品", "history": "（島根と共通）来待石を使用。苔が付きやすく、庭園にすぐ馴染む。", "tags": ["gift","tough","guest","daily","family","aging","unique", "museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    // --- 【島根県】(4) ---
-    { "id": "CR-189", "region": "中国四国", "pref": "島根県", "certified": "国", "name": "石州和紙", "type": "和紙", "history": "日本一の強度を誇ると言われる。重要無形文化財にも指定される最高級紙。", "tags": ["gift","light","kids","overseas","unique","daily","family", "museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-190", "region": "中国四国", "pref": "島根県", "certified": "国", "name": "雲州そろばん", "type": "その他", "history": "播州と並ぶ産地。極上の指馴染みと弾き心地を追求した逸品。", "tags": ["museum","family","kids","gift","aging","overseas","light", "daily"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-191", "region": "中国四国", "pref": "島根県", "certified": "国", "name": "出雲石燈ろう", "type": "石工品", "history": "（鳥取と共通）柔らかい石質を活かした精緻な彫刻美が魅力。", "tags": ["gift","tough","guest","daily","family","aging","unique", "museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-192", "region": "中国四国", "pref": "島根県", "certified": "国", "name": "石見焼", "type": "陶磁器", "history": "大型の「はんどう（水瓶）」で有名。耐酸・耐アルカリ性に優れた頑丈な器。", "tags": ["daily","factory","museum","aging","cooking","no-machine","daily","family", "light","tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-    // --- 【岡山県】(2) ---
-    { "id": "CR-193", "region": "中国四国", "pref": "岡山県", "certified": "国", "name": "備前焼", "type": "陶磁器", "history": "日本六古窯の一つ。釉薬を使わず、炎と土の化学反応（窯変）だけで生み出す究極の自然美。", "tags": ["museum", "factory","light","family","aging","unique","overseas","cooking","no-machine", "daily", "aging",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-194", "region": "中国四国", "pref": "岡山県", "certified": "国", "name": "勝山竹細工", "type": "木工品", "history": "良質な真竹を使用。竹の皮を剥がずに編むため、使うほどに青色が飴色へと変化する美しさが魅力。", "tags": ["daily", "tough", "museum", "aging","gift","overseas","light","unique","light","family"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-   // --- 【広島県】(5) ---
-    { "id": "CR-195", "region": "中国四国", "pref": "広島県", "certified": "国", "name": "熊野筆", "type": "文具", "history": "書道筆の国内シェア8割。近年は世界的な化粧筆ブランドとしても有名。", "tags": ["gift","light","kids","daily","family","aging","overseas","unique", "museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-196", "region": "中国四国", "pref": "広島県", "certified": "国", "name": "広島仏壇", "type": "木工品", "history": "豪華な彫金と、漆塗りの重厚さが特徴。伝統的な構法を厳格に守る。", "tags": ["gift", "family","daily","tough","aging","unique",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-197", "region": "中国四国", "pref": "広島県", "certified": "国", "name": "川尻筆", "type": "文具", "history": "「練り混ぜ」法により一本一本丁寧に作られる。穂先のまとまりが秀逸。", "tags": ["museum","gift","kids","daily","family","light","unique", "factory"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-198", "region": "中国四国", "pref": "広島県", "certified": "国", "name": "福山琴", "type": "その他", "history": "国内生産の大部分を占める。美しい木目と、響きの良さが最大の特徴。", "tags": ["gift","guest","tough","unique","daily","family","kids", "factory"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-199", "region": "中国四国", "pref": "広島県", "certified": "国", "name": "宮島細工", "type": "木工品", "history": "厳島神社の建築技法を起源とする。木目の美しさを生かした杓子やろくろ細工など、実用的な工芸品。", "tags": ["daily", "museum","cooking","gift","family","unique","aging", "light", "gift","kids","overseas"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-    // --- 【山口県】(3) ---
-    { "id": "CR-200", "region": "中国四国", "pref": "山口県", "certified": "国", "name": "萩焼", "type": "陶磁器", "history": "「一楽二萩三唐津」。使うほどに色が変化する「萩の七化け」が醍醐味。", "tags": ["daily","factory","gift","cooking","no-machine","guest","light","tough", "museum","family","unique","aging",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-201", "region": "中国四国", "pref": "山口県", "certified": "国", "name": "大内塗", "type": "漆器", "history": "渋い朱色と、黄色の「大内菱」模様。丸い大内人形が有名。", "tags": ["workshop","factory","museum", "cooking","no-machine","aging","light","overseas","gift","guest","unique","daily","family","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-202", "region": "中国四国", "pref": "山口県", "certified": "国", "name": "赤間硯", "type": "文具", "history": "赤間石を使用。墨おりが良く、緻密な装飾彫刻が施される。", "tags": ["gift","unique","daily","family","tough","aging", "museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-    // --- 【徳島県】(3) ---
-    { "id": "CR-203", "region": "中国四国", "pref": "徳島県", "certified": "国", "name": "阿波正藍しじら織", "type": "織物", "history": "日本最古の藍染技法。洗うほどに色が冴える「ジャパンブルー」。", "tags": ["museum", "factory","workshop","gift","guest","aging","light","family","daily","unique","overseas"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-204", "region": "中国四国", "pref": "徳島県", "certified": "国", "name": "阿波和紙", "type": "和紙", "history": "染め和紙が有名。独特のムラ感と強さがあり、工芸・美術用に最適。", "tags": ["museum","gift","kids","unique","guest","light","family","daily", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-205", "region": "中国四国", "pref": "徳島県", "certified": "国", "name": "大谷焼", "type": "陶磁器", "history": "巨大な瓶を作る「寝ろくろ」が特徴。素朴で力強い鉄色。", "tags": ["daily","cooking","no-machine","gift","aging","tough","light","family", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-    // --- 【香川県】(2) ---
-    { "id": "CR-206", "region": "中国四国", "pref": "香川県", "certified": "国", "name": "香川漆器", "type": "漆器", "history": "「蒟醤（きんま）」や「後藤塗」など、独自の多彩な技法を誇る。", "tags": ["daily", "museum","cooking","aging","family","unique","gift","light","overseas"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-207", "region": "中国四国", "pref": "香川県", "certified": "国", "name": "丸亀うちわ", "type": "その他", "history": "国内シェア9割。一本の竹から作られる構造が美しく丈夫。", "tags": ["daily","family","gift","guest","unique","aging","light", "museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    // --- 【愛媛県】(2) ---
-    { "id": "CR-208", "region": "中国四国", "pref": "愛媛県", "certified": "国", "name": "砥部焼", "type": "陶磁器", "history": "厚みのある白磁に、力強い紺色の絵付け。頑丈で日常使いに最適。", "tags": ["daily", "gift","guest","cooking","tough","light","overseas","family","no-machine","unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-209", "region": "中国四国", "pref": "愛媛県", "certified": "国", "name": "大洲和紙", "type": "和紙", "history": "「書道用紙の王様」と言われるほど。滑らかな書き味が魅力。", "tags": ["museum","factory","workshop","gift","family","light","kids","overseas", "daily"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-    // --- 【高知県】(2) ---
-    { "id": "CR-210", "region": "中国四国", "pref": "高知県", "certified": "国", "name": "土佐和紙", "type": "和紙", "history": "薄くて強靭な「かげろうの羽」のような紙。文化財修理にも使われる。", "tags": ["museum","gift","guest","factory","light","overseas","family","kids", ,"unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-    { "id": "CR-211", "region": "中国四国", "pref": "高知県", "certified": "国", "name": "土佐打刃物", "type": "金工品", "history": "自由鍛造による多様な形状。抜群の切れ味と研ぎやすさが特徴。", "tags": ["museum","light","tough","aging","overseas","unique","daily","family","gift" ,"tough"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-// --- 【福岡県】(7) ---
-{ "id": "CR-212", "region": "九州沖縄", "pref": "福岡県", "certified": "国", "name": "博多織", "type": "織物", "history": "独特の「献上柄」と、キュッと鳴る絹鳴りが特徴。帯としての締め心地は天下一品。", "tags": ["museum", "daily","family","light","overseas","aging","gift","guest","unique",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-213", "region": "九州沖縄", "pref": "福岡県", "certified": "国", "name": "久留米絣", "type": "織物", "history": "藍と白のコントラストが美しい。複雑な工程を経て生まれる素朴な機能美。", "tags": ["museum", "gift","light","guest","family","daily","tough","overseas","aging",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-214", "region": "九州沖縄", "pref": "福岡県", "certified": "国", "name": "小石原焼", "type": "陶磁器", "history": "「飛び鉋（かんな）」や「刷毛目」が生み出す幾何学的な紋様が、現代の食卓にも合う。", "tags": ["daily", "gift","cooking","no-machine","guest","museum","unique","light","family"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-215", "region": "九州沖縄", "pref": "福岡県", "certified": "国", "name": "上野焼", "type": "陶磁器", "history": "薄手で軽く、釉薬の種類が豊富。茶の湯の世界で愛されてきた気品ある器。", "tags": ["gift","cooking","no-machine","guest", "museum","daily","unique","light","family",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-216", "region": "九州沖縄", "pref": "福岡県", "certified": "国", "name": "八女福島仏壇", "type": "木工品", "history": "内部に施された豪華な彫刻と金箔。九州を代表する堅牢な仏壇。", "tags": ["museum", "factory","workshop","family","daily","gift","tough","unique","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-217", "region": "九州沖縄", "pref": "福岡県", "certified": "国", "name": "博多人形", "type": "人形", "history": "素焼きに直接彩色する。写実的でしなやかな曲線美が世界的に有名。", "tags": ["museum","daily","unique","family","guest","light","overseas","aging", "gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-218", "region": "九州沖縄", "pref": "福岡県", "certified": "国", "name": "八女提灯", "type": "その他", "history": "一本の竹ひごを螺旋状に巻く。繊細な草花が描かれた、涼しげな灯り。", "tags": ["museum","daily","family","guest","aging","light", "gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-// --- 【佐賀県】(2) ---
-{ "id": "CR-219", "region": "九州沖縄", "pref": "佐賀県", "certified": "国", "name": "伊万里・有田焼", "type": "陶磁器", "history": "日本の磁器の原点。透き通るような白磁と、華やかな絵付けが世界を魅了。", "tags": ["museum", "daily","family","guest","gift","cooking","unique","overseas","light","no-machine","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-220", "region": "九州沖縄", "pref": "佐賀県", "certified": "国", "name": "唐津焼", "type": "陶磁器", "history": "「作り手八分、使い手二分」。使うほどに味わいが増す、茶陶としても名高い器。", "tags": ["daily", "family","guest","gift","cooking","unique","overseas","light","no-machine","aging","museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-// --- 【長崎県】(3) ---
-{ "id": "CR-221", "region": "九州沖縄", "pref": "長崎県", "certified": "国", "name": "三川内焼", "type": "陶磁器", "history": "繊細な「唐子絵」や、透かし彫りが特徴。献上品としての歴史を持つ格調高い磁器。", "tags": ["museum", "gift","guest","cooking","light","aging","unique","family","daily","tough","no-maccine"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-222", "region": "九州沖縄", "pref": "長崎県", "certified": "国", "name": "波佐見焼", "type": "陶磁器", "history": "江戸時代から庶民の食器を支えた。現在はモダンなデザインで若者にも大人気。", "tags": ["daily", "museum","gift","family","guest","tough","unique","overseas","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-223", "region": "九州沖縄", "pref": "長崎県", "certified": "国", "name": "長崎べっ甲", "type": "その他", "history": "タイマイの甲羅を熱で接合。深みのある飴色が、装飾品に高貴な輝きを与える。", "tags": ["daily","family","aging","light","guest","gift", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-// --- 【熊本県】(4) ---
-{ "id": "CR-224", "region": "九州沖縄", "pref": "熊本県", "certified": "国", "name": "小代焼", "type": "陶磁器", "history": "素朴で力強い藁白釉の流し掛けが特徴。使い勝手の良い実用的な器。", "tags": ["daily","museum","family","light", "tough","guest","unique","cooking","no-machine","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-225", "region": "九州沖縄", "pref": "熊本県", "certified": "国", "name": "天草陶磁器", "type": "陶磁器", "history": "良質な天草陶石を使用。透明感のある白さと、滑らかな肌触りが魅力。", "tags": ["daily", "museum","cooking","no-machine","daily","family","light","tough","gift"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-226", "region": "九州沖縄", "pref": "熊本県", "certified": "国", "name": "肥後象がん", "type": "金工品", "history": "鉄の地金に金を打ち込む。漆黒に浮かび上がる黄金の紋様が美しい。", "tags": ["gift","daily","family","light","guest","overseas","unique", "museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-227", "region": "九州沖縄", "pref": "熊本県", "certified": "国", "name": "山鹿灯籠", "type": "その他", "history": "和紙と糊だけで作られる。内部まで空洞の立体的な造形は、まさに神業。", "tags": ["museum","gift","daily","family","guest","tough","light", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-// --- 【大分県】(1) ---
-{ "id": "CR-228", "region": "九州沖縄", "pref": "大分県", "certified": "国", "name": "別府竹細工", "type": "木工品", "history": "高度な編み技法を駆使。日用品から芸術性の高いバッグまで幅広く展開。", "tags": ["museum", "gift","guest","overseas","kids","daily","family","unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-// --- 【宮崎県】(2) ---
-{ "id": "CR-229", "region": "九州沖縄", "pref": "宮崎県", "certified": "国", "name": "本場大島紬", "type": "織物", "history": "（鹿児島と共通）世界三大織物の一つ。緻密な絣と、泥染めによる深い黒色。", "tags": ["factory", "gift","daily","family","aging","guest","overseas","unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-230", "region": "九州沖縄", "pref": "宮崎県", "certified": "国", "name": "都城大弓", "type": "その他", "history": "竹を組み合わせる伝統の製法。美しい曲線と、強靭な反発力を生み出す。", "tags": ["factory","kids","family","daily","tough","gift","guest", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-// --- 【鹿児島県】(3) ---
-{ "id": "CR-231", "region": "九州沖縄", "pref": "鹿児島県", "certified": "国", "name": "本場大島紬", "type": "織物", "history": "（宮崎と共通）奄美大島の泥染めが有名。100年以上着られると言われるほど丈夫。", "tags": ["factory", "gift","daily","family","aging","guest","overseas","unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-232", "region": "九州沖縄", "pref": "鹿児島県", "certified": "国", "name": "薩摩焼", "type": "陶磁器", "history": "豪華な「白薩摩」と、庶民に愛された「黒薩摩」。対照的な二つの美。", "tags": ["gift","daily","family","unique","guest","cooking","aging","light","overseas","no-machine", "museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-233", "region": "九州沖縄", "pref": "鹿児島県", "certified": "国", "name": "川辺仏壇", "type": "木工品", "history": "七つの工程それぞれに専門職人がいる。彫刻、蒔絵、金箔の美の結集。", "tags": ["family", "daily","unique","tough","gift",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-
-// --- 【沖縄県】(16) ---
-{ "id": "CR-234", "region": "九州沖縄", "pref": "沖縄県", "certified": "国", "name": "知花花織", "type": "織物", "history": "浮き出るような刺繍のような紋様。祝事の装いとして伝えられてきた。", "tags": ["unique", "gift","daily","family","guest","light","aging","overseas",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-235", "region": "九州沖縄", "pref": "沖縄県", "certified": "国", "name": "琉球びんがた", "type": "織物", "history": "沖縄を象徴する鮮やかな色彩。南国の自然を映し出した華麗な染物。", "tags": ["museum","gift","guest","overseas","unique","light","aging","family","daily", "factory"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-236", "region": "九州沖縄", "pref": "沖縄県", "certified": "国", "name": "琉球絣", "type": "織物", "history": "600種類以上の幾何学模様。手織りの温かみが残る、沖縄の風土が育てた布。", "tags": ["daily","gift","guest","unique","light","overseas","aging", "family"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-237", "region": "九州沖縄", "pref": "沖縄県", "certified": "国", "name": "首里織", "type": "織物", "history": "王府の城下町で育まれた格調高い織物。気品ある色彩と紋様が特徴。", "tags": ["museum", "factory","gift","light","guest","daily","family","unique","overseas","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-238", "region": "九州沖縄", "pref": "沖縄県", "certified": "国", "name": "読谷山花織", "type": "織物", "history": "立体的な花模様が織り込まれる。一時期途絶えかけたが復活を遂げた「幻の織物」。", "tags": ["unique", "museum","unique","overseas","light","kids","guest","aging","daily","family",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-239", "region": "九州沖縄", "pref": "沖縄県", "certified": "国", "name": "読谷山ミンサー", "type": "織物", "history": "細帯として愛用される。願いが込められた紋様が、今も大切に織り継がれる。", "tags": ["museum", "gift","guest","unique","daily","family","aging","light",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-240", "region": "九州沖縄", "pref": "沖縄県", "certified": "国", "name": "久米島紬", "type": "織物", "history": "紬の原点。泥染めや草木染めによる、しっとりと落ち着いた渋い風合い。", "tags": ["museum", "gift","guest","unique","daily","family","light",], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-241", "region": "九州沖縄", "pref": "沖縄県", "certified": "国", "name": "宮古上布", "type": "織物", "history": "「東の越後、西の宮古」。極細の苧麻糸で織られる、最高級の夏衣。", "tags": ["museum","gift","daily","family", "unique","guest","overseas","light"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-242", "region": "九州沖縄", "pref": "沖縄県", "certified": "国", "name": "八重山上布", "type": "織物", "history": "苧麻の白地に、紅露などの植物染料で描かれる絣。清涼感あふれる。", "tags": ["museum","factory","aging","gift","guest","light", "unique","overseas","family","daily"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-243", "region": "九州沖縄", "pref": "沖縄県", "certified": "国", "name": "八重山ミンサー", "type": "織物", "history": "「五つと四つ」の絣模様。五（いつ）の世（よ）までも、という想いが込められる。", "tags": ["museum","gift","unique","kids","light","daily","family","overseas","aging", "daily"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-244", "region": "九州沖縄", "pref": "沖縄県", "certified": "国", "name": "与那国織", "type": "織物", "history": "日本最西端。力強い色彩のドゥタティなど、独特の島の個性が息づく。", "tags": ["workshop","factory","museum","gift","light","unique","guest","overseas", "unique","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-245", "region": "九州沖縄", "pref": "沖縄県", "certified": "国", "name": "喜如嘉の芭蕉布", "type": "織物", "history": "糸芭蕉の繊維から作る。薄くて軽く、風が通り抜ける清涼感が魅力。", "tags": ["unique", "museum","gift","guest","overseas","light","daily","family","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-246", "region": "九州沖縄", "pref": "沖縄県", "certified": "国", "name": "壺屋焼", "type": "陶磁器", "history": "シーサーで有名。力強い筆致の絵付けと、素朴な土の質感が特徴。", "tags": ["daily","family","cooking","no-machine","aging","gift","guest","light","overseas","museum"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-247", "region": "九州沖縄", "pref": "沖縄県", "certified": "国", "name": "琉球漆器", "type": "漆器", "history": "鮮やかな朱漆に「堆錦」という独自の加飾を施す。南国らしい華やかさ。", "tags": ["museum","daily","family","cokking","aging","light","overseas", "unique"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-248", "region": "九州沖縄", "pref": "沖縄県", "certified": "国", "name": "南風原花織", "type": "織物", "history": "多彩な色糸を使い、浮き出るような模様を織り上げる。華やかな美しさ。", "tags": ["family", "gift","guest","unique","overseas","aging","daily","light"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" },
-{ "id": "CR-249", "region": "九州沖縄", "pref": "沖縄県", "certified": "国", "name": "三線", "type": "その他", "history": "沖縄音楽の魂。黒檀などの芯材と蛇皮から、独自の音色を響かせる。", "tags": ["unique", "gift","kids","guest","unique","family","daily","light","overseas","aging"], "official_site": "確認中", "shop_url": "確認中", "note_url": "確認中" }
-]
+];

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>付き添いプラン詳細 - Lesbian Bar Map JP</title>
+    <style>
+        /* --- 基本設定 --- */
+        body { background-color: #0a1428; color: #ffffff; font-family: sans-serif; line-height: 1.6; margin: 0; padding: 0 0 100px 0; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 90%; max-width: 600px; margin-top: 40px; }
+        
+        /* 言語切り替え */
+        .lang-switcher { text-align: right; width: 100%; margin-bottom: 15px; display: flex; justify-content: flex-end; gap: 8px; }
+        .lang-btn { background: #1a2a4a; border: 1px solid #3a4a6a; color: #8892b0; cursor: pointer; border-radius: 4px; padding: 5px 12px; font-size: 0.75rem; }
+        .lang-btn.active { border-color: #00ffcc; color: #00ffcc; }
+        
+        .lang-en { display: none; }
+        body.en-mode .lang-jp { display: none; }
+        body.en-mode .lang-en { display: inline; }
+        body.en-mode .lang-en-block { display: block; }
+
+        /* ヘッダー */
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { font-size: 1.6rem; color: #00ffcc; border-bottom: 2px solid #00ffcc; display: inline-block; padding-bottom: 5px; }
+        .intro-text { font-size: 0.9rem; color: #ccd6f6; background: rgba(0, 255, 204, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 30px; }
+
+        /* プランセクション */
+        .plan-grid { display: flex; flex-direction: column; gap: 20px; }
+        .plan-card { background: rgba(255, 255, 255, 0.05); border: 1px solid #2a3a5a; border-radius: 15px; padding: 20px; position: relative; }
+        .plan-card h2 { font-size: 1.2rem; color: #00ffcc; margin-top: 0; display: flex; align-items: center; gap: 8px; }
+        .price-tag { font-size: 1.3rem; font-weight: bold; color: #ffffff; margin: 10px 0; }
+        .plan-desc { font-size: 0.85rem; color: #ccd6f6; }
+
+        /* 交通費・ルール */
+        .info-section { background: rgba(255, 255, 255, 0.02); border: 1px solid #3a4a6a; border-radius: 12px; padding: 20px; margin-top: 20px; font-size: 0.85rem; }
+        .info-title { font-weight: bold; color: #00ffcc; margin-bottom: 10px; display: block; }
+        
+        .warning-box { border: 1px solid #ff4d4d; background: rgba(255, 77, 77, 0.05); padding: 20px; border-radius: 15px; margin-top: 30px; font-size: 0.85rem; }
+        .warning-box h2 { color: #ff4d4d; font-size: 1rem; margin-top: 0; }
+
+        /* ボタン */
+        .cta-btn { display: block; background: #00ffcc; color: #0a1428; text-decoration: none; text-align: center; padding: 15px; border-radius: 30px; font-weight: bold; margin-top: 30px; }
+        .back-link { display: block; text-align: center; margin-top: 25px; color: #8892b0; text-decoration: none; font-size: 0.85rem; }
+        
+        ul { padding-left: 20px; }
+        li { margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="lang-switcher">
+        <button id="btn-jp" class="lang-btn active" onclick="setLang('jp')">日本語</button>
+        <button id="btn-en" class="lang-btn" onclick="setLang('en')">English</button>
+    </div>
+
+    <div class="header">
+        <h1>
+            <span class="lang-jp">🤝 付き添い・案内人詳細</span>
+            <span class="lang-en">🤝 Escort & Guide Service</span>
+        </h1>
+    </div>
+
+    <div class="intro-text">
+        <span class="lang-jp">面倒な酔っ払いに絡まれたくない、テキーラに巻き込まれたくない、初めてで話しかけ方がわからない…そんな方のための「ボディガード」兼「案内人」です。一人でいくのが怖い方や、新しいお店の開拓をサポートします。</span>
+        <span class="lang-en">Avoid unwanted attention, stay safe from excessive drinking, or just get help starting a conversation. I act as your "Bodyguard & Guide" for those who are nervous about going alone or want to explore new bars safely.</span>
+    </div>
+
+    <div class="plan-grid">
+        <div class="plan-card">
+            <h2>🛡️ <span class="lang-jp">ガード枠</span><span class="lang-en">Guard Plan</span></h2>
+            <div class="price-tag">3,000 JPY <span style="font-size:0.8rem;"><span class="lang-jp">(2時間)</span><span class="lang-en">(2 hours)</span></span></div>
+            <div class="plan-desc">
+                <span class="lang-jp">1軒限定でお供します。隣でガードしつつ、安心してお酒を楽しめる環境をサポートします。</span>
+                <span class="lang-en">Support for 1 shop. I'll sit with you to ensure a safe and comfortable environment.</span>
+            </div>
+        </div>
+
+        <div class="plan-card">
+            <h2>🔍 <span class="lang-jp">マッチング</span><span class="lang-en">Matching Plan</span></h2>
+            <div class="price-tag">5,000 JPY <span style="font-size:0.8rem;"><span class="lang-jp">(3時間)</span><span class="lang-en">(3 hours)</span></span></div>
+            <div class="plan-desc">
+                <span class="lang-jp">条件をヒアリングし、あなたに合いそうなお店を提示・案内します。時間内なら何軒でもハシゴ可能です。</span>
+                <span class="lang-en">I'll suggest and guide you to bars that fit your preferences. Multiple stops are okay within the time limit.</span>
+            </div>
+        </div>
+
+        <div class="plan-card">
+            <h2>🌙 <span class="lang-jp">見守り役</span><span class="lang-en">Overnight Watch</span></h2>
+            <div class="price-tag">15,000 JPY</div>
+            <div class="plan-desc">
+                <span class="lang-jp">基本20:00〜翌5:00までサポート。途中離脱も可能です。※交通費は最初からタクシー換算となります。</span>
+                <span class="lang-en">Full support from 20:00 to 5:00. Early leave is okay. *Travel expenses calculated at taxi rates from the start.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-section">
+        <span class="info-title">🚗 <span class="lang-jp">交通費について</span><span class="lang-en">Travel Expenses</span></span>
+        <ul>
+            <li><span class="lang-jp">山手線沿線：一律 1,000円</span><span class="lang-en">Yamanote Line area: Flat 1,000 JPY</span></li>
+            <li><span class="lang-jp">都外・地方：要相談</span><span class="lang-en">Outside Tokyo/Local: Negotiable</span></li>
+            <li><strong><span class="lang-jp">23時以降：安全確保のためタクシー代での計算となります。</span><span class="lang-en">After 23:00: Calculated at taxi rates for safety.</span></strong></li>
+            <li><span class="lang-jp">※事前にお見積り目安を提示いたします。</span><span class="lang-en">*Estimated cost will be provided in advance.</span></li>
+        </ul>
+    </div>
+
+    <div class="info-section">
+        <span class="info-title">💳 <span class="lang-jp">お支払い・飲食代</span><span class="lang-en">Payment & Drinks</span></span>
+        <ul>
+            <li><strong><span class="lang-jp">案内人の飲食代・交通費はすべて依頼主様のご負担となります。</span><span class="lang-en">Client covers all of the guide's drink and travel expenses.</span></strong></li>
+            <li><span class="lang-jp">代金は入店前にお預かりします。延長時は店外または店内にて。</span><span class="lang-en">Payment is required before entering the shop.</span></li>
+            <li><span class="lang-jp">【キャンセル料】12時間前以降の直前キャンセルは全額請求させていただきます。</span><span class="lang-en">[Cancellation] Full charge if cancelled within 12 hours of the appointment.</span></li>
+        </ul>
+    </div>
+
+    <div class="warning-box">
+        <h2>⚠️ <span class="lang-jp">注意事項</span><span class="lang-en">Notes</span></h2>
+        <ul style="padding-left:15px;">
+            <li><span class="lang-jp">20歳未満は付き添い不可。待ち合わせは公共の場を厳守。</span><span class="lang-en">No minors under 20. Meetings must be in public places.</span></li>
+            <li><span class="lang-jp">恋愛・性的サポートなし。あくまで「ボディガード」としての同行です。</span><span class="lang-en">No romantic/sexual support. I am there as a "Bodyguard."</span></li>
+            <li><span class="lang-jp">許可のない撮影・録音はご遠慮ください。</span><span class="lang-en">No filming/recording without permission.</span></li>
+            <li><span class="lang-jp">泥酔によるトラブルの責任は負いかねます。危険な飲み方は制止させていただきます。</span><span class="lang-en">I am not responsible for trouble caused by intoxication. Dangerous drinking will be stopped.</span></li>
+        </ul>
+    </div>
+
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfFImnEyesEpfDGiIKEKtAN0BDzaHj9LPaelxO8pa9IdrjdJg/viewform?usp=header" target="_blank" class="cta-btn">
+        <span class="lang-jp">📋 Googleフォームで付き添いを依頼する</span>
+        <span class="lang-en">📋 Request via Google Form</span>
+    </a>
+
+    <a href="https://x.com/412357siki" target="_blank" class="back-link" style="color: #00ffcc; text-decoration: underline; margin-top: 20px; font-weight: bold;">
+        <span class="lang-jp">✉️ その他のお問い合わせ（XのDM）</span>
+        <span class="lang-en">✉️ Other Inquiries (X DM)</span>
+    </a>
+    
+    <a href="index.html" class="back-link">
+        <span class="lang-jp">← マップ一覧に戻る</span>
+        <span class="lang-en">← Back to Map</span>
+    </a>
+</div>
+
+<script>
+    function setLang(lang) {
+        document.body.classList.toggle('en-mode', lang === 'en');
+        document.getElementById('btn-jp').classList.toggle('active', lang === 'jp');
+        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    }
+</script>
+
+</body>
+</html>
