@@ -3,347 +3,458 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>レズビアンバーマップ一覧</title>
-    <meta name="description" content="新宿二丁目や東京都内を中心に, 全国のレズビアンバー（ビアンバー）をレポ付きで探せる一覧マップです。初心者の方への付き添いサービスも実施中。">
+    <title>Cinq Étoile Craft - 伝統的工芸品アーカイブ</title>
     <style>
-        /* --- 基本設定 --- */
-        body { background-color: #0a1428; color: #ffffff; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 0 0 80px 0; margin: 0; scroll-behavior: smooth; }
-        .lang-switcher { text-align: right; width: 90%; max-width: 600px; margin: 15px 0; display: flex; justify-content: flex-end; gap: 8px; }
-        .lang-btn { background: #1a2a4a; border: 1px solid #3a4a6a; color: #8892b0; cursor: pointer; border-radius: 4px; padding: 5px 12px; font-size: 0.75rem; }
-        .lang-btn.active { border-color: #00ffcc; color: #00ffcc; }
+        :root { 
+            --primary-green: #2d5d3d; 
+            --light-green: #9acd32;
+            --accent-brown: #6f4e37; 
+            --bg-gray: #f4f7f4; 
+            --white: #ffffff;
+        }
+
+        body { font-family: "Hiragino Mincho ProN", serif; margin: 0; background-color: var(--bg-gray); color: #333; line-height: 1.6; }
+
+        /* --- ヘッダー --- */
+        .header { 
+            background: var(--white);
+            padding: 40px 0 25px 0; 
+            border-bottom: 5px solid var(--primary-green);
+            text-align: center;
+        }
+        .header-container { max-width: 1100px; margin: 0 auto; padding: 0 15px; }
+        .logo-main { display: block; margin: 0 auto 15px auto; max-width: 500px; width: 90%; height: auto; }
+        .site-copy { font-size: 1.3rem; color: var(--primary-green); font-weight: bold; margin: 0; }
+        .site-welcome { font-size: 1rem; color: var(--accent-brown); letter-spacing: 0.1em; margin-top: 8px; }
+
+        .main-content { max-width: 1100px; margin: 25px auto; padding: 0 15px; }
         
-        .lang-en, .lang-en-block { display: none !important; }
-        body.en-mode .lang-jp { display: none !important; }
-        body.en-mode .lang-en { display: inline !important; }
-        body.en-mode .lang-en-block { display: block !important; }
+        /* 💡 お知らせセクション */
+        .notice-box {
+            background: #fff; padding: 20px; border-radius: 15px; margin-bottom: 25px; 
+            border-left: 8px solid var(--primary-green); box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .notice-title { color: var(--primary-green); font-weight: bold; display: block; margin-bottom: 8px; font-size: 1.1rem; }
+        .notice-text { font-size: 0.9rem; margin: 0; color: #444; }
+        .note-status { 
+            display: inline-block; background: #fef2f2; color: #b91c1c; 
+            padding: 2px 10px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; margin-bottom: 10px;
+        }
 
-        .site-header { text-align: center; padding: 40px 20px; width: 100%; }
-        .site-header h1 { font-size: 1.8rem; font-weight: bold; background: linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #00ffff, #0000ff, #8b00ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; }
-        .site-subtitle { font-size: 0.85rem; color: #ccd6f6; margin-top: 10px; display: block; }
+        /* 🛒 体験キットエリア */
+        .kit-container {
+            background: #fff9f0; padding: 20px; border-radius: 18px; margin-bottom: 25px; border: 2px solid #eec;
+        }
+        .kit-box {
+            background: #fff; padding: 12px; border-radius: 12px; border: 1px solid #ddd; 
+            display: flex; align-items: center; gap: 12px; text-decoration: none; transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .kit-box:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
-        .guide-intro { width: 90%; max-width: 600px; background: rgba(0, 255, 204, 0.05); border: 1px solid rgba(0, 255, 204, 0.2); border-radius: 15px; padding: 20px; margin-bottom: 20px; text-align: center; }
-        .guide-notes { font-size: 0.75rem; color: #ff4d4d; text-align: left; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; margin-top: 15px; line-height: 1.6; border: 1px solid rgba(255, 77, 77, 0.3); }
+        /* フィルター・リスト */
+        .selection-box {
+            background: var(--white); padding: 25px; border-radius: 20px; margin-bottom: 20px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+        .selection-box h2 { 
+            font-size: 1.2rem; color: var(--primary-green); border-left: 5px solid var(--primary-green); 
+            padding-left: 12px; margin: 0 0 15px 0; 
+        }
+        .filter-group-title { display: block; font-size: 0.85rem; color: var(--accent-brown); font-weight: bold; margin: 15px 0 10px; }
+        .filter-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
 
-        .form-btn { display: block; background: #00ffcc; color: #0a1428; padding: 12px; width: 90%; max-width: 600px; border-radius: 30px; text-decoration: none; font-weight: bold; text-align: center; font-size: 0.9rem; margin-bottom: 15px; }
-        .sub-form-btn { display: block; background: #1a2a4a; color: #ffffff; border: 1px solid #3a4a6a; padding: 10px; width: 90%; max-width: 600px; border-radius: 8px; text-decoration: none; font-size: 0.75rem; text-align: center; margin-bottom: 15px; }
-        .tip-btn { display: block; background: #233554; color: #ffffff; padding: 10px; width: 90%; max-width: 600px; border-radius: 8px; text-decoration: none; font-size: 0.75rem; text-align: center; margin-bottom: 30px; border: 1px solid #3a4a6a; }
+        .btn-green, .btn-brown, .btn-tag { padding: 8px 18px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: 0.2s; }
+        .btn-green { background: #e8eee8; color: #4a5a4a; }
+        .btn-green.active { background: var(--primary-green); color: white; }
+        .btn-brown { background: #efebe9; color: #5d4037; }
+        .btn-brown.active { background: var(--accent-brown); color: white; }
+        .btn-tag { background: #fff; border: 1px solid var(--light-green); color: var(--primary-green); }
+        .btn-tag.active { background: var(--light-green); color: white; }
 
-        .qa-section { width: 90%; max-width: 600px; margin-bottom: 20px; }
-        .qa-item { background: rgba(255,255,255,0.05); border: 1px solid #2a3a5a; border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
-        .qa-question { width: 100%; background: none; border: none; padding: 12px 15px; text-align: left; color: #ff8c00; font-weight: bold; font-size: 0.85rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        .qa-question::after { content: "▼"; font-size: 0.7rem; transition: 0.3s; }
-        .qa-question.active::after { transform: rotate(180deg); }
-        .qa-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: rgba(0,0,0,0.2); }
-        .qa-answer-inner { padding: 12px 15px; font-size: 0.8rem; color: #ccd6f6; line-height: 1.5; }
+        #result-count { margin-bottom: 15px; text-align: center; font-size: 1.1rem; font-weight: bold; color: var(--primary-green); }
+        #craft-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+        .craft-card { 
+            background: var(--white); padding: 22px; border-radius: 18px; border-top: 5px solid var(--primary-green); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); cursor: pointer;
+        }
 
-        .legend-section { width: 90%; max-width: 600px; margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .legend-box { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; border: 1px solid #2a3a5a; font-size: 0.7rem; }
-        .legend-title { font-weight: bold; margin-bottom: 5px; color: #00ffcc; }
-        .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
-        .dot-l { width: 4px; height: 12px; }
-        .dot-r { width: 10px; height: 10px; border-radius: 2px; }
+        /* モーダル */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 1001; overflow-y: auto; }
+        .modal-content { background: #fff; max-width: 650px; margin: 30px auto; padding: 35px; border-radius: 25px; position: relative; width: 90%; }
+        .close-modal { position: absolute; right: 20px; top: 10px; font-size: 35px; cursor: pointer; color: #999; }
+        .link-area { margin: 25px 0; padding: 20px; background: #f4f7f4; border-radius: 15px; }
+        .link-btn { display: block; text-align: center; padding: 14px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-bottom: 12px; }
+        .btn-official { background: #fff; color: var(--primary-green); border: 1px solid var(--primary-green); }
+        .btn-shop { background: var(--primary-green); color: #fff; }
+        .btn-disabled { background: #eee; color: #999; cursor: not-allowed; }
 
-        .filter-section { width: 90%; max-width: 600px; margin-bottom: 30px; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; }
-        .area-filter, .tag-filter { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 15px; }
-        .area-btn, .tag-btn { background: #1a2a4a; color: #ffffff; border: 1px solid #3a4a6a; padding: 6px 14px; border-radius: 30px; cursor: pointer; font-size: 0.75rem; }
-        .area-btn.active, .tag-btn.active { border-color: #00ffcc; background: #3a4a6a; }
+        @media (max-width: 600px) { .logo-main { max-width: 350px; } }
+        .badge {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: white;
+    display: inline-block;
+}
+.badge-national { background-color: #e60012; } /* 赤 */
+.badge-local { background-color: #007bc3; }    /* 青 */
 
-        #shop-container { width: 90%; max-width: 500px; }
-        .shop-card { background: #162440; border-radius: 12px; overflow: hidden; border: 1px solid #2a3a5a; margin-bottom: 25px; display: none; position: relative; padding-left: 14px; border-right: 10px solid #2a3a5a; }
-        .shop-card.show { display: block; }
-        .shop-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 14px; }
-        .border-l-h::before { background: #00ff00; } 
-        .border-l-a::before { background: #ff8c00; }
-        .border-l-gf::before { background: #ffd700; }
-        .border-l-fune::before { background: #00ffff; }
-        .border-l-b-l::before { background: linear-gradient(to bottom, #9d00ff 50%, #0000ff 50%); }
-        .border-l-b-g::before { background: linear-gradient(to bottom, #9d00ff 50%, #ff0000 50%); }
-        .border-r-bian { border-right-color: #ff69b4 !important; }
-        .border-r-mix { border-right-color: #4bc0c0 !important; }
 
-        .shop-name { font-size: 1.1rem; font-weight: bold; margin-bottom: 5px; }
-        .feature-tags { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 5px; font-size: 0.7rem; color: #8892b0; }
-        .feature-tags span { background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 3px; }
+    /* ボタンのデザイン（以前の雰囲気に合わせて） */
+    .btn-concept {
+        display: inline-block;
+        background-color: var(--primary-green);
+        color: white;
+        padding: 10px 25px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: bold;
+        margin-bottom: 20px;
+        transition: 0.3s;
+        border: 2px solid var(--primary-green);
+    }
+    .btn-concept:hover {
+        background-color: white;
+        color: var(--primary-green);
+    }
+/* ボタンの親要素を中央揃えにする */
+.concept-btn-container {
+    text-align: center;      /* 中身を中央に寄せる */
+    margin: 30px 0 50px 0;  /* 上下の余白（適宜調整してください） */
+}
 
-        .action-buttons { display: grid; grid-template-columns: 1fr 1fr; }
-        .btn { padding: 12px; text-align: center; text-decoration: none; font-size: 0.85rem; font-weight: bold; }
-        .btn-note { color: #ffffff; background: #233554; }
-        .btn-guide { color: #0a1428; background: #00ffcc; }
+.btn-concept {
+    display: inline-block;   /* 中央揃えを効かせるために必要 */
+    background-color: var(--primary-green);
+    color: var(--white);
+    padding: 15px 40px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
 
-        .aff-section { width: 90%; max-width: 600px; margin: 30px 0; border-top: 1px solid #2a3a5a; padding-top: 20px; }
-        .aff-title { font-size: 1rem; font-weight: bold; color: #00ffcc; margin-bottom: 15px; text-align: center; }
-        .aff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .aff-card { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; font-size: 0.75rem; border: 1px solid #333; }
-        .aff-comment { display: block; font-style: italic; color: #ccd6f6; margin-bottom: 5px; }
+.btn-concept:hover {
+    background-color: var(--light-green);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
 
-        .footer-notice { width: 90%; max-width: 600px; padding: 30px 20px; color: #8892b0; font-size: 0.75rem; border-top: 1px solid #2a3a5a; margin-top: 10px; }
-        .footer-notice ul { list-style: none; padding: 0; margin: 10px 0 0 0; }
-        .footer-notice li { margin-bottom: 8px; line-height: 1.4; }
-        
-        .portfolio-section { width: 90%; max-width: 600px; margin-top: 15px; display: flex; gap: 10px; margin-bottom: 40px; }
-        .portfolio-card { flex: 1; background: #1a2a4a; padding: 10px; border-radius: 8px; text-decoration: none; color: #ffffff; font-size: 0.75rem; text-align: center; border: 1px solid #3a4a6a; }
-
-        #back-to-top { position: fixed; bottom: 20px; right: 20px; background: #00ffcc; color: #0a1428; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 24px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 1000; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
-        #back-to-top.show { opacity: 1; pointer-events: auto; }
-    </style>
+</style>
 </head>
+
+
 <body>
-
-<a href="#" id="back-to-top">↑</a>
-
-<div class="lang-switcher">
-    <button id="btn-jp" class="lang-btn active" onclick="setLang('jp')">日本語</button>
-    <button id="btn-en" class="lang-btn" onclick="setLang('en')">English</button>
-</div>
-
-<header class="site-header">
-    <h1><span class="lang-jp">レズビアンバーマップ一覧</span><span class="lang-en">Lesbian Bar Map JP</span></h1>
-    <span class="site-subtitle lang-jp">新宿二丁目や全国のビアンバーをレポ付きで探せるマップ（随時更新中）</span>
-    <span class="site-subtitle lang-en">Nationwide lesbian bar map with report notes (updating)</span>
-</header>
-
-<section class="guide-intro">
-    <h2>🤝 <span class="lang-jp">初めてのバー巡りをサポートします</span><span class="lang-en">Support for your first bar visit</span></h2>
-    <p><span class="lang-jp">「二丁目に行ってみたいけど、一人で入る勇気がない…」そんな方のための付き添いサービスです。</span>
-       <span class="lang-en">"I want to go to Ni-chome, but I'm not brave enough to go alone..." This service is for you.</span></p>
-    
-    <div style="margin: 10px 0;"><a href="guide.html" style="color:#00ffcc; font-size:0.85rem; text-decoration:none; font-weight:bold;">>>> <span class="lang-jp">付き添いプラン詳細はこちら</span><span class="lang-en">Details & Booking</span></a></div>
-    
-    <div class="guide-notes">
-        ⚠️ <strong><span class="lang-jp">注意事項</span><span class="lang-en">Notes</span></strong>：<br>
-        <span class="lang-jp">・20歳未満不可 / 待ち合わせは公共の場厳守 / 恋愛・性的サポートなし</span><span class="lang-en-block lang-en">- No minors under 20 / Public meeting only / No dating or sexual support</span>
-        <span class="lang-jp">・<strong>友達作り・コミュニティ探しのお手伝いは積極的に協力します！</strong></span><span class="lang-en-block lang-en">- We actively help you make friends and find your community!</span>
-        <span class="lang-jp">・許可のない撮影不可 / <strong>案内人の交通費・飲食代は依頼主負担</strong> となります</span><span class="lang-en-block lang-en">- No filming / Client covers guide's travel and drink expenses</span>
-        <span class="lang-jp">・その他のお問い合わせは <strong><a href="https://x.com/412357siki" target="_blank" style="color:#ff4d4d;">X（@412357siki）のDM</a></strong> まで。</span><span class="lang-en-block lang-en">- For other inquiries, contact <strong><a href="https://x.com/412357siki" target="_blank" style="color:#ff4d4d;">X (@412357siki) DM</a></strong>.</span>
-    </div>
-</section>
-
-<a href="https://docs.google.com/forms/d/e/1FAIpQLSfFImnEyesEpfDGiIKEKtAN0BDzaHj9LPaelxO8pa9IdrjdJg/viewform?usp=sf_link" target="_blank" class="form-btn">📩 <span class="lang-jp">付き添い申し込み（Googleフォーム）</span><span class="lang-en">Booking Accompaniment (Form)</span></a>
-<a href="https://docs.google.com/forms/d/e/1FAIpQLSeVqSVijh9lmLNHvjP1nOshrKn8JccVwurxPl-Y4CMDOnV_vA/viewform?usp=sf_link" target="_blank" class="sub-form-btn">✨ <span class="lang-jp">スポンサー・掲載依頼（Googleフォーム）</span><span class="lang-en">Sponsors & Listing Requests</span></a>
-<a href="https://note.com/412357siki/n/n771b0098a2e3" target="_blank" class="tip-btn">☕ <span class="lang-jp">愁（しゅう）にチップを送る (note)</span><span class="lang-en">Send a tip to Syu (note)</span></a>
-
-<section class="qa-section">
-    <div class="qa-item">
-        <button class="qa-question" onclick="toggleQA(this)"><span class="lang-jp">Q1. 料金相場や「チャージ」について</span><span class="lang-en">Q1. About costs and "Cover Charge"</span></button>
-        <div class="qa-answer"><div class="qa-answer-inner"><span class="lang-jp">チャージと1ドリンクで<strong>合計2,000円以内</strong>が一般的です。ドリンクは1杯900円〜の設定が多く、明朗会計な店がほとんどなのでご安心ください。</span><span class="lang-en">Usually <strong>under 2,000 JPY</strong> for cover charge + one drink. Most drinks start around 900 JPY.</span></div></div>
-    </div>
-    <div class="qa-item">
-        <button class="qa-question" onclick="toggleQA(this)"><span class="lang-jp">Q2. トランスジェンダーの入店について</span><span class="lang-en">Q2. For transgender guests</span></button>
-        <div class="qa-answer"><div class="qa-answer-inner"><span class="lang-jp">レズビアンバーは基準が様々。まずは「MIXバー」が確実。</span><span class="lang-en">Policies vary. "MIX bars" are more accommodating.</span></div></div>
-    </div>
-    <div class="qa-item">
-        <button class="qa-question" onclick="toggleQA(this)"><span class="lang-jp">Q3. ひとりでも入れますか？</span><span class="lang-en">Q3. Can I go alone?</span></button>
-        <div class="qa-answer"><div class="qa-answer-inner"><span class="lang-jp">もちろんです！一人客の方が多い店もたくさんあります。</span><span class="lang-en">Yes! Many customers visit alone.</span></div></div>
-    </div>
-    <div class="qa-item">
-        <button class="qa-question" onclick="toggleQA(this)"><span class="lang-jp">Q4. 服装に決まりはありますか？</span><span class="lang-en">Q4. Is there a dress code?</span></button>
-        <div class="qa-answer"><div class="qa-answer-inner"><span class="lang-jp">自由です！清潔感があれば仕事帰りでも大丈夫です。</span><span class="lang-en">No specific code. Neat casual is fine.</span></div></div>
-    </div>
-    <div class="qa-item">
-        <button class="qa-question" onclick="toggleQA(this)"><span class="lang-jp">Q5. 英語対応や男性の入店は？</span><span class="lang-en">Q5. English & Male entry</span></button>
-        <div class="qa-answer"><div class="qa-answer-inner"><span class="lang-jp">「英語対応」タグや「MIXバー」は柔軟。</span><span class="lang-en">"English OK" bars are flexible.</span></div></div>
-    </div>
-    <div class="qa-item">
-        <button class="qa-question" onclick="toggleQA(this)"><span class="lang-jp">Q6. 予約は必要ですか？</span><span class="lang-en">Q6. Do I need a reservation?</span></button>
-        <div class="qa-answer"><div class="qa-answer-inner"><span class="lang-jp">ほとんど不要ですが、イベント時はSNSを確認。</span><span class="lang-en">Usually not, check SNS for events.</span></div></div>
-    </div>
-    <div class="qa-item">
-        <button class="qa-question" onclick="toggleQA(this)"><span class="lang-jp">Q7. 付き添いサービスはどう頼めばいい？</span><span class="lang-en">Q7. How to book?</span></button>
-        <div class="qa-answer"><div class="qa-answer-inner"><span class="lang-jp">上部の「付き添い申し込み」ボタンからお送りください。</span><span class="lang-en">Please use the "Booking Accompaniment" form button above.</span></div></div>
-    </div>
-</section>
-
-<div class="legend-section">
-    <div class="legend-box">
-        <div class="legend-title"><span class="lang-jp">左線：系列</span><span class="lang-en">Left: Series</span></div>
-        <div class="legend-item"><div class="dot-l" style="background:#00ff00;"></div><span>H系 / A系 <div class="dot-l" style="background:#ff8c00; display:inline-block; margin-left:5px;"></div></span></div>
-        <div class="legend-item"><div class="dot-l" style="background:#ffd700;"></div><span>GF系 / 船系 <div class="dot-l" style="background:#00ffff; display:inline-block; margin-left:5px;"></div></span></div>
-        <div class="legend-item"><div class="dot-l" style="background:linear-gradient(#9d00ff 50%, #0000ff 50%);"></div><span>B系(L) / B系(G) <div class="dot-l" style="background:linear-gradient(#9d00ff 50%, #ff0000 50%); display:inline-block; margin-left:5px;"></div></span></div>
-    </div>
-    <div class="legend-box">
-        <div class="legend-title"><span class="lang-jp">右線：種別</span><span class="lang-en">Right: Type</span></div>
-        <div class="legend-item"><div class="dot-r" style="background:#ff69b4;"></div><span>ビアン専用</span></div>
-        <div class="legend-item"><div class="dot-r" style="background:#4bc0c0;"></div><span>MIXバー</span></div>
-    </div>
-</div>
-
-<div class="filter-section">
-    <div class="area-filter">
-        <button class="area-btn" onclick="filterArea('東日本', this)"><span class="lang-jp">東日本</span><span class="lang-en">East JP</span></button>
-        <button class="area-btn" onclick="filterArea('東京', this)"><span class="lang-jp">東京</span><span class="lang-en">Tokyo</span></button>
-        <button class="area-btn" onclick="filterArea('名古屋', this)"><span class="lang-jp">名古屋</span><span class="lang-en">Nagoya</span></button>
-        <button class="area-btn" onclick="filterArea('大阪', this)"><span class="lang-jp">大阪</span><span class="lang-en">Osaka</span></button>
-        <button class="area-btn" onclick="filterArea('西日本', this)"><span class="lang-jp">西日本</span><span class="lang-en">West JP</span></button>
-    </div>
-
-    <div class="tag-filter">
-        <button class="tag-btn" onclick="filterTag('外国人多い', this)"><span class="lang-jp">#外国人多い</span><span class="lang-en">#Global</span></button>
-        <button class="tag-btn" onclick="filterTag('ノーチャージ', this)"><span class="lang-jp">#ノーチャージ</span><span class="lang-en">#NoCharge</span></button>
-        <button class="tag-btn" onclick="filterTag('英語対応', this)"><span class="lang-jp">#英語対応</span><span class="lang-en">#English</span></button>
-        <button class="tag-btn" onclick="filterTag('カラオケ', this)"><span class="lang-jp">#カラオケ</span><span class="lang-en">#Karaoke</span></button>
-        <button class="tag-btn" onclick="filterTag('喫煙可', this)"><span class="lang-jp">#喫煙可</span><span class="lang-en">#Smoking</span></button>
-        <button class="tag-btn" onclick="filterTag('初心者向け', this)"><span class="lang-jp">#初心者向け</span><span class="lang-en">#Beginner</span></button>
-        <button class="tag-btn" onclick="filterTag('初心者多め', this)"><span class="lang-jp">#初心者多め</span><span class="lang-en">#Newbies</span></button>
-        <button class="tag-btn" onclick="filterTag('年齢層高め', this)"><span class="lang-jp">#年齢層高め</span><span class="lang-en">#Mature</span></button>
-        <button class="tag-btn" onclick="filterTag('穏やか', this)"><span class="lang-jp">#穏やか</span><span class="lang-en">#Calm</span></button>
-        <button class="tag-btn" onclick="filterTag('盛り上がる', this)"><span class="lang-jp">#盛り上がる</span><span class="lang-en">#Lively</span></button>
-        <button class="tag-btn" onclick="filterTag('お通し有', this)"><span class="lang-jp">#お通し有</span><span class="lang-en">#Appetizer</span></button>
-        <button class="tag-btn" onclick="filterTag('フード有', this)"><span class="lang-jp">#フード有</span><span class="lang-en">#Food</span></button>
-        <button class="tag-btn" onclick="filterTag('変わったリキュール有', this)"><span class="lang-jp">#変わったリキュール有</span><span class="lang-en">#UniqueDrink</span></button>
-        <button class="tag-btn" onclick="filterTag('イベント多い', this)"><span class="lang-jp">#イベント多い</span><span class="lang-en">#Events</span></button>
-        <button class="tag-btn" onclick="filterTag('ボトルキープ有', this)"><span class="lang-jp">#ボトルキープ有</span><span class="lang-en">#BottleKeep</span></button>
-        <button class="tag-btn" onclick="filterTag('持ち込み食べ物可', this)"><span class="lang-jp">#持ち込み食べ物可</span><span class="lang-en">#BYOFood</span></button>
-    </div>
-</div>
-
-<div id="shop-container"></div>
-
-<section class="aff-section">
-    <div class="aff-title"><span class="lang-jp">✨ 作成者おすすめの百合コンテンツ</span><span class="lang-en">✨ Recommended Yuri Content</span></div>
-    <div class="aff-grid">
-        <div class="aff-card">
-            <span class="aff-comment"><span class="lang-jp">「学生百合でこれが好き！」</span><span class="lang-en">"My student-yuri fav!"</span></span>
-            <div style="margin-top:10px;"><a href="https://amzn.to/4rXhcGH" target="_blank" style="color:#00ffcc; font-weight:bold; text-decoration:none;">📖 気になってる人が男じゃなかった</a></div>
+    <header class="header">
+        <div class="header-container">
+            <img src="logo.png" alt="Logo" class="logo-main">
+            <p class="site-copy">日本全国の至宝を、探しませんか？</p>
+            <p class="site-welcome">伝統的工芸品の世界へようこそ</p>
         </div>
-        <div class="aff-card">
-            <span class="aff-comment"><span class="lang-jp">「社会人百合でこれが好き！」</span><span class="lang-en">"Best office-yuri!"</span></span>
-            <div style="margin-top:10px;"><a href="https://amzn.to/4rtRQjS" target="_blank" style="color:#00ffcc; font-weight:bold; text-decoration:none;">📖 姉の親友、私の恋人。</a></div>
+    </header>
+
+    <div class="concept-btn-container">
+        <a href="concept.html" class="btn-concept">伝統的工芸品とは？（解説ページ）</a>
+    </div>   
+    <div class="header-nav">
+                
+            <p class="site-intro">日本が誇る、経済産業大臣指定の全 <span id="total-count">0</span> 品目アーカイブ</p>
         </div>
-        <div class="aff-card">
-            <span class="aff-comment"><span class="lang-jp">「こんなノンケどこにいるんですか？」</span><span class="lang-en">"An intense story of raw desire."</span></span>
-            <div style="margin-top:10px;"><a href="RAKUTEN_URL" target="_blank" style="color:#00ffcc; font-weight:bold; text-decoration:none;">✒️ 生のみ生のままで [ 綿矢 りさ ]</a></div>
-        </div>
-        <div class="aff-card">
-            <span class="aff-comment"><span class="lang-jp">「作画が神がかってます」</span><span class="lang-en">"Stunning art style!"</span></span>
-            <div style="margin-top:10px;"><a href="https://amzn.to/4rwUC8a" target="_blank" style="color:#00ffcc; font-weight:bold; text-decoration:none;">🎬 やがて君になる</a></div>
-        </div>
-    </div>
-</section>
+    </header>
 
-<footer class="footer-notice">
-    <strong><span class="lang-jp">免責事項</span><span class="lang-en">Disclaimer</span></strong>
-    <ul>
-        <li><span class="lang-jp">・掲載情報は案内人の実体験や調査時点のものです。最新情報は各店舗のSNS等でご確認ください。</span><span class="lang-en-block lang-en">- Information is based on experience and research. Check SNS for latest.</span></li>
-        <li><span class="lang-jp">・情報の誤りや削除依頼はX（@412357siki）のDMまでお願いいたします。</span><span class="lang-en-block lang-en">- For corrections or removal, contact via X (@412357siki) DM.</span></li>
-        <li><span class="lang-jp">・当サイトの利用により生じたトラブルについては責任を負いかねます。</span><span class="lang-en-block lang-en">- We are not responsible for any trouble arising from the use of this site.</span></li>
-    </ul>
-</footer>
-
-<div class="portfolio-section">
-    <a href="https://nogi46etoile5.github.io/aquazoo5etoile/" target="_blank" class="portfolio-card">🐟 <span class="lang-jp">水族館巡り</span><span class="lang-en">Aquarium</span></a>
-    <a href="https://nogi46etoile5.github.io/etoile5craft/" target="_blank" class="portfolio-card">🏺 <span class="lang-jp">伝統的工芸品</span><span class="lang-en">Traditional Crafts</span></a>
-</div>
-
-<script src="data.js"></script>
-<script>
-    const tagMap = {
-        '外国人多い': { jp: '外国人多い', en: 'Global' },
-        'ノーチャージ': { jp: 'ノーチャージ', en: 'NoCharge' },
-        '英語対応': { jp: '英語対応', en: 'English' },
-        'カラオケ': { jp: 'カラオケ', en: 'Karaoke' },
-        '喫煙可': { jp: '喫煙可', en: 'Smoking' },
-        '初心者向け': { jp: '初心者向け', en: 'Beginner' },
-        '初心者多め': { jp: '初心者多め', en: 'Newbies' },
-        '年齢層高め': { jp: '年齢層高め', en: 'Mature' },
-        '穏やか': { jp: '穏やか', en: 'Calm' },
-        '盛り上がる': { jp: '盛り上がる', en: 'Lively' },
-        'お通し有': { jp: 'お通し有', en: 'Appetizer' },
-        'フード有': { jp: 'フード有', en: 'Food' },
-        '変わったリキュール有': { jp: '変わったリキュール有', en: 'UniqueDrink' },
-        'イベント多い': { jp: 'イベント多い', en: 'Events' },
-        'ボトルキープ有': { jp: 'ボトルキープ有', en: 'BottleKeep' },
-        '持ち込み食べ物可': { jp: '持ち込み食べ物可', en: 'BYOFood' }
-    };
-
-    function setLang(lang) {
-        document.body.classList.toggle('en-mode', lang === 'en');
-        document.getElementById('btn-jp').classList.toggle('active', lang === 'jp');
-        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-        displayShops(); 
-    }
-    function toggleQA(btn) {
-        btn.classList.toggle('active');
-        const ans = btn.nextElementSibling;
-        ans.style.maxHeight = ans.style.maxHeight ? null : ans.scrollHeight + "px";
-    }
-    window.onscroll = function() {
-        const btn = document.getElementById('back-to-top');
-        if (document.documentElement.scrollTop > 300) btn.classList.add('show');
-        else btn.classList.remove('show');
-    };
-
-    function displayShops() {
-        const container = document.getElementById('shop-container');
-        if (!container || typeof shopDetails === 'undefined') return;
-        const isEn = document.body.classList.contains('en-mode');
-        container.innerHTML = ""; 
-
-        shopDetails.forEach(shop => {
-            const card = document.createElement('div');
-            card.className = 'shop-card show';
-            if (shop.series === "H系列") card.classList.add('border-l-h');
-            else if (shop.series === "A系列") card.classList.add('border-l-a');
-            else if (shop.series === "B系列") {
-                if (shop.seriesMark && shop.seriesMark.includes("(L)")) card.classList.add('border-l-b-l');
-                else card.classList.add('border-l-b-g');
-            } else if (shop.series === "GF系") card.classList.add('border-l-gf');
-            else if (shop.series === "船系") card.classList.add('border-l-fune');
-            if (shop.type === "ビアン") card.classList.add('border-r-bian'); else card.classList.add('border-r-mix');
-
-            card.dataset.area = shop.area;
-            card.dataset.tags = JSON.stringify(shop.tags || []);
-            
-            const dName = isEn ? (shop.name_en || shop.name_jp) : shop.name_jp;
-            const dDesc = isEn ? (shop.description_en || shop.description_jp) : shop.description_jp;
-            const dTags = (shop.tags || []).map(t => {
-                const label = tagMap[t] ? (isEn ? tagMap[t].en : tagMap[t].jp) : t;
-                return `<span>#${label}</span>`;
-            }).join('');
-
-            const iconContent = (shop.icon === "instagram" || !shop.icon || shop.icon === "") 
-                ? `<div style="width:100px; height:100px; border-radius:8px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; font-size: 9px; font-weight: bold; flex-shrink: 0;"><span style="font-size:20px; margin-bottom:2px;">📸</span>Instagram</div>`
-                : `<img src="${shop.icon}" style="width:100px; height:100px; border-radius:8px; object-fit:cover; flex-shrink: 0;" onerror="this.src='https://via.placeholder.com/100?text=Bar'">`;
-
-            card.innerHTML = `
-                <div style="padding:15px;">
-                    <div style="display:flex; gap:15px; margin-bottom:10px;">
-                        ${iconContent}
-                        <div style="flex:1;">
-                            <div class="shop-name"><a href="${shop.snsUrl}" target="_blank" style="color:white; text-decoration:none;">${dName} 🔗</a></div>
-                            <div style="font-size:0.75rem; color:#ccd6f6;">📍 ${isEn ? shop.address_en : shop.address_jp}</div>
-                            <div class="feature-tags">${dTags}</div>
-                        </div>
+    <main class="main-content">
+        <div class="kit-container">
+            <p style="font-size:0.85rem; font-weight:bold; color:var(--accent-brown); margin:0 0 15px 0; text-align:center;">
+                ＼ 職人技に触れる！自宅で伝統工芸体験キット ／
+            </p>
+            <div style="display:flex; flex-wrap:wrap; gap:15px; justify-content:center;">
+                <a href="https://a.r10.to/h5GKDi" target="_blank" class="kit-box" style="flex: 1; min-width: 280px;">
+                    <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/rakuten24/cabinet/855/4901316713855.jpg?_ex=128x128" style="width:60px; height:60px; object-fit:cover; border-radius:6px;" alt="楽天体験キット">
+                    <div>
+                        <span style="font-size:0.8rem; color:#666; display:block;">楽天で選ぶ：</span>
+                        <span style="font-size:0.9rem; color:#bf0000; font-weight:bold; text-decoration:underline;">伝統工芸体験キットを見る ≫</span>
                     </div>
-                    ${dDesc ? `<div style="font-size:0.75rem; color:#ccd6f6; line-height:1.5; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px;">${dDesc}</div>` : ""}
-                </div>
-                <div class="action-buttons">
-                    <a href="${isEn ? (shop.medium || shop.note) : shop.note}" class="btn btn-note" target="_blank">📝 ${isEn ? 'Medium' : 'note'}</a>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfFImnEyesEpfDGiIKEKtAN0BDzaHj9LPaelxO8pa9IdrjdJg/viewform?usp=sf_link" class="btn btn-guide" target="_blank">🤝 ${isEn ? 'Booking' : '付き添い依頼'}</a>
-                </div>`;
-            container.appendChild(card);
-        });
-        updateVisibility();
-    }
+                </a>
+                <a href="https://amzn.to/3NCwL7W" target="_blank" class="kit-box" style="flex: 1; min-width: 280px;">
+                    <div style="padding-left:10px;">
+                        <span style="font-size:0.8rem; color:#666; display:block;">Amazonで選ぶ：</span>
+                        <span style="font-size:0.9rem; color:var(--primary-green); font-weight:bold; text-decoration:underline;">▶ 伝統工芸体験キットを見る</span>
+                    </div>
+                </a>
+            </div>
+            <p style="font-size:0.6rem; color:#999; margin-top:12px; text-align:center;">※上記リンク先にはアフィリエイト広告が含まれます</p>
+        </div>
 
-    let activeFilters = { areas: [], tags: [] };
-    function updateVisibility() {
-        document.querySelectorAll('.shop-card').forEach(card => {
-            const areaMatch = activeFilters.areas.length === 0 || activeFilters.areas.includes(card.dataset.area);
-            const tagsMatch = activeFilters.tags.every(t => JSON.parse(card.dataset.tags).includes(t));
-            card.classList.toggle('show', areaMatch && tagsMatch);
+        <div class="notice-box">
+            <span class="note-status">✍️ note記事：誠意作成中</span>
+            <span class="notice-title">当サイトは「伝統的工芸品」の統括アーカイブです</span>
+            <p class="notice-text">
+                本サイトで紹介しているのは、経済産業大臣が指定した<b>「伝統的工芸品」</b>です。
+                一般的な「伝統工芸」とは異なり、100年以上の歴史や厳格な審査基準をクリアした、国が認める日本の宝のみを厳選して掲載しています。「全国244品目を網羅。複数県にまたがる産地を地域別に収録しているため、総データ数は256件となっています。」
+            </p>
+        </div>
+
+        <section class="selection-box">
+            <h2>場所から探す</h2>
+            <div class="filter-buttons" id="area-filters">
+                <button class="btn-green active" data-area="all">全国すべて</button>
+                <button class="btn-green" data-area="北日本">北日本</button>
+                <button class="btn-green" data-area="関東">関東</button>
+                <button class="btn-green" data-area="北陸中部">北陸中部</button>
+                <button class="btn-green" data-area="西日本">西日本</button>
+                <button class="btn-green" data-area="九州沖縄">九州沖縄</button>
+            </div>
+        </section>
+
+        <section class="selection-box">
+            <h2>品目ジャンル</h2>
+            <div class="filter-buttons" id="type-filters">
+                <button class="btn-brown active" data-type="all">すべて</button>
+                <button class="btn-brown" data-type="陶磁器">陶磁器</button>
+                <button class="btn-brown" data-type="漆器">漆器</button>
+                <button class="btn-brown" data-type="織物">織物</button>
+                <button class="btn-brown" data-type="木工品">木工品</button>
+                <button class="btn-brown" data-type="金工品">金工品</button>
+                <button class="btn-brown" data-type="和紙">和紙</button>
+            </div>
+        </section>
+
+        <section class="selection-box" id="tag-filters-container">
+            <h2>こだわり条件</h2>
+            <span class="filter-group-title">▼ 目的（誰に・何のために）</span>
+            <div class="filter-buttons">
+                <button class="btn-tag" data-tag="family">家族向け</button>
+                <button class="btn-tag" data-tag="kids">子供向け</button>
+                <button class="btn-tag" data-tag="cooking">料理向け</button>
+                <button class="btn-tag" data-tag="gift">贈答向け</button>
+                <button class="btn-tag" data-tag="overseas">海外向け</button>
+            </div>
+            <span class="filter-group-title">▼ 用途・機能</span>
+            <div class="filter-buttons">
+                <button class="btn-tag" data-tag="daily">普段使い</button>
+                <button class="btn-tag" data-tag="guest">来客向け</button>
+                <button class="btn-tag" data-tag="repair">修理可能</button>
+                <button class="btn-tag" data-tag="unique">一点もの</button>
+            </div>
+            <span class="filter-group-title">▼ 特徴・注意点</span>
+            <div class="filter-buttons">
+                <button class="btn-tag" data-tag="tough">丈夫</button>
+                <button class="btn-tag" data-tag="light">軽い</button>
+                <button class="btn-tag" data-tag="no-machine">食洗機・レンジ不可</button>
+                <button class="btn-tag" data-tag="aging">経年変化を楽しむ</button>
+                <button class="btn-tag" data-tag="reasonable">値段控えめ</button>
+            </div>
+            <span class="filter-group-title">▼ 体験・見学</span>
+            <div class="filter-buttons">
+                <button class="btn-tag" data-tag="workshop">制作体験あり</button>
+                <button class="btn-tag" data-tag="factory">工房見学可</button>
+                <button class="btn-tag" data-tag="museum">展示施設あり</button>
+            </div>
+        </section>
+
+        <div id="result-count">読み込み中...</div>
+        <div id="craft-list"></div>
+
+        <section style="margin-top:60px; border-top:2px solid #ddd; padding-top:30px; padding-bottom:50px;">
+            <h2 style="text-align:center; font-size:1.1rem; color:var(--accent-brown); margin-bottom:20px;">🌐 関連ポータルサイト</h2>
+            <div style="display:flex; flex-wrap:wrap; gap:15px; justify-content:center;">
+                <a href="https://nogi46etoile5.github.io/aquazoo5etoile/" target="_blank" style="width:280px; text-decoration:none; background:#e3f2fd; padding:15px; border-radius:12px; display:flex; align-items:center; gap:10px; border:1px solid #bbdefb;">
+                    <span style="font-size:1.5rem;">🐟</span>
+                    <div>
+                        <span style="display:block; font-weight:bold; color:#01579b; font-size:0.85rem;">日本の水族館アーカイブ</span>
+                        <span style="display:block; font-size:0.7rem; color:#0277bd;">癒やしの空間を網羅するポータル</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <div id="craft-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        let allCraftData = []; 
+        let currentArea = 'all';
+        let currentType = 'all';
+        let activeTags = [];
+    
+        // --- メイン表示更新処理 ---
+        function updateDisplay() {
+            const list = document.getElementById('craft-list');
+            if (!list) return;
+    
+            const filteredData = allCraftData.filter(item => {
+                let areaMatch = (currentArea === 'all');
+                if (!areaMatch) {
+                    const r = item.region || "";
+                    if (currentArea === '西日本') {
+                        areaMatch = r.includes('近畿') || r.includes('中国四国');
+                    } else if (currentArea === '北陸中部') {
+                        areaMatch = r.includes('北陸') || r.includes('中部') || r.includes('東海');
+                    } else if (currentArea === '九州沖縄') {
+                        areaMatch = r.includes('九州') || r.includes('沖縄');
+                    } else {
+                        areaMatch = r.includes(currentArea);
+                    }
+                }
+                const typeMatch = (currentType === 'all' || item.type === currentType);
+                const tagMatch = activeTags.length === 0 || (item.tags && activeTags.every(t => item.tags.includes(t)));
+                return areaMatch && typeMatch && tagMatch;
+            });
+    
+            // 件数表示を更新
+            const countEl = document.getElementById('result-count');
+            if (countEl) countEl.textContent = `表示中：${filteredData.length} 件`;
+    
+            list.innerHTML = filteredData.map(item => {
+                const isNational = item.certified === "国";
+                const badgeText = isNational ? "国指定" : `${item.pref.charAt(0)}指定`;
+                const badgeClass = isNational ? "badge-national" : "badge-local";
+    
+                return `
+                    <article class="craft-card" onclick="showDetail('${item.id}')">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <span class="badge ${badgeClass}">${badgeText}</span>
+                            <div style="color: var(--accent-brown); font-size: 0.75rem; font-weight: bold;">${item.pref} / ${item.type}</div>
+                        </div>
+                        <h3 style="margin: 8px 0; color: var(--primary-green); font-size:1.15rem; line-height:1.4;">${item.name}</h3>
+                        <p style="font-size: 0.8rem; color: #666; height: 3em; overflow: hidden; margin:0; line-height:1.5;">${item.history}</p>
+                    </article>
+                `;
+            }).join('');
+        }
+    
+        // --- 詳細表示（モーダル） ---
+        function showDetail(id) {
+            const item = allCraftData.find(d => String(d.id) === String(id));
+            if(!item) return;
+    
+            const modal = document.getElementById('craft-modal');
+            const body = document.getElementById('modal-body');
+    
+            const isNational = item.certified === "国";
+            const badgeText = isNational ? "経済産業大臣指定 伝統的工芸品" : `${item.pref}知事指定 伝統工芸品`;
+            const badgeColor = isNational ? "#e60012" : "#007bc3";
+    
+            const offLink = (item.official_site && item.official_site !== "確認中") 
+                ? `<a href="${item.official_site}" target="_blank" class="link-btn btn-official">🌐 公式サイトを見る</a>`
+                : `<span class="link-btn btn-disabled">🌐 公式サイト：確認中</span>`;
+            
+            const shopLink = (item.shop_url && item.shop_url !== "確認中") 
+                ? `<a href="${item.shop_url}" target="_blank" class="link-btn btn-shop">🛒 販売元で購入</a>`
+                : `<span class="link-btn btn-disabled">🛒 販売元：確認中</span>`;
+    
+            const noteBtnLabel = (item.note_url && item.note_url !== "確認中") 
+                ? `noteで「${item.name}」の物語を読む` 
+                : `noteで伝統工芸の記事を探す`;
+            
+            const noteUrl = (item.note_url && item.note_url !== "確認中") 
+                ? item.note_url 
+                : "https://note.com/";
+    
+            body.innerHTML = `
+                <div style="display:inline-block; background:${badgeColor}; color:white; font-size:0.75rem; padding:4px 12px; border-radius:4px; margin-bottom:12px; font-weight:bold;">
+                    ${badgeText}
+                </div>
+                <p style="color:var(--accent-brown); font-size:0.85rem; font-weight:bold; margin-bottom:8px;">${item.region} | ${item.pref}</p>
+                <h2 style="color:var(--primary-green); margin-top:0; border-bottom:3px solid var(--light-green); padding-bottom:15px;">${item.name}</h2>
+                <p style="font-size:0.95rem; line-height:1.8; color:#333;">${item.history}</p>
+                <div class="link-area">
+                    ${offLink}
+                    ${shopLink}
+                </div>
+                <div style="text-align:center; margin-top:30px;">
+                    <a href="${noteUrl}" target="_blank" style="background:var(--accent-brown); color:#fff; padding:15px 35px; text-decoration:none; border-radius:30px; font-weight:bold; display:inline-block;">
+                        ${noteBtnLabel}
+                    </a>
+                </div>
+            `;
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+    
+        // --- 初期化処理 ---
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof CRAFT_DATA !== 'undefined') {
+                // ★ここが重複排除の心臓部★
+                allCraftData = Array.from(
+                    CRAFT_DATA.reduce((map, item) => {
+                        const existing = map.get(item.name);
+                        if (existing) {
+                            // 同じ名前があれば、県名を合体させて、カウントを増やさない
+                            if (!existing.pref.includes(item.pref)) {
+                                existing.pref = `${existing.pref}・${item.pref}`;
+                            }
+                        } else {
+                            // 新しい名前なら map に登録
+                            map.set(item.name, { ...item });
+                        }
+                        return map;
+                    }, new Map()).values()
+                );
+                console.log("重複排除完了。現在の品目数:", allCraftData.length);
+            }
+    
+            // フィルターボタンのイベント登録
+            document.querySelectorAll('#area-filters button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#area-filters button').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentArea = btn.dataset.area;
+                    updateDisplay();
+                });
+            });
+    
+            document.querySelectorAll('#type-filters button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#type-filters button').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentType = btn.dataset.type;
+                    updateDisplay();
+                });
+            });
+    
+            document.querySelectorAll('.btn-tag').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    btn.classList.toggle('active');
+                    const tag = btn.dataset.tag;
+                    if (activeTags.includes(tag)) activeTags = activeTags.filter(t => t !== tag);
+                    else activeTags.push(tag);
+                    updateDisplay();
+                });
+            });
+    
+            // モーダル閉じる処理
+            const closeBtn = document.querySelector('.close-modal');
+            if (closeBtn) closeBtn.onclick = () => {
+                document.getElementById('craft-modal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            };
+    
+            updateDisplay();
         });
-    }
-    function filterArea(area, btn) {
-        const i = activeFilters.areas.indexOf(area);
-        i > -1 ? activeFilters.areas.splice(i, 1) : activeFilters.areas.push(area);
-        btn.classList.toggle('active'); updateVisibility();
-    }
-    function filterTag(tag, btn) {
-        const i = activeFilters.tags.indexOf(tag);
-        i > -1 ? activeFilters.tags.splice(i, 1) : activeFilters.tags.push(tag);
-        btn.classList.toggle('active'); updateVisibility();
-    }
-    document.addEventListener('DOMContentLoaded', displayShops);
-</script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // data.jsから読み込んだCRAFT_DATAの数（244）を正確に表示
+        const totalCountElement = document.getElementById('total-count');
+        if (totalCountElement) {
+            totalCountElement.textContent = CRAFT_DATA.length;
+        }
+
+        // ...（フィルタリング処理など）...
+        // データが多い場合、重複IDがあると正しく表示されないため、
+        // render関数内で craft.id ではなく、配列のindex等を使うと安全です
+    });
+
+    </script>
+
 </body>
 </html>
