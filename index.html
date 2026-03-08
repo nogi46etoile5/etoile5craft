@@ -21,7 +21,34 @@
             padding: 40px 0 25px 0; 
             border-bottom: 5px solid var(--primary-green);
             text-align: center;
+            position: relative;
         }
+        
+        /* 💡 言語切替ボタンを大きく調整 */
+        .lang-switch {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 12px;
+        }
+        .btn-lang {
+            padding: 10px 25px; /* 内側の余白を拡大 */
+            font-size: 1.2rem;    /* 文字サイズを大きく */
+            border: 2px solid var(--primary-green); /* 線を少し太く */
+            background: #fff;
+            color: var(--primary-green);
+            cursor: pointer;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: 0.2s;
+            min-width: 90px; /* 最小横幅を確保 */
+        }
+        .btn-lang.active {
+            background: var(--primary-green);
+            color: #fff;
+        }
+
         .header-container { max-width: 1100px; margin: 0 auto; padding: 0 15px; }
         .logo-main { display: block; margin: 0 auto 15px auto; max-width: 500px; width: 90%; height: auto; }
         .site-copy { font-size: 1.3rem; color: var(--primary-green); font-weight: bold; margin: 0; }
@@ -87,185 +114,165 @@
         .link-btn { display: block; text-align: center; padding: 14px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-bottom: 12px; }
         .btn-official { background: #fff; color: var(--primary-green); border: 1px solid var(--primary-green); }
         .btn-shop { background: var(--primary-green); color: #fff; }
+        .btn-medium { background: #000; color: #fff; }
         .btn-disabled { background: #eee; color: #999; cursor: not-allowed; }
 
-        @media (max-width: 600px) { .logo-main { max-width: 350px; } }
-        .badge {
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    font-weight: bold;
-    color: white;
-    display: inline-block;
-}
-.badge-national { background-color: #e60012; } /* 赤 */
-.badge-local { background-color: #007bc3; }    /* 青 */
+        .badge { padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; color: white; display: inline-block; }
+        .badge-national { background-color: #e60012; }
+        .badge-local { background-color: #007bc3; }
 
+        .concept-btn-container { text-align: center; margin: 30px 0 50px 0; }
+        .btn-concept {
+            display: inline-block; background-color: var(--primary-green); color: var(--white); padding: 15px 40px; border-radius: 30px; text-decoration: none; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .btn-concept:hover { background-color: var(--light-green); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
 
-    /* ボタンのデザイン（以前の雰囲気に合わせて） */
-    .btn-concept {
-        display: inline-block;
-        background-color: var(--primary-green);
-        color: white;
-        padding: 10px 25px;
-        border-radius: 50px;
-        text-decoration: none;
-        font-weight: bold;
-        margin-bottom: 20px;
-        transition: 0.3s;
-        border: 2px solid var(--primary-green);
-    }
-    .btn-concept:hover {
-        background-color: white;
-        color: var(--primary-green);
-    }
-/* ボタンの親要素を中央揃えにする */
-.concept-btn-container {
-    text-align: center;      /* 中身を中央に寄せる */
-    margin: 30px 0 50px 0;  /* 上下の余白（適宜調整してください） */
-}
-
-.btn-concept {
-    display: inline-block;   /* 中央揃えを効かせるために必要 */
-    background-color: var(--primary-green);
-    color: var(--white);
-    padding: 15px 40px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-.btn-concept:hover {
-    background-color: var(--light-green);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-}
-
-</style>
+        @media (max-width: 600px) { 
+            .logo-main { max-width: 350px; } 
+            .lang-switch { top: 10px; right: 10px; }
+            .btn-lang { padding: 6px 14px; font-size: 0.9rem; }
+        }
+    </style>
 </head>
-
 
 <body>
     <header class="header">
+        <div class="lang-switch">
+            <button class="btn-lang active" onclick="switchLang('ja')">日本語</button>
+            <button class="btn-lang" onclick="switchLang('en')">English</button>
+        </div>
         <div class="header-container">
             <img src="logo.png" alt="Logo" class="logo-main">
-            <p class="site-copy">日本全国の至宝を、探しませんか？</p>
-            <p class="site-welcome">伝統的工芸品の世界へようこそ</p>
+            <p class="site-copy" data-ja="日本全国の至宝を、探しませんか？" data-en="Discover the treasures of Japan.">日本全国の至宝を、探しませんか？</p>
+            <p class="site-welcome" data-ja="伝統的工芸品の世界へようこそ" data-en="Welcome to the World of Traditional Crafts">伝統的工芸品の世界へようこそ</p>
         </div>
     </header>
 
     <div class="concept-btn-container">
-        <a href="concept.html" class="btn-concept">伝統的工芸品とは？（解説ページ）</a>
+        <a href="concept.html" class="btn-concept" data-ja="伝統的工芸品とは？（解説ページ）" data-en="What are Traditional Crafts? (Details)">伝統的工芸品とは？（解説ページ）</a>
     </div>   
-    <div class="header-nav">
-                
-            <p class="site-intro">日本が誇る、経済産業大臣指定の全 <span id="total-count">0</span> 品目アーカイブ</p>
-        </div>
-    </header>
+
+    <div style="text-align:center; margin-bottom: 20px;">
+        <p class="site-intro" data-ja="日本が誇る、経済産業大臣指定の全 <span id='total-count'>0</span> 品目アーカイブ" data-en="Archive of all <span id='total-count-en'>0</span> items designated by the Minister of METI">
+            日本が誇る、経済産業大臣指定の全 <span id="total-count">0</span> 品目アーカイブ
+        </p>
+    </div>
 
     <main class="main-content">
         <div class="kit-container">
-            <p style="font-size:0.85rem; font-weight:bold; color:var(--accent-brown); margin:0 0 15px 0; text-align:center;">
+            <p style="font-size:0.85rem; font-weight:bold; color:var(--accent-brown); margin:0 0 15px 0; text-align:center;" data-ja="＼ 職人技に触れる！自宅で伝統工芸体験キット ／" data-en="\ Experience Craftsmanship! Traditional Craft Kits at Home /">
                 ＼ 職人技に触れる！自宅で伝統工芸体験キット ／
             </p>
             <div style="display:flex; flex-wrap:wrap; gap:15px; justify-content:center;">
                 <a href="https://a.r10.to/h5GKDi" target="_blank" class="kit-box" style="flex: 1; min-width: 280px;">
-                    <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/rakuten24/cabinet/855/4901316713855.jpg?_ex=128x128" style="width:60px; height:60px; object-fit:cover; border-radius:6px;" alt="楽天体験キット">
+                    <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/rakuten24/cabinet/855/4901316713855.jpg?_ex=128x128" style="width:60px; height:60px; object-fit:cover; border-radius:6px;" alt="Rakuten">
                     <div>
-                        <span style="font-size:0.8rem; color:#666; display:block;">楽天で選ぶ：</span>
-                        <span style="font-size:0.9rem; color:#bf0000; font-weight:bold; text-decoration:underline;">伝統工芸体験キットを見る ≫</span>
+                        <span style="font-size:0.8rem; color:#666; display:block;" data-ja="楽天で選ぶ：" data-en="Shop on Rakuten:">楽天で選ぶ：</span>
+                        <span style="font-size:0.9rem; color:#bf0000; font-weight:bold; text-decoration:underline;" data-ja="伝統工芸体験キットを見る ≫" data-en="View Craft Kits ≫">伝統工芸体験キットを見る ≫</span>
                     </div>
                 </a>
                 <a href="https://amzn.to/3NCwL7W" target="_blank" class="kit-box" style="flex: 1; min-width: 280px;">
                     <div style="padding-left:10px;">
-                        <span style="font-size:0.8rem; color:#666; display:block;">Amazonで選ぶ：</span>
-                        <span style="font-size:0.9rem; color:var(--primary-green); font-weight:bold; text-decoration:underline;">▶ 伝統工芸体験キットを見る</span>
+                        <span style="font-size:0.8rem; color:#666; display:block;" data-ja="Amazonで選ぶ：" data-en="Shop on Amazon:">Amazonで選ぶ：</span>
+                        <span style="font-size:0.9rem; color:var(--primary-green); font-weight:bold; text-decoration:underline;" data-ja="▶ 伝統工芸体験キットを見る" data-en="▶ View Craft Kits">▶ 伝統工芸体験キットを見る</span>
                     </div>
                 </a>
             </div>
-            <p style="font-size:0.6rem; color:#999; margin-top:12px; text-align:center;">※上記リンク先にはアフィリエイト広告が含まれます</p>
+            <p style="font-size:0.6rem; color:#999; margin-top:12px; text-align:center;" data-ja="※上記リンク先にはアフィリエイト広告が含まれます" data-en="*This section contains affiliate advertisements.">※上記リンク先にはアフィリエイト広告が含まれます</p>
         </div>
 
         <div class="notice-box">
-            <span class="note-status">✍️ note記事：誠意作成中</span>
-            <span class="notice-title">当サイトは「伝統的工芸品」の統括アーカイブです</span>
-            <p class="notice-text">
+            <span class="note-status" data-ja="✍️ note記事：誠意作成中" data-en="✍️ note stories: Under Construction">✍️ note記事：誠意作成中</span>
+            <span class="notice-title" data-ja="当サイトは「伝統的工芸品」の統括アーカイブです" data-en="Comprehensive Archive of 'Traditional Crafts'">当サイトは「伝統的工芸品」の統括アーカイブです</span>
+            <p class="notice-text" data-ja="本サイトで紹介しているのは、経済産業大臣が指定した<b>「伝統的工芸品」</b>です。一般的な「伝統工芸」とは異なり、100年以上の歴史や厳格な審査基準をクリアした、国が認める日本の宝のみを厳選して掲載しています。「全国244品目を網羅。複数県にまたがる産地を地域別に収録しているため、総データ数は249件となっています。」" data-en="Featured here are 'Traditional Crafts' designated by the Minister of METI. Unlike general crafts, these are national treasures that have cleared strict criteria and over 100 years of history. Covering all 244 items nationwide (249 data points including multi-prefecture areas).">
                 本サイトで紹介しているのは、経済産業大臣が指定した<b>「伝統的工芸品」</b>です。
                 一般的な「伝統工芸」とは異なり、100年以上の歴史や厳格な審査基準をクリアした、国が認める日本の宝のみを厳選して掲載しています。「全国244品目を網羅。複数県にまたがる産地を地域別に収録しているため、総データ数は249件となっています。」
             </p>
         </div>
 
         <section class="selection-box">
-            <h2>場所から探す</h2>
+            <h2 data-ja="場所から探す" data-en="Search by Area">場所から探す</h2>
             <div class="filter-buttons" id="area-filters">
-                <button class="btn-green active" data-area="all">全国すべて</button>
-                <button class="btn-green" data-area="北日本">北日本</button>
-                <button class="btn-green" data-area="関東">関東</button>
-                <button class="btn-green" data-area="北陸中部">北陸中部</button>
-                <button class="btn-green" data-area="西日本">西日本</button>
-                <button class="btn-green" data-area="九州沖縄">九州沖縄</button>
+                <button class="btn-green active" data-area="all" data-ja="全国すべて" data-en="All Japan">全国すべて</button>
+                <button class="btn-green" data-area="北日本" data-ja="北日本" data-en="North Japan">北日本</button>
+                <button class="btn-green" data-area="関東" data-ja="関東" data-en="Kanto">関東</button>
+                <button class="btn-green" data-area="北陸中部" data-ja="北陸中部" data-en="Hokuriku/Chubu">北陸中部</button>
+                <button class="btn-green" data-area="西日本" data-ja="西日本" data-en="West Japan">西日本</button>
+                <button class="btn-green" data-area="九州沖縄" data-ja="九州沖縄" data-en="Kyushu/Okinawa">九州沖縄</button>
             </div>
         </section>
 
         <section class="selection-box">
-            <h2>品目ジャンル</h2>
+            <h2 data-ja="品目ジャンル" data-en="Categories">品目ジャンル</h2>
             <div class="filter-buttons" id="type-filters">
-                <button class="btn-brown active" data-type="all">すべて</button>
-                <button class="btn-brown" data-type="陶磁器">陶磁器</button>
-                <button class="btn-brown" data-type="漆器">漆器</button>
-                <button class="btn-brown" data-type="織物">織物</button>
-                <button class="btn-brown" data-type="木工品">木工品</button>
-                <button class="btn-brown" data-type="金工品">金工品</button>
-                <button class="btn-brown" data-type="和紙">和紙</button>
+                <button class="btn-brown active" data-type="all" data-ja="すべて" data-en="All">すべて</button>
+                <button class="btn-brown" data-type="陶磁器" data-ja="陶磁器" data-en="Ceramics">陶磁器</button>
+                <button class="btn-brown" data-type="漆器" data-ja="漆器" data-en="Lacquerware">漆器</button>
+                <button class="btn-brown" data-type="織物" data-ja="織物" data-en="Textiles">織物</button>
+                <button class="btn-brown" data-type="木工品" data-ja="木工品" data-en="Woodwork">木工品</button>
+                <button class="btn-brown" data-type="金工品" data-ja="金工品" data-en="Metalwork">金工品</button>
+                <button class="btn-brown" data-type="和紙" data-ja="和紙" data-en="Washi Paper">和紙</button>
             </div>
         </section>
 
         <section class="selection-box" id="tag-filters-container">
-            <h2>こだわり条件</h2>
-            <span class="filter-group-title">▼ 目的（誰に・何のために）</span>
+            <h2 data-ja="こだわり条件" data-en="Advanced Filters">こだわり条件</h2>
+            <span class="filter-group-title" data-ja="▼ 目的（誰に・何のために）" data-en="▼ Purpose">▼ 目的（誰に・何のために）</span>
             <div class="filter-buttons">
-                <button class="btn-tag" data-tag="family">家族向け</button>
-                <button class="btn-tag" data-tag="kids">子供向け</button>
-                <button class="btn-tag" data-tag="cooking">料理向け</button>
-                <button class="btn-tag" data-tag="gift">贈答向け</button>
-                <button class="btn-tag" data-tag="overseas">海外向け</button>
+                <button class="btn-tag" data-tag="family" data-ja="家族向け" data-en="Family">家族向け</button>
+                <button class="btn-tag" data-tag="kids" data-ja="子供向け" data-en="Kids">子供向け</button>
+                <button class="btn-tag" data-tag="cooking" data-ja="料理向け" data-en="Cooking">料理向け</button>
+                <button class="btn-tag" data-tag="gift" data-ja="贈答向け" data-en="Gift">贈答向け</button>
+                <button class="btn-tag" data-tag="overseas" data-ja="海外向け" data-en="Overseas">海外向け</button>
             </div>
-            <span class="filter-group-title">▼ 用途・機能</span>
+            <span class="filter-group-title" data-ja="▼ 用途・機能" data-en="▼ Use Case">▼ 用途・機能</span>
             <div class="filter-buttons">
-                <button class="btn-tag" data-tag="daily">普段使い</button>
-                <button class="btn-tag" data-tag="guest">来客向け</button>
-                <button class="btn-tag" data-tag="repair">修理可能</button>
-                <button class="btn-tag" data-tag="unique">一点もの</button>
+                <button class="btn-tag" data-tag="daily" data-ja="普段使い" data-en="Daily">普段使い</button>
+                <button class="btn-tag" data-tag="guest" data-ja="来客向け" data-en="Guests">来客向け</button>
+                <button class="btn-tag" data-tag="repair" data-ja="修理可能" data-en="Repairable">修理可能</button>
+                <button class="btn-tag" data-tag="unique" data-ja="一点もの" data-en="Unique">一点もの</button>
             </div>
-            <span class="filter-group-title">▼ 特徴・注意点</span>
+            <span class="filter-group-title" data-ja="▼ 特徴・注意点" data-en="▼ Features">▼ 特徴・注意点</span>
             <div class="filter-buttons">
-                <button class="btn-tag" data-tag="tough">丈夫</button>
-                <button class="btn-tag" data-tag="light">軽い</button>
-                <button class="btn-tag" data-tag="no-machine">食洗機・レンジ不可</button>
-                <button class="btn-tag" data-tag="aging">経年変化を楽しむ</button>
-                <button class="btn-tag" data-tag="reasonable">値段控えめ</button>
+                <button class="btn-tag" data-tag="tough" data-ja="丈夫" data-en="Tough">丈夫</button>
+                <button class="btn-tag" data-tag="light" data-ja="軽い" data-en="Light">軽い</button>
+                <button class="btn-tag" data-tag="no-machine" data-ja="食洗機・レンジ不可" data-en="No Machine/Microwave">食洗機・レンジ不可</button>
+                <button class="btn-tag" data-tag="aging" data-ja="経年変化を楽しむ" data-en="Aging Texture">経年変化を楽しむ</button>
+                <button class="btn-tag" data-tag="reasonable" data-ja="値段控えめ" data-en="Reasonable">値段控えめ</button>
             </div>
-            <span class="filter-group-title">▼ 体験・見学</span>
+            <span class="filter-group-title" data-ja="▼ 体験・見学" data-en="▼ Tours">▼ 体験・見学</span>
             <div class="filter-buttons">
-                <button class="btn-tag" data-tag="workshop">制作体験あり</button>
-                <button class="btn-tag" data-tag="factory">工房見学可</button>
-                <button class="btn-tag" data-tag="museum">展示施設あり</button>
+                <button class="btn-tag" data-tag="workshop" data-ja="制作体験あり" data-en="Workshops">制作体験あり</button>
+                <button class="btn-tag" data-tag="factory" data-ja="工房見学可" data-en="Factory Tours">工房見学可</button>
+                <button class="btn-tag" data-tag="museum" data-ja="展示施設あり" data-en="Museums">展示施設あり</button>
             </div>
         </section>
 
-        <div id="result-count">読み込み中...</div>
+        <div id="result-count">Loading...</div>
         <div id="craft-list"></div>
 
         <section style="margin-top:60px; border-top:2px solid #ddd; padding-top:30px; padding-bottom:50px;">
-            <h2 style="text-align:center; font-size:1.1rem; color:var(--accent-brown); margin-bottom:20px;">🌐 関連ポータルサイト</h2>
+            <h2 style="text-align:center; font-size:1.1rem; color:var(--accent-brown); margin-bottom:20px;" data-ja="🌐 関連ポータルサイト" data-en="🌐 Related Portals">🌐 関連ポータルサイト</h2>
             <div style="display:flex; flex-wrap:wrap; gap:15px; justify-content:center;">
                 <a href="https://nogi46etoile5.github.io/aquazoo5etoile/" target="_blank" style="width:280px; text-decoration:none; background:#e3f2fd; padding:15px; border-radius:12px; display:flex; align-items:center; gap:10px; border:1px solid #bbdefb;">
                     <span style="font-size:1.5rem;">🐟</span>
                     <div>
-                        <span style="display:block; font-weight:bold; color:#01579b; font-size:0.85rem;">日本の水族館アーカイブ</span>
-                        <span style="display:block; font-size:0.7rem; color:#0277bd;">癒やしの空間を網羅するポータル</span>
+                        <span style="display:block; font-weight:bold; color:#01579b; font-size:0.85rem;" data-ja="日本の水族館アーカイブ" data-en="Japan Aquarium Archive">日本の水族館アーカイブ</span>
+                        <span style="display:block; font-size:0.7rem; color:#0277bd;" data-ja="癒やしの空間を網羅" data-en="Portal for healing spaces">癒やしの空間を網羅</span>
+                    </div>
+                </a>
+                <a href="https://nogi46etoile5.github.io/bianbarmap/" target="_blank" style="width:280px; text-decoration:none; background:#fce4ec; padding:15px; border-radius:12px; display:flex; align-items:center; gap:10px; border:1px solid #f8bbd0;">
+                    <span style="font-size:1.5rem;">🏳️‍🌈</span>
+                    <div>
+                        <span style="display:block; font-weight:bold; color:#880e4f; font-size:0.85rem;" data-ja="レズビアンバー・アーカイブ" data-en="Lesbian Bar Archive">レズビアンバー・アーカイブ</span>
+                        <span style="display:block; font-size:0.7rem; color:#ad1457;" data-ja="全国の交流スポットを紹介" data-en="Discover community spots">全国の交流スポットを紹介</span>
+                    </div>
+                </a>
+                <a href="https://nogi46etoile5.github.io/nomigame/" target="_blank" style="width:280px; text-decoration:none; background:#fff3e0; padding:15px; border-radius:12px; display:flex; align-items:center; gap:10px; border:1px solid #ffe0b2;">
+                    <span style="font-size:1.5rem;">🍻</span>
+                    <div>
+                        <span style="display:block; font-weight:bold; color:#e65100; font-size:0.85rem;" data-ja="飲みゲーム・アーカイブ" data-en="Drinking Games Archive">飲みゲーム・アーカイブ</span>
+                        <span style="display:block; font-size:0.7rem; color:#ef6c00;" data-ja="宴会を盛り上げる定番ルール" data-en="Classic rules for parties">宴会を盛り上げる定番ルール</span>
                     </div>
                 </a>
             </div>
@@ -285,12 +292,36 @@
         let currentArea = 'all';
         let currentType = 'all';
         let activeTags = [];
-    
-        // --- メイン表示更新処理 ---
+        let currentLang = 'ja';
+
+        function switchLang(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.btn-lang').forEach(b => b.classList.remove('active'));
+            // lang引数に合わせたボタンをアクティブにする
+            const activeBtn = document.querySelector(`.btn-lang[onclick*="'${lang}'"]`);
+            if (activeBtn) activeBtn.classList.add('active');
+            
+            document.querySelectorAll('[data-ja]').forEach(el => {
+                const translation = el.getAttribute(`data-${lang}`);
+                el.innerHTML = translation;
+            });
+
+            updateCountDisplay();
+            updateDisplay();
+        }
+
+        function updateCountDisplay() {
+            const countJa = document.getElementById('total-count');
+            const countEn = document.getElementById('total-count-en');
+            const total = typeof CRAFT_DATA !== 'undefined' ? CRAFT_DATA.length : 0;
+            if (countJa) countJa.textContent = total;
+            if (countEn) countEn.textContent = total;
+        }
+
         function updateDisplay() {
             const list = document.getElementById('craft-list');
             if (!list) return;
-    
+
             const filteredData = allCraftData.filter(item => {
                 let areaMatch = (currentArea === 'all');
                 if (!areaMatch) {
@@ -309,101 +340,113 @@
                 const tagMatch = activeTags.length === 0 || (item.tags && activeTags.every(t => item.tags.includes(t)));
                 return areaMatch && typeMatch && tagMatch;
             });
-    
-            // 件数表示を更新
+
             const countEl = document.getElementById('result-count');
-            if (countEl) countEl.textContent = `表示中：${filteredData.length} 件`;
-    
+            if (countEl) {
+                countEl.textContent = currentLang === 'ja' ? `表示中：${filteredData.length} 件` : `Showing: ${filteredData.length} items`;
+            }
+
             list.innerHTML = filteredData.map(item => {
                 const isNational = item.certified === "国";
-                const badgeText = isNational ? "国指定" : `${item.pref.charAt(0)}指定`;
+                const badgeText = currentLang === 'ja' 
+                    ? (isNational ? "国指定" : `${item.pref.charAt(0)}指定`)
+                    : (isNational ? "National" : "Local");
                 const badgeClass = isNational ? "badge-national" : "badge-local";
-    
+
+                // 言語に応じたテキストの選択
+                const displayName = currentLang === 'ja' ? item.name : (item.name_en || item.name);
+                const displayType = currentLang === 'ja' ? item.type : (item.type_en || item.type);
+                const displayHistory = currentLang === 'ja' ? item.history : (item.history_en || item.history);
+
                 return `
                     <article class="craft-card" onclick="showDetail('${item.id}')">
                         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <span class="badge ${badgeClass}">${badgeText}</span>
-                            <div style="color: var(--accent-brown); font-size: 0.75rem; font-weight: bold;">${item.pref} / ${item.type}</div>
+                            <div style="color: var(--accent-brown); font-size: 0.75rem; font-weight: bold;">${item.pref} / ${displayType}</div>
                         </div>
-                        <h3 style="margin: 8px 0; color: var(--primary-green); font-size:1.15rem; line-height:1.4;">${item.name}</h3>
-                        <p style="font-size: 0.8rem; color: #666; height: 3em; overflow: hidden; margin:0; line-height:1.5;">${item.history}</p>
+                        <h3 style="margin: 8px 0; color: var(--primary-green); font-size:1.15rem; line-height:1.4;">${displayName}</h3>
+                        <p style="font-size: 0.8rem; color: #666; height: 3em; overflow: hidden; margin:0; line-height:1.5;">${displayHistory}</p>
                     </article>
                 `;
             }).join('');
         }
-    
-        // --- 詳細表示（モーダル） ---
+
         function showDetail(id) {
             const item = allCraftData.find(d => String(d.id) === String(id));
             if(!item) return;
-    
+
             const modal = document.getElementById('craft-modal');
             const body = document.getElementById('modal-body');
-    
+
             const isNational = item.certified === "国";
-            const badgeText = isNational ? "経済産業大臣指定 伝統的工芸品" : `${item.pref}知事指定 伝統工芸品`;
+            const badgeText = currentLang === 'ja'
+                ? "経済産業大臣指定 伝統的工芸品"
+                : "National Traditional Craft (Ministerial)";
             const badgeColor = isNational ? "#e60012" : "#007bc3";
-    
+
+            // 詳細表示用の言語切り替え
+            const displayName = currentLang === 'ja' ? item.name : (item.name_en || item.name);
+            const displayHistory = currentLang === 'ja' ? item.history : (item.history_en || item.history);
+
             const offLink = (item.official_site && item.official_site !== "確認中") 
-                ? `<a href="${item.official_site}" target="_blank" class="link-btn btn-official">🌐 公式サイトを見る</a>`
-                : `<span class="link-btn btn-disabled">🌐 公式サイト：確認中</span>`;
+                ? `<a href="${item.official_site}" target="_blank" class="link-btn btn-official">🌐 ${currentLang==='ja'?'公式サイトを見る':'Visit Official Site'}</a>`
+                : `<span class="link-btn btn-disabled">🌐 ${currentLang==='ja'?'公式サイト：確認中':'Site: TBA'}</span>`;
             
             const shopLink = (item.shop_url && item.shop_url !== "確認中") 
-                ? `<a href="${item.shop_url}" target="_blank" class="link-btn btn-shop">🛒 販売元で購入</a>`
-                : `<span class="link-btn btn-disabled">🛒 販売元：確認中</span>`;
-    
-            const noteBtnLabel = (item.note_url && item.note_url !== "確認中") 
-                ? `noteで「${item.name}」の物語を読む` 
-                : `noteで伝統工芸の記事を探す`;
-            
-            const noteUrl = (item.note_url && item.note_url !== "確認中") 
-                ? item.note_url 
-                : "https://note.com/";
-    
+                ? `<a href="${item.shop_url}" target="_blank" class="link-btn btn-shop">🛒 ${currentLang==='ja'?'販売元で購入':'Shop Online'}</a>`
+                : `<span class="link-btn btn-disabled">🛒 ${currentLang==='ja'?'販売元：確認中':'Shop: TBA'}</span>`;
+
+            // Mediumリンクの動的生成
+            const mediumUrl = (item.medium_url && item.medium_url !== "確認中") ? item.medium_url : "https://medium.com/";
+
             body.innerHTML = `
-                <div style="display:inline-block; background:${badgeColor}; color:white; font-size:0.75rem; padding:4px 12px; border-radius:4px; margin-bottom:12px; font-weight:bold;">
-                    ${badgeText}
-                </div>
+                <div style="display:inline-block; background:${badgeColor}; color:white; font-size:0.75rem; padding:4px 12px; border-radius:4px; margin-bottom:12px; font-weight:bold;">${badgeText}</div>
                 <p style="color:var(--accent-brown); font-size:0.85rem; font-weight:bold; margin-bottom:8px;">${item.region} | ${item.pref}</p>
-                <h2 style="color:var(--primary-green); margin-top:0; border-bottom:3px solid var(--light-green); padding-bottom:15px;">${item.name}</h2>
-                <p style="font-size:0.95rem; line-height:1.8; color:#333;">${item.history}</p>
+                <h2 style="color:var(--primary-green); margin-top:0; border-bottom:3px solid var(--light-green); padding-bottom:15px;">${displayName}</h2>
+                <p style="font-size:0.95rem; line-height:1.8; color:#333;">${displayHistory}</p>
                 <div class="link-area">
                     ${offLink}
                     ${shopLink}
                 </div>
-                <div style="text-align:center; margin-top:30px;">
-                    <a href="${noteUrl}" target="_blank" style="background:var(--accent-brown); color:#fff; padding:15px 35px; text-decoration:none; border-radius:30px; font-weight:bold; display:inline-block;">
-                        ${noteBtnLabel}
+                <div style="display:flex; flex-direction:column; gap:12px; align-items:center; margin-top:30px;">
+                    <a href="${(item.note_url && item.note_url !== '確認中') ? item.note_url : 'https://note.com/'}" target="_blank" style="background:var(--accent-brown); color:#fff; padding:15px; text-decoration:none; border-radius:30px; font-weight:bold; width:100%; text-align:center;">
+                        ${currentLang==='ja' ? `noteで物語を読む` : `Read Story on note`}
+                    </a>
+                    <a href="${mediumUrl}" target="_blank" class="link-btn btn-medium" style="width:100%; border-radius:30px; padding:15px;">
+                        Medium (English Stories)
                     </a>
                 </div>
             `;
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
         }
-    
-        // --- 初期化処理 ---
+
         document.addEventListener('DOMContentLoaded', () => {
-            if (typeof CRAFT_DATA !== 'undefined') {
-                // ★ここが重複排除の心臓部★
-                allCraftData = Array.from(
-                    CRAFT_DATA.reduce((map, item) => {
+            if (typeof CRAFT_DATA !== 'undefined' && CRAFT_DATA.length > 0) {
+                // 重複排除ロジックの安全な実行
+                try {
+                    const map = new Map();
+                    CRAFT_DATA.forEach(item => {
+                        if (!item.name) return;
                         const existing = map.get(item.name);
                         if (existing) {
-                            // 同じ名前があれば、県名を合体させて、カウントを増やさない
                             if (!existing.pref.includes(item.pref)) {
                                 existing.pref = `${existing.pref}・${item.pref}`;
                             }
                         } else {
-                            // 新しい名前なら map に登録
                             map.set(item.name, { ...item });
                         }
-                        return map;
-                    }, new Map()).values()
-                );
-                console.log("重複排除完了。現在の品目数:", allCraftData.length);
+                    });
+                    allCraftData = Array.from(map.values());
+                } catch (e) {
+                    console.error("Data processing error:", e);
+                    allCraftData = [...CRAFT_DATA];
+                }
+                updateCountDisplay();
+                updateDisplay();
             }
-    
-            // フィルターボタンのイベント登録
+
+            // フィルタボタンのイベント登録
             document.querySelectorAll('#area-filters button').forEach(btn => {
                 btn.addEventListener('click', () => {
                     document.querySelectorAll('#area-filters button').forEach(b => b.classList.remove('active'));
@@ -412,7 +455,7 @@
                     updateDisplay();
                 });
             });
-    
+
             document.querySelectorAll('#type-filters button').forEach(btn => {
                 btn.addEventListener('click', () => {
                     document.querySelectorAll('#type-filters button').forEach(b => b.classList.remove('active'));
@@ -421,7 +464,7 @@
                     updateDisplay();
                 });
             });
-    
+
             document.querySelectorAll('.btn-tag').forEach(btn => {
                 btn.addEventListener('click', () => {
                     btn.classList.toggle('active');
@@ -431,31 +474,15 @@
                     updateDisplay();
                 });
             });
-    
-            // モーダル閉じる処理
+
             const closeBtn = document.querySelector('.close-modal');
             if (closeBtn) closeBtn.onclick = () => {
                 document.getElementById('craft-modal').style.display = 'none';
                 document.body.style.overflow = 'auto';
             };
-    
-            updateDisplay();
         });
-
-    document.addEventListener('DOMContentLoaded', () => {
-        // data.jsから読み込んだCRAFT_DATAの数（244）を正確に表示
-        const totalCountElement = document.getElementById('total-count');
-        if (totalCountElement) {
-            totalCountElement.textContent = CRAFT_DATA.length;
-        }
-
-        // ...（フィルタリング処理など）...
-        // データが多い場合、重複IDがあると正しく表示されないため、
-        // render関数内で craft.id ではなく、配列のindex等を使うと安全です
-    });
-
     </script>
-
+    
 </body>
 
 </html>

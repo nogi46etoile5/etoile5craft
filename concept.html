@@ -5,60 +5,128 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>伝統的工芸品とは？ - Cinq Étoile Craft</title>
     <style>
-        body { font-family: "Hiragino Mincho ProN", serif; line-height: 1.8; color: #333; max-width: 800px; margin: 0 auto; padding: 40px 20px; background: #fcfaf5; }
-        h1 { color: #2d5d3d; border-bottom: 3px solid #9acd32; padding-bottom: 10px; text-align: center; }
+        body { font-family: "Hiragino Mincho ProN", serif; line-height: 1.8; color: #333; max-width: 800px; margin: 0 auto; padding: 40px 20px; background: #fcfaf5; position: relative; }
+        
+        /* 💡 言語切替ボタン（1.5倍サイズ） */
+        .lang-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 12px;
+        }
+        .btn-lang {
+            padding: 12px 28px;
+            font-size: 1.3rem;
+            border: 3px solid #2d5d3d;
+            background: #fff;
+            color: #2d5d3d;
+            cursor: pointer;
+            border-radius: 35px;
+            font-weight: bold;
+            transition: 0.2s;
+            min-width: 90px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .btn-lang.active {
+            background: #2d5d3d;
+            color: #fff;
+            box-shadow: none;
+        }
+
+        h1 { color: #2d5d3d; border-bottom: 3px solid #9acd32; padding-bottom: 10px; text-align: center; margin-top: 60px; }
         h2 { color: #6f4e37; border-left: 5px solid #6f4e37; padding-left: 15px; margin-top: 40px; }
         .point-box { background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin: 20px 0; }
         .important { color: #b91c1c; font-weight: bold; }
-        .back-link { display: block; text-align: center; margin-top: 50px; color: #2d5d3d; font-weight: bold; text-decoration: none; }
+        .back-link { display: block; text-align: center; margin-top: 50px; color: #2d5d3d; font-weight: bold; text-decoration: none; font-size: 1.2rem; }
+
+        @media (max-width: 600px) {
+            .lang-switch { top: 10px; right: 10px; }
+            .btn-lang { padding: 10px 22px; font-size: 1.1rem; min-width: 70px; }
+            h1 { font-size: 1.5rem; margin-top: 80px; }
+        }
     </style>
 </head>
 <body>
-    <h1>伝統的工芸品と、伝統工芸の違い</h1>
-
-    <div class="point-box">
-        <p>当サイトが扱うのは、ただの「伝統工芸」ではありません。経済産業大臣が指定した、日本を代表する<b>「伝統的工芸品」</b>です。</p>
+    <div class="lang-switch">
+        <button class="btn-lang active" onclick="switchLang('ja')">日本語</button>
+        <button class="btn-lang" onclick="switchLang('en')">English</button>
     </div>
 
-    <h2>1. 似ているようで全く違う「定義」</h2>
-<p>
-    <b>伝統工芸：</b>古くからある技術で作られたもの全般。自称でも名乗れます。<br>
-    <b>伝統的工芸品：</b>法律（伝産法）に基づき、国が厳しい審査を行い指定したもの。現在、全国で<span class="important">244品目</span>（最新）が指定されています。「全国244品目を網羅。複数県にまたがる産地を地域別に収録しているため、総データ数は256件となっています。」
-</p>
+    <h1 data-ja="伝統的工芸品と、伝統工芸の違い" data-en="Difference between 'Traditional Crafts' and 'Designated Traditional Crafts'">
+        伝統的工芸品と、伝統工芸の違い
+    </h1>
 
-    <h2>2. 実は「日用品」じゃないとダメ？</h2>
+    <div class="point-box">
+        <p data-ja="当サイトが扱うのは、ただの「伝統工芸」ではありません。経済産業大臣が指定した、日本を代表する<b>「伝統的工芸品」</b>です。" 
+           data-en="This site doesn't just feature general 'Traditional Crafts.' We focus on <b>'Designated Traditional Crafts'</b> (Densanteki-Kogeihin), officially recognized by the Japanese Minister of METI.">
+            当サイトが扱うのは、ただの「伝統工芸」ではありません。経済産業大臣が指定した、日本を代表する<b>「伝統的工芸品」</b>です。
+        </p>
+    </div>
+
+    <h2 data-ja="1. 似ているようで全く違う「定義」" data-en="1. Definitions: Similar but Distinct">1. 似ているようで全く違う「定義」</h2>
     <p>
+        <b data-ja="伝統工芸：" data-en="General Traditional Crafts:">伝統工芸：</b><span data-ja="古くからある技術で作られたもの全般。自称でも名乗れます。" data-en="Anything made with old techniques. It's a broad term with no legal restrictions.">古くからある技術で作られたもの全般。自称でも名乗れます。</span><br>
+        <b data-ja="伝統的工芸品：" data-en="Designated Traditional Crafts:">伝統的工芸品：</b><span data-ja="法律（伝産法）に基づき、国が厳しい審査を行い指定したもの。現在、全国で<span class='important'>244品目</span>（最新）が指定されています。「全国244品目を網羅。複数県にまたがる産地を地域別に収録しているため、総データ数は249件となっています。」" 
+              data-en="Items strictly screened and designated by the government under the 'Densan Law.' Currently, <span class='important'>244 items</span> (latest) are designated nationwide. Covering all 244 items with 249 total data points.">法律（伝産法）に基づき、国が厳しい審査を行い指定したもの。現在、全国で<span class="important">244品目</span>（最新）が指定されています。「全国244品目を網羅。複数県にまたがる産地を地域別に収録しているため、総データ数は249件となっています。」</span>
+    </p>
+
+    <h2 data-ja="2. 実は「日用品」じゃないとダメ？" data-en="2. Must be an 'Everyday Object'">2. 実は「日用品」じゃないとダメ？</h2>
+    <p data-ja="意外かもしれませんが、高価な「美術品」や「骨董品」は対象になりません。<br><span class='important'>「日常生活で使われるもの（日用品）」</span>であることが条件です。使われてこそ技術が継承され、私たちの暮らしを豊かにするという考え方が根底にあります。"
+       data-en="Surprisingly, expensive 'art pieces' or 'antiques' are not the focus. The condition is that they must be <span class='important'>'items used in daily life.'</span> The philosophy is that techniques are truly preserved and our lives enriched only when these items are actually used.">
         意外かもしれませんが、高価な「美術品」や「骨董品」は対象になりません。<br>
         <span class="important">「日常生活で使われるもの（日用品）」</span>であることが条件です。使われてこそ技術が継承され、私たちの暮らしを豊かにするという考え方が根底にあります。
     </p>
 
-    <h2>3. 認定されるための「5つの厳格なルール」</h2>
+    <h2 data-ja="3. 認定されるための「5つの厳格なルール」" data-en="3. The Five Strict Rules for Designation">3. 認定されるための「5つの厳格なルール」</h2>
     <ul>
-        <li><b>100年以上</b>の歴史があること。</li>
-        <li>製造工程の主要部分が<b>熟練の手作業</b>であること。</li>
-        <li>伝統的な<b>原材料</b>（漆、木、土など）を使っていること。</li>
-        <li>伝統的な<b>技術・技法</b>が守られていること。</li>
-        <li>一定の地域で産業として成立していること。</li>
+        <li data-ja="<b>100年以上</b>の歴史があること。" data-en="Must have a history of <b>over 100 years</b>."><b>100年以上</b>の歴史があること。</li>
+        <li data-ja="製造工程の主要部分が<b>熟練の手作業</b>であること。" data-en="The main parts of the process must be <b>skilled handwork</b>.">製造工程の主要部分が<b>熟練の手作業</b>であること。</li>
+        <li data-ja="伝統的な<b>原材料</b>（漆、木、土など）を使っていること。" data-en="Made with traditional <b>raw materials</b> (lacquer, wood, clay, etc.).">伝統的な<b>原材料</b>（漆、木、土など）を使っていること。</li>
+        <li data-ja="伝統的な<b>技術・技法</b>が守られていること。" data-en="Traditional <b>skills and techniques</b> must be preserved.">伝統的な<b>技術・技法</b>が守られていること。</li>
+        <li data-ja="一定の地域で産業として成立していること。" data-en="Must be established as an industry in a specific region.">一定の地域で産業として成立していること。</li>
     </ul>
 
-    <h2>4. メリットとデメリット</h2>
+    <h2 data-ja="4. メリットとデメリット" data-en="4. Pros and Cons">4. メリットとデメリット</h2>
     <div class="point-box">
-        <b>✅ メリット：</b><br>
-        ・「本物」という絶対的な信頼。<br>
-        ・熟練の職人による修理が可能で、孫の代まで使える。<br>
-        ・使い込むほどに「経年変化」という美しさが出る。
+        <b data-ja="✅ メリット：" data-en="✅ Pros:">✅ メリット：</b><br>
+        <span data-ja="・「本物」という絶対的な信頼。<br>・熟練の職人による修理が可能で、孫の代まで使える。<br>・使い込むほどに「経年変化」という美しさが出る。" 
+              data-en="- Absolute trust as an 'authentic' product.<br>- Repairable by skilled craftsmen, lasting for generations.<br>- Develops a beautiful 'aged patina' the more you use it.">
+            ・「本物」という絶対的な信頼。<br>
+            ・熟練の職人による修理が可能で、孫の代まで使える。<br>
+            ・使い込むほどに「経年変化」という美しさが出る。
+        </span>
     </div>
     <div class="point-box">
-        <b>⚠️ デメリット：</b><br>
-        ・手作業のため、どうしても値段が高くなる。<br>
-        ・食洗機やレンジが使えないなど、手入れに手間がかかる場合がある。<br>
-        ・量産できないため、注文から数ヶ月待つこともある。
+        <b data-ja="⚠️ デメリット：" data-en="⚠️ Cons:">⚠️ デメリット：</b><br>
+        <span data-ja="・手作業のため、どうしても値段が高くなる。<br>・食洗機やレンジが使えないなど、手入れに手間がかかる場合がある。<br>・量産できないため、注文から数ヶ月待つこともある。"
+              data-en="- Higher prices due to manual labor.<br>- May require care (e.g., no dishwashers or microwaves).<br>- Limited production may lead to several months of waiting.">
+            ・手作業のため、どうしても値段が高くなる。<br>
+            ・食洗機やレンジが使えないなど、手入れに手間がかかる場合がある。<br>
+            ・量産できないため、注文から数ヶ月待つこともある。
+        </span>
     </div>
 
-    <p style="text-align: center; font-style: italic;">
+    <p style="text-align: center; font-style: italic;" 
+       data-ja="「不便を楽しむ。本物を育てる。」<br>そんな豊かな時間を、このサイトで見つけていただければ幸いです。" 
+       data-en="'Enjoying inconvenience. Cultivating authenticity.'<br>We hope you find such enriching moments through this site.">
         「不便を楽しむ。本物を育てる。」<br>そんな豊かな時間を、このサイトで見つけていただければ幸いです。
     </p>
 
-    <a href="index.html" class="back-link">← アーカイブに戻る</a>
+    <a href="index.html" class="back-link" data-ja="← アーカイブに戻る" data-en="← Back to Archive">← アーカイブに戻る</a>
+
+    <script>
+        function switchLang(lang) {
+            // ボタンの見た目更新
+            document.querySelectorAll('.btn-lang').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // テキストの切り替え
+            document.querySelectorAll('[data-ja]').forEach(el => {
+                const text = el.getAttribute('data-' + lang);
+                el.innerHTML = text;
+            });
+        }
+    </script>
 </body>
 </html>
